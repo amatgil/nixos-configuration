@@ -12,15 +12,19 @@
 
   # Bootloader.
   boot = {
-    loader.grub = {
-      enable = true;
-      useOSProber = true;
-      #efiSupport = true;
-      device = "nodev";
+    loader = {
+      grub = {
+        enable = true;
+        useOSProber = true;
+        efiSupport = true;
+        device = "nodev";
 
-      #efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
-      extraEntriesBeforeNixOS = true;
+        extraEntriesBeforeNixOS = true;
+      };
+
+      efi.efiSysMountPoint = "/boot/efi";
     };
+   
     supportedFilesystems = [ "ntfs" ];
   };
 
@@ -116,7 +120,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
     lf
     git
@@ -125,6 +129,23 @@
     kitty
     cargo
     rustc
+    keepassxc
+    zathura
+    sxiv
+    neovim
+    neovide
+    gcc
+    clang
+    nil # nix lsp
+    alacritty
+    mpv
+    xclip # For (n)vim clipboard access
+
+
+    home-manager
+  ];
+  fonts.packages = with pkgs; [
+    iosevka
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
