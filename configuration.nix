@@ -295,6 +295,7 @@
 			commit.gpgsign = true;
 			pull.rebaes = true;
 			credential.helper = "cache --timeout 7200";
+			safe.directory="/etc/nixos";
 		};
 	};
 	programs.zsh.enable = true;
