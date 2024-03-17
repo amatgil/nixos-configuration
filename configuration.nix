@@ -31,11 +31,6 @@
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # remaps
-  services.xserver.xkbOptions = "ctrl:swapcaps";
-  services.xserver.autoRepeatDelay = 300;
-  services.xserver.autoRepeatInterval = 50;
-
   networking.hostName = "dreanix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -80,6 +75,12 @@
   # Configure console keymap
   console.keyMap = "es";
 
+  # remaps
+  services.xserver.xkbOptions = "esc:swapcaps";
+  services.xserver.autoRepeatDelay = 300;
+  services.xserver.autoRepeatInterval = 50;
+
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -111,6 +112,8 @@
     packages = with pkgs; [
       firefox
       thunderbird
+      vscode
+      emacs
     ];
   };
 
@@ -140,7 +143,10 @@
     alacritty
     mpv
     xclip # For (n)vim clipboard access
-
+    qbittorrent
+    mullvad-vpn
+    ffmpeg
+    yakuake
 
     home-manager
   ];
