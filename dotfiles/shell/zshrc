@@ -1,4 +1,4 @@
-eval "$(zellij setup --generate-auto-start zsh)" # Al prinici perque va mes rapid
+#eval "$(zellij setup --generate-auto-start zsh)" # Al prinici perque va mes rapid
 # Lines configured by zsh-newuser-install
 SAVEHIST=100000
 HISTSIZE=100000

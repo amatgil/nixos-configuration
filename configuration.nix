@@ -141,7 +141,7 @@
     vim
     wget
     lf
-    git
+    gitFull
     gcc
     clang
     nil # nix lsp
@@ -189,6 +189,7 @@
   	        eza
   	        du-dust
   	        hexyl
+		#gitFull
   	        gitui
   	        gitoxide
   	        zellij
@@ -209,6 +210,8 @@
 		mullvad-vpn
 		yakuake
 	        alacritty
+		delta
+		meld
 
   	        neovim
 
@@ -267,6 +270,33 @@
   	      recursive = true;
   	};
 
+	programs.git = {
+		enable = true;
+		userName = "amatgil";
+		userEmail = "amatgilvinyes@gmail.com";
+		extraConfig = {
+			user.singingkey = "D34BAAD5029249C9";
+			init.defaultBranch = "master";
+			core = {
+				pager = "delta";
+				editor = "nvim";
+			};
+			interactive.diffFilter = "delta --color-only";
+			delta = {
+				navigate = true; # change sections with n/N
+				light = false;   # for terminals with white bg
+			};
+			diff = {
+				tool = "meld";
+				colorMoved = "default";
+			};
+			difftool.prompt = false;
+			#difftool."meld".cmd = "meld \"$LOCAL\" \"$REMOTE\""; <-- how space?
+			commit.gpgsign = true;
+			pull.rebaes = true;
+			credential.helper = "cache --timeout 7200";
+		};
+	};
 	programs.zsh.enable = true;
   	programs.alacritty = {
   	  enable = true;
@@ -285,6 +315,7 @@
   	#  settings.default_layout = "compact";
   	#};
 
+	programs.gpg.enable = true;
   	programs.hyfetch = {
   	  enable = true;
   	  settings = {
