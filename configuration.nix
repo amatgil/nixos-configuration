@@ -15,17 +15,27 @@
   # Bootloader.
   boot = {
     loader = {
-      grub = {
-        enable = true;
-        useOSProber = true;
-        efiSupport = true;
-        device = "nodev";
-        extraEntriesBeforeNixOS = true;
-      };
-      efi.efiSysMountPoint = "/boot/efi";
+      #grub = {
+      #  enable = true;
+      #  useOSProber = true;
+      #  efiSupport = true;
+      #  device = "nodev";
+      #  extraEntriesBeforeNixOS = true;
+      #};
+      #efi.efiSysMountPoint = "/boot/efi";
+      systemd-boot.enable = true;
+      systemd-boot.configurationLimit = 3;
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot";
     };
    
     supportedFilesystems = [ "ntfs" ];
+  };
+
+  nix.gc = {
+    automatic = true;
+    randomizedDelaySec = "14m";
+    options = "--delete-older-than 10d";
   };
 
   # Flakes
@@ -257,26 +267,23 @@
   	      recursive = true;
   	};
 
+	programs.zsh.enable = true;
   	programs.alacritty = {
   	  enable = true;
   	  settings = {
   	    font = {
-  	      size = 13;
+  	      size = 12;
   	      normal.family = "iosevka";
-  	    };
-  	    env = {
-  	      ZELLIJ_AUTO_ATTACH = "true";
-  	      ENABLE_ZELLIJ = "true";
   	    };
   	    shell.program = "${pkgs.zsh}/bin/zsh";
   	    window.opacity = 1;
   	  };
   	};
 
-  	programs.zellij = {
-  	  enable = true;
-  	  settings.default_layout = "compact";
-  	};
+  	#programs.zellij = {
+  	#  enable = true;
+  	#  settings.default_layout = "compact";
+  	#};
 
   	programs.hyfetch = {
   	  enable = true;
