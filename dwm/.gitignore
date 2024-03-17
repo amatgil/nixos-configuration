@@ -1,0 +1,11 @@
+*.o
+config.h
+blocks.h
+dwm
+*bak
+*.orig
+*.rej
+WHATYOUWEREDOING
+*.log
+dwmblocks/dwmblocks
+Makefile

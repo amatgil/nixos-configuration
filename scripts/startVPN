@@ -1,0 +1,1 @@
+sudo nohup openvpn --config /etc/openvpn/mullvad_es_mad.conf

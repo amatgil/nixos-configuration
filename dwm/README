@@ -1,0 +1,75 @@
+Requirements
+------------
+In order to build dwm you need the Xlib header files.
+THIS FOLDER MUST BE /home/casenc/.config/suckless/dwm
+THIS FOLDER MUST HAVE A SYMLINK TO MY SCRIPTS REPO CALLED `scripts` (or a submodule)
+Please run `git submodule update --init` when cloning
+
+
+Installation
+------------
+Edit config.mk to match your local setup (dwm is installed into
+the /usr/local namespace by default).
+
+Afterwards enter the following command to build and install dwm (if
+necessary as root):
+
+    make clean install
+
+
+Running dwm
+-----------
+Get your .xinitrc to ~/.xinitrc
+
+Configuration
+-------------
+The configuration of dwm is done by creating a custom config.h
+and (re)compiling the source code.
+
+`dwmblocks` can be altered by editing `[variant].blocks.def.h` and recompiling just like dwm.
+
+
+For battery events, `/etc/acpi/handler.sh` should be edited with the proper names seen when running `acpi_listen`. For example, if the output when unplugging the charger looks like:
+
+    ac_adapter ACPI0003:00 00000080 00000000
+    battery PNP0C0A:00 00000080 00000001
+ 
+Then line 26 should be something like 
+
+    case "$2" in
+        AC|ACAD|ADP0|ACPI0003:00)
+
+Since ACPI0003:00 is the name of the ac_adapter.
+The following command can then be executed to refresh dwmblocks:
+    
+    $DWM/scripts/battery 1
+
+Example of relevant section of `etc/acpi/handler.sh`:
+case "$1" in 
+    ...
+    ac_adapter) 
+        case "$2" in 
+            AC|ACAD|ADP0|ACPI0003:00) #Notice the added line
+                /home/casenc/scripts/battery 1 #The script to run, above the fourth case statement as the script must run regardless of whether the charger was plugged or unplugged
+                case "$4" in 
+                    00000000) 
+                        logger 'AC unpluged' 
+                        ;; 
+                    00000001) 
+                        logger 'AC pluged' 
+                        ;; 
+                esac 
+                ;; 
+            *) 
+                logger "ACPI action undefined: $2" 
+                ;; 
+        esac 
+        ;; 
+
+Dependencies
+-------------
+
+* A scripts symlink/folder to the gitlab repo `git@gitlab.com:amatgilvinyes/scripts.git` is necessary for all keybinds/scripts to work properly
+* A symlink from `./scripts/initialDisplay`  to one of the scripts in `./scripts/screenlayouts/`. It will be executed on startup to setup the display
+* `acpi`
+* `xmenu` (for `layoutmenu.sh`)

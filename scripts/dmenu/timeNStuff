@@ -1,0 +1,15 @@
+#!/bin/sh
+#Execute the different wallpaper scripts, selected by dmenu
+
+choices="Calculadora\nCrono\nCompte Enrere\nAlarm\nAuto Clicker"
+
+chosen=$(echo -e "$choices" | dmenu -i)
+
+case "$chosen" in 
+		Calculadora) qalculate-gtk;;
+		Crono) kronometer;;
+		"Compte Enrere") ktimer;;
+		Alarm) kalarm;;
+		"Auto Clicker") qt5autoclick;;
+		
+esac

@@ -1,0 +1,52 @@
+#!/bin/sh
+# I fucked up and now lm-sensors doesn't see each individual sensor. *sigh*.
+#sensors | grep Core | awk '{print $2" "$3}' | sed -e "s/+//" | sed -e "s/°C//" | awk 'BEGIN { max = 0; info = "" } { if ($2 > max) { max = $2; info = $1" "$2} } END {print info"°C"}' | sed s/[0-9]:\ //
+#
+#temp=$(sensors | grep Core | awk '{print $2" "$3}' | sed -e "s/+//" | sed -e "s/°C//" | awk 'BEGIN { max = 0; info = "" } { if ($2 > max) { max = $2; info = $1" "$2} } END {print info"°C"}' | sed -e "s/[0-9]:\ //" -e "s/°C//g")
+#
+#intTemp=${temp%.*}
+#
+#
+#highTemp=80
+#
+#maxTemp=87
+#
+## if (("$intTemp" > $maxTemp)); then
+##     notify-send -u critical "ALERTA: TEMPERATURA" "LA TEMPERATURA HA SOBREPASSAT ELS $maxTemp GRAUS"
+## fi
+#
+#
+#if (("$intTemp" > $highTemp)); then
+#    if (("$intTemp" > $maxTemp)); then
+#        notify-send -u critical "ALERTA: TEMPERATURA" "LA TEMPERATURA HA SOBREPASSAT ELS $maxTemp GRAUS"
+#        exit 0
+#    fi
+#
+#    notify-send "ALERTA: TEMPERATURA" "LA TEMPERATURA HA SOBREPASSAT ELS $highTemp GRAUS"
+#fi
+
+# Has not been fixed yet. *sigh*
+sensors | grep Core | awk '{print $2" "$3}' | sed -e "s/+//" | sed -e "s/°C//" | awk 'BEGIN { max = 0; info = "" } { if ($2 > max) { max = $2; info = $1" "$2} } END {print info"°C"}' | sed s/[0-9]:\ //
+
+temp=$(sensors | grep Core | awk '{print $2" "$3}' | sed -e "s/+//" | sed -e "s/°C//" | awk 'BEGIN { max = 0; info = "" } { if ($2 > max) { max = $2; info = $1" "$2} } END {print info"°C"}' | sed -e "s/[0-9]:\ //" -e "s/°C//g")
+
+intTemp=${temp%.*}
+
+
+highTemp=80
+
+maxTemp=87
+
+# if (("$intTemp" > $maxTemp)); then
+#     notify-send -u critical "ALERTA: TEMPERATURA" "LA TEMPERATURA HA SOBREPASSAT ELS $maxTemp GRAUS"
+# fi
+
+
+if (("$intTemp" > $highTemp)); then
+    if (("$intTemp" > $maxTemp)); then
+        notify-send -u critical "ALERTA: TEMPERATURA" "LA TEMPERATURA HA SOBREPASSAT ELS $maxTemp GRAUS"
+        exit 0
+    fi
+
+    notify-send "ALERTA: TEMPERATURA" "LA TEMPERATURA HA SOBREPASSAT ELS $highTemp GRAUS"
+fi

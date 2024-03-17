@@ -1,0 +1,8 @@
+#!/bin/bash
+
+images=40
+imagesPlusOne=41
+
+files=$(ls -l $HOME.scrot | tail -n$imagesPlusOne | head -n$images | tac | awk '{print $9}')
+
+cd $HOME/.scrot && echo $files | xargs sxiv "{}"

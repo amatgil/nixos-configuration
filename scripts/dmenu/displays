@@ -1,0 +1,17 @@
+#!/bin/sh
+#Execute the different xrander scripts, selected by dmenu
+#Assumes that DP1 has a resolution of 1440x900 and HDMI has a resolution of 1920x1080
+
+choices="HDMI only\nDP only\nHDMI <-> DP\nDP <-> HDMI\nMirror"
+
+chosen=$(echo -e "$choices" | dmenu -i -p "Quines displays vols utilitzar?")
+
+case "$chosen" in 
+	"HDMI only") bash -c "$HOME/.config/scripts/screenlayouts/HDMIonly.sh";;
+	"DP only") bash -c "$HOME/.config/scripts/screenlayouts/DPonly.sh";;
+	"HDMI <-> DP") bash -c "$HOME/.config/scripts/screenlayouts/HDMI-DP.sh";;
+	"DP <-> HDMI") bash -c "$HOME/.config/scripts/screenlayouts/DP-HDMI.sh";;
+	"Mirror") bash -c "$HOME/.config/scripts/screenlayouts/mirrored.sh";;
+
+
+esac

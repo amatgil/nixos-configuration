@@ -1,0 +1,16 @@
+#!/bin/sh
+#Execute the different power management scripts, selected by dmenu
+
+choices="Cancel\nLock\nShutdown\nReboot\nSuspend\nKill awesome\nKill dwm"
+
+chosen=$(echo -e "$choices" | dmenu -i -p "Què vols fer?")
+
+case "$chosen" in 
+		Lock) slock;;
+		#Shutdown) shutdown 2>/tmp/shutdownTimer && notify-send -t 3000 "$(basename 'Shutdown Enabled')" "$(cat /tmp/shutdownTimer)";;
+		Shutdown) shutdown now;;
+		Reboot) reboot 2>/tmp/shutdownTimer && notify-send -t 3000 "Reboot Enabled" "";;
+		Suspend) systemctl suspend;;
+		"Kill awesome") echo 'awesome.quit()' | awesome-client;;
+		"Kill dwm") killall dwm;;
+esac

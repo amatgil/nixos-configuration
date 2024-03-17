@@ -1,0 +1,14 @@
+#/bin/sh
+
+case $BLOCK_BUTTON in
+    1) # Si click, te diu que ho està gastant
+        notify-send "$(ps axch -o cmd:15,%mem --sort=-%mem | head)"
+		;;
+    *) # Display per defecte
+		MEM=$(free -h | tail -n2 | head -n1 | awk "{print $ 3\"/\"$ 2}" | sed 's/i//g')
+		FREE=$(free -mh | awk '{print $7}' | sed '/^$/d') # True free (Linux calls it 'available', it
+														  # steals RAM to make caching faster but
+														  # counts it as available nontheless)
+		echo "$MEM (ll: $FREE)"
+		;;
+esac

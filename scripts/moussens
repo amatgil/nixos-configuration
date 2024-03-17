@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#The command around the parenthesis gets the device ID (because it changes)
+xinput --set-prop $(xinput | grep SteelSeries | awk '{print $9}' | cut -b 4-6) 'libinput Accel Speed' -.7

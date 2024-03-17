@@ -1,0 +1,12 @@
+#!/bin/sh
+NOTIFTEXT="Saved at ~/.scrot/$(date +%y-%m-%d_%H:%M)"
+
+function send_successful_notification() {
+    notify-send -t 10000 "Screenshot taken" "Saved at ~/.scrot/$(date +%y-%m-%d_%H:%M).png"
+}
+
+function send_error_notification() {
+    notify-send -t 5000 "Screenshot not taken" "The screenshot was canceled or an error occured"
+}
+
+scrot -s ~/.scrot/%y-%m-%d_%H:%M.png && send_successful_notification || send_error_notification

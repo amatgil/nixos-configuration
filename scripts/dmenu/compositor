@@ -1,0 +1,13 @@
+#!/bin/sh
+#Execute the different wallpaper scripts, selected by dmenu
+
+choices="Enable notifications\nDisable notifications\nEnable picom\nDisable picom"
+
+chosen=$(echo -e "$choices" | dmenu -i)
+
+case "$chosen" in 
+		'Enable notifications') ~/scripts/toggleNotifState 0;;
+		'Disable notifications') ~/scripts/toggleNotifState 1;;
+		'Enable picom') picom && notify-send -t 3000 "Transparency changed" "Now enabled" ;;
+		'Disable picom') killall picom && notify-send -t 3000 "Transparency changed" "Now disabled" ||  notify-send -t 3000 "Transparency NOT changed" "Picom wasn't running" ;;
+esac

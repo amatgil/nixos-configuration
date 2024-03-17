@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos>
     ];
 
   # Bootloader.
@@ -63,8 +64,13 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
+
+  # Dwm my beloved
+  services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
+    src = ./dwm;
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -127,32 +133,199 @@
     wget
     lf
     git
-    eza
-    ripgrep
-    kitty
-    cargo
-    rustc
-    keepassxc
-    zathura
-    sxiv
-    neovim
-    neovide
     gcc
     clang
     nil # nix lsp
-    alacritty
     mpv
     xclip # For (n)vim clipboard access
-    qbittorrent
-    mullvad-vpn
     ffmpeg
-    yakuake
-
-    home-manager
   ];
+
   fonts.packages = with pkgs; [
     iosevka
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
+
+  home-manager.users.casenc = { pkgs, ... }: {
+        nixpkgs.config.allowUnfree = true;
+	nixpkgs.config.permittedInsecurePackages = [
+          "electron-25.9.0" # For obsidian
+        ];
+  	home.username = "casenc";
+  	home.homeDirectory = "/home/casenc";
+
+  	# NO TOUCHY
+  	home.stateVersion = "23.11"; 
+
+  	# The home.packages option allows you to install Nix packages into your
+  	# environment.
+  	# # A list of them is at https://search.nixos.org/packages
+  	home.packages = with pkgs; [
+	        cargo
+	        rustc
+	        keepassxc
+	        zathura
+	        sxiv
+	        neovim
+	        neovide
+		bacon
+		bat
+		just
+		sccache
+  	        tealdeer
+  	        silicon
+  	        zoxide
+  	        bottom
+  	        cargo-sweep
+  	        eza
+  	        du-dust
+  	        hexyl
+  	        gitui
+  	        gitoxide
+  	        zellij
+  	        starship
+	        vscodium-fhs
+  	        alejandra
+  	        obsidian
+  	        nil
+  	        tokei
+  	        eza
+  	        monocraft
+  	        killall
+  	        ripgrep
+  	        wget
+  	        yt-dlp
+  	        du-dust
+		qbittorrent
+		mullvad-vpn
+		yakuake
+	        alacritty
+
+  	        neovim
+
+  	        zsh
+  	        zsh-autocomplete
+  	        zsh-autosuggestions
+  	        zsh-syntax-highlighting
+
+  	        dunst
+  	        dmenu
+  	        mold
+  	        xmousepasteblock
+  	        keepassxc
+  	        thunderbird
+  	        devour
+  	        imagemagick
+  	        youtube-dl
+
+  	        iosevka # Untested
+  	];
+
+  	# Home Manager is pretty good at managing dotfiles. The primary way to manage
+  	# plain files is through 'home.file'.
+
+  	# Keep in mind, these will end up in ~/
+  	home.file = {
+  		".zshrc".source = ./dotfiles/shell/zshrc;
+  		".shell_aliases".source = ./dotfiles/shell/shell_aliases;
+  	};
+
+  	## from https://discourse.nixos.org/t/home-manager-spacemacs/8033
+  	#home.file.".emacs.d" = {
+  	#  # don't make the directory read only so that impure melpa can still happen
+  	#  # for now
+  	#  recursive = true;
+  	#  source = pkgs.fetchFromGitHub {
+  	#    owner = "syl20bnr"; # owner of the github lmao
+  	#    repo = "spacemacs";
+  	#    rev = "26b8fe0c317915b622825877eb5e5bdae88fb2b2";
+  	#    sha256 = "00cfm6caaz85rwlrbs8rm2878wgnph6342i9688w4dji3dgyz3rz";
+  	#  };
+  	#};
+
+  	# These will end up in ~/.config instead
+  	xdg.configFile."starship.toml" = {
+  	      source = ./dotfiles/starship.toml;
+  	};
+  	xdg.configFile.dunst = {
+  		source = ./dotfiles/dunst;
+  	};
+  	xdg.configFile.plantill = {
+  		source = ./dotfiles/plantill;
+  	};
+  	xdg.configFile.nvim = {
+  		source = ./dotfiles/nvim;
+  	      recursive = true;
+  	};
+
+  	programs.alacritty = {
+  	  enable = true;
+  	  settings = {
+  	    font = {
+  	      size = 13;
+  	      normal.family = "iosevka";
+  	    };
+  	    env = {
+  	      ZELLIJ_AUTO_ATTACH = "true";
+  	      ENABLE_ZELLIJ = "true";
+  	    };
+  	    shell.program = "${pkgs.zsh}/bin/zsh";
+  	    window.opacity = 1;
+  	  };
+  	};
+
+  	programs.zellij = {
+  	  enable = true;
+  	  settings.default_layout = "compact";
+  	};
+
+  	programs.hyfetch = {
+  	  enable = true;
+  	  settings = {
+  	    args = null;
+  	    backend = "neofetch";
+  	    color_align = {
+  	      custom_colors."1" = 3;
+  	      custom_colors."2" = 2;
+  	      fore_back = [];
+  	      mode = "custom";
+  	    };
+  	    distro = null;
+  	    light_dark = "dark";
+  	    lightness = 0.65;
+  	    mode = "rgb";
+  	    preset = "asexual";
+  	    pride_month_disable = false;
+  	    pride_month_shown = [];
+  	  };
+  	};
+
+  	programs.mpv = {
+  	  enable = true;
+  	  bindings = {
+  	    RIGHT = "seek  5";
+  	    LEFT = "seek  -5";
+  	    UP = "seek  60";
+  	    DOWN = "seek  -60";
+  	    "Shift+RIGHT" = "no-osd seek  1";
+  	    "Shift+LEFT" = "no-osd seek  -1";
+  	    "[" = "add speed -0.05";
+  	    "]" = "add speed 0.05";
+  	    "Ctrl+[" = "add speed -0.25";
+  	    "Ctrl+]" = "add speed 0.25";
+  	    "{" = "multiply speed 0.5";
+  	    "}" = "multiply speed 2.0";
+  	  };
+  	};
+
+  	home.sessionVariables = {
+  	  EDITOR = "nvim";
+  	};
+
+  	# Let Home Manager install and manage itself.
+  	programs.home-manager.enable = true;
+
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

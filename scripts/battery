@@ -1,0 +1,21 @@
+#!/bin/sh
+
+
+if ["$(acpi -i)" != "No support for device type: power_supply" ]; then
+    OUTPUT=$(acpi -i | head -n1 | sed 's/Battery\ 0: //')
+    case $1 in
+            2) # Get battery percent. ^ means charging, V means discharing, followed by %
+			   grep 'Dischargin' <<< "$OUTPUT" 1>/dev/null &&
+				   sed -e 's/Discharging, /V\ /' -e 's/,.*//' <<< "$OUTPUT" ||
+				   sed -e 's/Charging,\ /Ʌ\ /' -e 's/,.*//'<<< $OUTPUT
+			   ;;
+			1)
+			   sleep 1; pkill -RTMIN+1 dwmblocks
+			   ;;
+
+		   "") echo "1" ;;
+        esac
+else
+    echo "NaN"
+fi
+# 0 if a line is found, 1 if it is not

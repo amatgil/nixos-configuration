@@ -1,0 +1,3 @@
+#!/bin/sh
+
+encfs /home/casenc/Dropbox/xifrats/"$1" /media/XIFRATS/"$1"

@@ -1,0 +1,12 @@
+#!/bin/sh
+#Execute the different wallpaper scripts, selected by dmenu
+
+choices="Random\nDefault\nGrey"
+
+chosen=$(echo -e "$choices" | dmenu -i -p "Tria un tipus de fons de pantalla:")
+
+case "$chosen" in 
+		Random) $HOME/scripts/fehbg ;;
+		Default) $HOME/scripts/normbg ;;
+		Grey) $HOME/scripts/greybg ;;
+esac

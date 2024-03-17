@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case $1 in 
+	0)
+		dunstctl set-paused false &&
+			echo "S" >$HOME/.cache/notifState &&
+			pkill -RTMIN+7 dwmblocks 
+		;;
+	1)
+		dunstctl set-paused true &&
+			echo "N" >$HOME/.cache/notifState &&
+			pkill -RTMIN+7 dwmblocks 
+		;;
+	*)
+		echo "ERROR: Argument no reconegut"
+		;;
+esac

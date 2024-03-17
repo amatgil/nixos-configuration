@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+#curl wttr.in -s | head-7 | tail -5 | awk'{print $4, $5, $6, $7, $8}' |
+curl -s http://wttr.in/barcelona?format=3 | awk '{print $2, $3}' > $HOME/.cache/weather

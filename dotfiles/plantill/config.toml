@@ -1,0 +1,15 @@
+[lispt]
+source = "lispt"
+should_replace_name = true
+
+[LaTeX]
+source = "latex"
+should_replace_name = true
+
+[C]
+source = "C"
+should_replace_name = true
+
+[AdventOfCode]
+source = "AdventOfCodeDay"
+should_replace_name = true

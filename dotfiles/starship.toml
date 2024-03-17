@@ -1,0 +1,82 @@
+# Don't insert a blank line between shell prompts
+add_newline = false
+format = """
+[┌](bold #C74DED) [󰄛 ](bold #C74DED) '$directory' de $hostname ($all)\
+[└>](bold #C74DED) $character
+"""
+[character] 
+success_symbol = "[](bold purple)"
+error_symbol = "[](red)"
+
+# '$directory' de $hostname per $username
+[username]
+format = "[$user](bold dimmed blue) "
+show_always = false # don't show it 
+disabled = false
+
+[hostname]
+#format = 'de [$hostname](bold dimmed blue)'
+format = '[$hostname](bold purple)'
+ssh_only = false
+disabled = false
+
+[directory]
+read_only = " "
+format = '[$path](bold cyan)'
+truncation_length = 4
+truncation_symbol = "../"
+truncate_to_repo = false # truncates directory to root folder if in github repo
+# style = "bold italic blue"
+
+
+[cmd_duration]
+min_time = 30 # in milis
+show_milliseconds = false
+disabled = false
+
+
+# Edited Nerd font preset
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "ﳒ "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[spack]
+symbol = "🅢 "
