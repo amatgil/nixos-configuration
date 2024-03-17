@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # And home-manager so that the options can be set from in here
       <home-manager/nixos>
     ];
 
@@ -19,10 +20,8 @@
         useOSProber = true;
         efiSupport = true;
         device = "nodev";
-
         extraEntriesBeforeNixOS = true;
       };
-
       efi.efiSysMountPoint = "/boot/efi";
     };
    
@@ -64,13 +63,15 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
 
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
   # Dwm my beloved
-  services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
-    src = ./dwm;
-  };
+  #services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
+  #  src = ./dwm;
+  #};
 
   # Configure keymap in X11
   services.xserver = {
@@ -118,8 +119,6 @@
     packages = with pkgs; [
       firefox
       thunderbird
-      vscode
-      emacs
     ];
   };
 
