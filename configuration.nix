@@ -28,7 +28,7 @@
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot";
     };
-   
+    
     supportedFilesystems = [ "ntfs" ];
   };
 
@@ -72,14 +72,30 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
+  # DON'T Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = false;
   services.xserver.desktopManager.gnome.enable = false;
 
+  # Plasma my beloved
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+
+  # Keyboard layout(s)
+  #
+  # services.kanata = {
+  #    enable = true;
+  #    keyboards = { # "teclat" is the name of the keyboard
+  #      "teclat".config = ''
+  #(defcfg
+  #	process-unmapped-keys yes
+  #)
+  #(defsrc
+  #)
+  #  '';
+  #    };
+  #  };
   # Dwm my beloved
-  #services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
+  #  #services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
   #  src = ./dwm;
   #};
 
@@ -148,6 +164,7 @@
     mpv
     xclip # For (n)vim clipboard access
     ffmpeg
+    kanata # Keyboard layout
   ];
 
   fonts.packages = with pkgs; [
@@ -156,10 +173,10 @@
   ];
 
   home-manager.users.casenc = { pkgs, ... }: {
-        nixpkgs.config.allowUnfree = true;
-	nixpkgs.config.permittedInsecurePackages = [
-          "electron-25.9.0" # For obsidian
-        ];
+    nixpkgs.config.allowUnfree = true;
+	  nixpkgs.config.permittedInsecurePackages = [
+      "electron-25.9.0" # For obsidian
+    ];
   	home.username = "casenc";
   	home.homeDirectory = "/home/casenc";
 
@@ -169,136 +186,181 @@
   	# The home.packages option allows you to install Nix packages into your
   	# environment.
   	# # A list of them is at https://search.nixos.org/packages
-  	home.packages = with pkgs; [
-	        cargo
-	        rustc
-	        keepassxc
-	        zathura
-	        sxiv
-	        neovim
-	        neovide
-		bacon
-		bat
-		just
-		sccache
-  	        tealdeer
-  	        silicon
-  	        zoxide
-  	        bottom
-  	        cargo-sweep
-  	        eza
-  	        du-dust
-  	        hexyl
-		#gitFull
-  	        gitui
-  	        gitoxide
-  	        zellij
-  	        starship
-	        vscodium-fhs
-  	        alejandra
-  	        obsidian
-  	        nil
-  	        tokei
-  	        eza
-  	        monocraft
-  	        killall
-  	        ripgrep
-  	        wget
-  	        yt-dlp
-  	        du-dust
-		qbittorrent
-		mullvad-vpn
-		yakuake
-	        alacritty
-		delta
-		meld
+    home.packages = with pkgs; [
+      cargo
+      rustc
+      keepassxc
+      zathura
+      sxiv
+      neovim
+      neovide
+      bacon
+      bat
+      just
+      sccache
+      tealdeer
+      silicon
+      zoxide
+      bottom
+      cargo-sweep
+      eza
+      du-dust
+      hexyl
+      gitui
+      gitoxide
+      zellij
+      starship
+      vscodium-fhs
+      alejandra
+      obsidian
+      nil
+      tokei
+      eza
+      monocraft
+      killall
+      ripgrep
+      wget
+      yt-dlp
+      du-dust
+      qbittorrent
+      mullvad-vpn
+      yakuake
+      alacritty
+      delta
+      meld
+      pandoc
+      texlive.combined.scheme-full 
+      groff
+      encfs
+      qalculate-gtk
 
-  	        neovim
+  	  neovim
 
-  	        zsh
-  	        zsh-autocomplete
-  	        zsh-autosuggestions
-  	        zsh-syntax-highlighting
+  	  zsh
+  	  zsh-autocomplete
+  	  zsh-autosuggestions
+  	  zsh-syntax-highlighting
 
-  	        dunst
-  	        dmenu
-  	        mold
-  	        xmousepasteblock
-  	        keepassxc
-  	        thunderbird
-  	        devour
-  	        imagemagick
-  	        youtube-dl
-
-  	        iosevka # Untested
-  	];
-
-  	# Home Manager is pretty good at managing dotfiles. The primary way to manage
-  	# plain files is through 'home.file'.
-
+  	  dunst
+  	  dmenu
+  	  mold
+  	  xmousepasteblock
+  	  keepassxc
+  	  thunderbird
+  	  devour
+  	  imagemagick
+      youtube-dl
+      
+      iosevka # Untested
+	  ];
   	# Keep in mind, these will end up in ~/
   	home.file = {
   		".zshrc".source = ./dotfiles/shell/zshrc;
   		".shell_aliases".source = ./dotfiles/shell/shell_aliases;
   	};
 
-  	## from https://discourse.nixos.org/t/home-manager-spacemacs/8033
-  	#home.file.".emacs.d" = {
-  	#  # don't make the directory read only so that impure melpa can still happen
-  	#  # for now
-  	#  recursive = true;
-  	#  source = pkgs.fetchFromGitHub {
-  	#    owner = "syl20bnr"; # owner of the github lmao
-  	#    repo = "spacemacs";
-  	#    rev = "26b8fe0c317915b622825877eb5e5bdae88fb2b2";
-  	#    sha256 = "00cfm6caaz85rwlrbs8rm2878wgnph6342i9688w4dji3dgyz3rz";
-  	#  };
-  	#};
-
-  	# These will end up in ~/.config instead
-  	xdg.configFile."starship.toml" = {
-  	      source = ./dotfiles/starship.toml;
-  	};
-  	xdg.configFile.dunst = {
-  		source = ./dotfiles/dunst;
-  	};
-  	xdg.configFile.plantill = {
-  		source = ./dotfiles/plantill;
-  	};
+    programs.starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
+        buf = {symbol = " ";};
+        c = {symbol = " ";};
+        character = {
+          error_symbol = "[](red)";
+          success_symbol = "[](bold purple)";
+        };
+        cmd_duration = {
+          disabled = false;
+          min_time = 30;
+          show_milliseconds = false;
+        };
+        directory = {
+          format = "[$path](bold cyan)";
+          read_only = " ";
+          truncate_to_repo = false;
+          truncation_length = 4;
+          truncation_symbol = "../";
+        };
+        docker_context = {symbol = " ";};
+        format = "[┌](bold #C74DED) [󰄛 ](bold #C74DED) '$directory' de $hostname ($all)[└>](bold #C74DED) $character\n";
+        git_branch = {symbol = " ";};
+        haskell = {symbol = " ";};
+        hg_branch = {symbol = " ";};
+        hostname = {
+          disabled = false;
+          format = "[$hostname](bold purple)";
+          ssh_only = false;
+        };
+        lua = {symbol = " ";};
+        memory_usage = {symbol = " ";};
+        package = {symbol = " ";};
+        python = {symbol = " ";};
+        rlang = {symbol = "ﳒ ";};
+        ruby = {symbol = " ";};
+        rust = {symbol = " ";};
+        scala = {symbol = " ";};
+        spack = {symbol = "🅢 ";};
+        username = {
+          disabled = false;
+          format = "[$user](bold dimmed blue) ";
+          show_always = false;
+        };
+      };
+    };
+  	xdg.configFile.dunst.source = ./dotfiles/dunst;
+  	xdg.configFile.plantill.source = ./dotfiles/plantill;
   	xdg.configFile.nvim = {
   		source = ./dotfiles/nvim;
-  	      recursive = true;
+  		recursive = true;
   	};
 
-	programs.git = {
-		enable = true;
-		userName = "amatgil";
-		userEmail = "amatgilvinyes@gmail.com";
-		extraConfig = {
-			user.singingkey = "D34BAAD5029249C9";
-			init.defaultBranch = "master";
-			core = {
-				pager = "delta";
-				editor = "nvim";
-			};
-			interactive.diffFilter = "delta --color-only";
-			delta = {
-				navigate = true; # change sections with n/N
-				light = false;   # for terminals with white bg
-			};
-			diff = {
-				tool = "meld";
-				colorMoved = "default";
-			};
-			difftool.prompt = false;
-			#difftool."meld".cmd = "meld \"$LOCAL\" \"$REMOTE\""; <-- how space?
-			commit.gpgsign = true;
-			pull.rebaes = true;
-			credential.helper = "cache --timeout 7200";
-			safe.directory="/etc/nixos";
-		};
-	};
-	programs.zsh.enable = true;
+	  programs.emacs = {
+		  enable = true;
+		  extraPackages = epkgs: [
+			  epkgs.nix-mode
+			  epkgs.evil
+        epkgs.evil-collection
+			  epkgs.magit
+			  epkgs.rust-mode
+			  epkgs.origami
+		  ];
+	  };
+	  xdg.configFile.emacs = {
+  		source = ./dotfiles/emacs;
+  		recursive = true;
+	  };
+	  services.emacs.enable = true;
+
+	  programs.git = {
+		  enable = true;
+		  userName = "amatgil";
+		  userEmail = "amatgilvinyes@gmail.com";
+		  extraConfig = {
+			  user.singingkey = "D34BAAD5029249C9";
+			  init.defaultBranch = "master";
+			  core = {
+				  pager = "delta";
+				  editor = "nvim";
+			  };
+			  interactive.diffFilter = "delta --color-only";
+			  delta = {
+				  navigate = true; # change sections with n/N
+				  light = false;   # for terminals with white bg
+			  };
+			  diff = {
+				  tool = "meld";
+				  colorMoved = "default";
+			  };
+			  difftool.prompt = false;
+			  #difftool."meld".cmd = "meld \"$LOCAL\" \"$REMOTE\""; <-- how space?
+			  commit.gpgsign = true;
+			  pull.rebaes = true;
+			  credential.helper = "cache --timeout 7200";
+			  safe.directory="/etc/nixos";
+		  };
+	  };
+
+	  programs.zsh.enable = true;
   	programs.alacritty = {
   	  enable = true;
   	  settings = {
@@ -316,7 +378,7 @@
   	#  settings.default_layout = "compact";
   	#};
 
-	programs.gpg.enable = true;
+	  programs.gpg.enable = true;
   	programs.hyfetch = {
   	  enable = true;
   	  settings = {
