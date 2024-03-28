@@ -8,6 +8,7 @@
 (setq visible-bell t) ;; Make the flashing visible, like when scrolling up when at the top
 (tool-bar-mode -1)   ;; disable tool-bar
 (scroll-bar-mode -1) ;; disable scroll bar
+(setq display-line-numbers 'relative) ;; make line numbers be relative
 (global-display-line-numbers-mode 1) ;; enable line numbers
 (hl-line-mode 1) ;; Highlight current line
 (recentf-mode 1) ;; Remember recent files (enables M-x recentf-open-files)
@@ -18,8 +19,11 @@
 
 (overwrite-mode -1) ;; Disble overwrite mode so that text editing actually works
 (global-origami-mode 1) ;; Enable folding
+(setq evil-want-keybinding nil) ;; evil-collection tells me to use this if I'm using evil, so here it is
+(setq evil-undo-system 'undo-fu)
 (evil-mode 1) ;; Vim keybinds pretty please
 (evil-collection-init) ;; Vim keybinds in buffers like magit too
+(global-set-key (kbd "<escape>") 'keyboard-quit) ;; Make <ESC> do what C-g does as well
 
 
 ;; Move customization variables to a separate file and load it so that emacs doesn't pollute init.el
@@ -53,3 +57,4 @@
         (t . (semilight 1.1))))
 (load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
+;(set-frame-font "Iosevka 11" nil t) ;; looks kind of bad for emacs, somehow

@@ -32,7 +32,7 @@
   fileSystems."/media/HDD" =
     { device = "/dev/disk/by-uuid/5AE6E755E6E72FC5";
       fsType = "ntfs-3g";
-      options = [ "nofail" ];
+      options = [ "nofail" "uid=1000"  "gid=1000"];
     };
 
   swapDevices =
