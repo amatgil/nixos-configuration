@@ -8,8 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # And home-manager so that the options can be set from in here
-      <home-manager/nixos>
     ];
 
   # Bootloader.
