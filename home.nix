@@ -27,7 +27,6 @@
     sccache
     tealdeer
     silicon
-    zoxide
     bottom
     cargo-sweep
     eza
@@ -36,7 +35,6 @@
     gitui
     gitoxide
     zellij
-    starship
     vscodium-fhs
     alejandra
     obsidian
@@ -66,10 +64,10 @@
 
     neovim
 
-    zsh
-    zsh-autocomplete
-    zsh-autosuggestions
-    zsh-syntax-highlighting
+    #zsh
+    #zsh-autocomplete
+    #zsh-autosuggestions
+    #zsh-syntax-highlighting
 
     dunst
     dmenu
@@ -87,8 +85,89 @@
   ];
 
   home.file = {
-  	".zshrc".source = ./dotfiles/shell/zshrc;
+  	#".zshrc".source = ./dotfiles/shell/zshrc;
   	".shell_aliases".source = ./dotfiles/shell/shell_aliases;
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    syntaxHighlighting.enable = true;
+    history = {
+      size = 10000;
+      path = "${config.xdg.dataHome}/zsh/history";
+      ignoreDups = true;
+      ignoreSpace = true;
+    };
+    shellAliases = {
+      l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
+      lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
+      la="eza -al --color=always --icons=always --group-directories-first";  # Tot
+      ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
+      ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
+      lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
+      lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
+
+      grep="grep -i --color=auto";
+      egrep="egrep --color=auto";
+      fgrep="fgrep --color=auto";
+      cp="cp -iv";
+      rm="echo 'Dont rm, mv to /tmp instead'";
+      mv="mv -iv";
+      cat="bat --paging=never";
+
+      doas="doas ";
+      sudo="sudo ";
+      fucking="doas";
+      please="doas !!"; #Lmao
+
+      config="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
+      glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
+
+      doom="~/.emacs.d/bin/doom"; #Doom emacs
+      img="devour sxiv"; #Replace image viewer
+      hor="devour sxiv /media/HDD/School/horari20212022.png"; #Calendar & Horari
+      cal="cal -m";
+
+      v="nvim"; 
+      pdf="devour zathura"; #Get in the habit of opening pdfs with Zathura
+      wet="curl wttr.in";
+      cheat="curl cheat.sh";
+      top="btm"; # bottom, top pero amb Rust (aka millor)
+      sys="systemctl";
+      lisp="clisp";
+      encfs="~/scripts/encfsMount";
+
+      changehosts="sudo nvim /etc/hosts";
+      ifconfig="ip --brief --color address";
+
+      cmatrix="cmatrix -C blue -b";
+      playLast="mpv $(eza --sort=changed -l | tail -n1 | awk '{print $7}')";
+      playlist="mpv * --shuffle --no-video";
+      sping="ping -c20 archlinux.org";
+      time="/usr/bin/time -p";
+      cmd="command"; # For things like 'command top'
+      cd="z"; # zoxide
+      zrem="zoxide remove $(pwd)";
+      dunstoff="dunstctl set-paused true";
+      dunston="dunstctl set-paused false";
+      make_auth="/usr/bin/polkit-dumb-agent";
+      record="ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0 -f pulse -ac 2 -i default /tmp/screen_recording.mp4";
+      gpu-top="sudo intel_gpu_top";
+      whatismyip="curl https://am.i.mullvad.net/ip";
+      mida="du -h . --max-depth=1";
+      toclip="~/scripts/toclip";
+      "p1++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni
+      "p2++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni part 2
+      sbcl="rlwrap sbcl";
+      syncfib="rsync /media/UPC/FIB/ ~/School/Quat1/ -rvzt && rsync ~/School/Quat1& /media/UPC/FIB/ -rvzt";
+      nv="neovide .";
+      music="mpv --no-video";
+    };
+  };
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.starship = {
@@ -193,7 +272,6 @@
 		};
 	};
 
-	programs.zsh.enable = true;
   programs.alacritty = {
   	enable = true;
   	settings = {
@@ -252,4 +330,4 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-};
+}
