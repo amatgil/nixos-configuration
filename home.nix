@@ -84,11 +84,6 @@
     iosevka # Untested
   ];
 
-  home.file = {
-  	#".zshrc".source = ./dotfiles/shell/zshrc;
-  	".shell_aliases".source = ./dotfiles/shell/shell_aliases;
-  };
-
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -121,7 +116,6 @@
       fucking="doas";
       please="doas !!"; #Lmao
 
-      config="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME";
       glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
 
       doom="~/.emacs.d/bin/doom"; #Doom emacs
