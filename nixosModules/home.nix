@@ -60,6 +60,7 @@
     qalculate-gtk
     firefox
     thunderbird
+    silicon
     fzf
 
     neovim
