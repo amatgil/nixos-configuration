@@ -1,6 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# Help is available in the configuration.nix(5) man page and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
 
@@ -32,11 +30,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # I don't know why these have to be here, they're already in home.nix
-
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0" # For obsidian
-  ];
+  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.hostName = "dreanix"; # Define your hostname.
@@ -114,12 +109,9 @@
     ffmpeg
     kanata # Keyboard layout
   ];
-
   fonts.packages = with pkgs; [
     iosevka
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
-
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
