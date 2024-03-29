@@ -202,12 +202,8 @@
       };
     };
   };
-  xdg.configFile.dunst.source = ./dotfiles/dunst;
-  xdg.configFile.plantill.source = ./dotfiles/plantill;
-  xdg.configFile.nvim = {
-  	source = ./dotfiles/nvim;
-  	recursive = true;
-  };
+  xdg.configFile.dunst.source = ../dotfiles/dunst;
+  xdg.configFile.plantill.source = ../dotfiles/plantill;
 
 	programs.emacs = {
 		enable = true;
@@ -222,7 +218,7 @@
 		];
 	};
 	xdg.configFile.emacs = {
-  	source = ./dotfiles/emacs;
+  	source = ../dotfiles/emacs;
   	recursive = true;
 	};
 	services.emacs.enable = true;

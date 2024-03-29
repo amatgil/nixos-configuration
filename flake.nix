@@ -21,7 +21,7 @@
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.casenc = import ./home.nix;
+          home-manager.users.casenc = import ./nixosModules/home.nix;
         }
       ];
     };
