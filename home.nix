@@ -64,11 +64,6 @@
 
     neovim
 
-    #zsh
-    #zsh-autocomplete
-    #zsh-autosuggestions
-    #zsh-syntax-highlighting
-
     dunst
     dmenu
     mold
@@ -118,28 +113,24 @@
 
       glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
 
-      doom="~/.emacs.d/bin/doom"; #Doom emacs
       img="devour sxiv"; #Replace image viewer
       hor="devour sxiv /media/HDD/School/horari20212022.png"; #Calendar & Horari
       cal="cal -m";
 
       v="nvim"; 
+      nv="neovide .";
       pdf="devour zathura"; #Get in the habit of opening pdfs with Zathura
       wet="curl wttr.in";
       cheat="curl cheat.sh";
       top="btm"; # bottom, top pero amb Rust (aka millor)
       sys="systemctl";
       lisp="clisp";
-      encfs="~/scripts/encfsMount";
-
-      changehosts="sudo nvim /etc/hosts";
+      encfs="/etc/nixos/scripts/encfsMount";
       ifconfig="ip --brief --color address";
-
       cmatrix="cmatrix -C blue -b";
       playLast="mpv $(eza --sort=changed -l | tail -n1 | awk '{print $7}')";
       playlist="mpv * --shuffle --no-video";
       sping="ping -c20 archlinux.org";
-      time="/usr/bin/time -p";
       cmd="command"; # For things like 'command top'
       cd="z"; # zoxide
       zrem="zoxide remove $(pwd)";
@@ -151,12 +142,11 @@
       whatismyip="curl https://am.i.mullvad.net/ip";
       mida="du -h . --max-depth=1";
       toclip="~/scripts/toclip";
-      "p1++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni
-      "p2++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni part 2
       sbcl="rlwrap sbcl";
       syncfib="rsync /media/UPC/FIB/ ~/School/Quat1/ -rvzt && rsync ~/School/Quat1& /media/UPC/FIB/ -rvzt";
-      nv="neovide .";
       music="mpv --no-video";
+      "p1++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni
+      "p2++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni part 2
     };
   };
   programs.zoxide = {
@@ -275,6 +265,14 @@
   	  };
   	  shell.program = "${pkgs.zsh}/bin/zsh";
   	  window.opacity = 1;
+      cursor = {
+        style = {
+          shape = "Beam";
+          blinking = "Always";
+        };
+        blink_interval = 500;
+        thickness = 0.15;
+      };
   	};
   };
 
