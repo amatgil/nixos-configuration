@@ -64,6 +64,12 @@
     autoRepeatDelay = 300;
     autoRepeatInterval = 50;
   };
+  programs.gnupg.agent = {
+	  enable = true;
+	  pinentryFlavor = "curses";
+	  enableSSHSupport = true;
+  };
+
 
   console.keyMap = "es";
 

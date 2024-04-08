@@ -14,8 +14,6 @@
   # environment.
   # # A list of them is at https://search.nixos.org/packages
   home.packages = with pkgs; [
-    cargo
-    rustc
     keepassxc
     zathura
     sxiv
@@ -90,6 +88,7 @@
       ignoreDups = true;
       ignoreSpace = true;
     };
+    initExtra = "export GPG_TTY=$(tty)";
     shellAliases = {
       l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
       lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
@@ -109,8 +108,8 @@
 
       doas="doas ";
       sudo="sudo ";
-      fucking="doas";
-      please="doas !!"; #Lmao
+      fucking="sudo";
+      please="sudo !!"; #Lmao
 
       glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
 
@@ -229,13 +228,19 @@
 		userName = "amatgil";
 		userEmail = "amatgilvinyes@gmail.com";
 		extraConfig = {
-			user.singingkey = "D34BAAD5029249C9";
+			user.signingkey = "D34BAAD5029249C9";
 			init.defaultBranch = "master";
 			core = {
 				pager = "delta";
-				editor = "nvim";
+				editor = "emacs";
+                                fileMode = false;
 			};
+                        merge.tool = "emacs";
 			interactive.diffFilter = "delta --color-only";
+                        alias = {
+                          add = "add -p";
+                          wdiff = "diff --word-diff";
+                        };
 			delta = {
 				navigate = true; # change sections with n/N
 				light = false;   # for terminals with white bg

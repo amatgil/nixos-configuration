@@ -1,5 +1,6 @@
 ;;;;; Startup optimizations
 
+
 ; (stolen from https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga)
 ;; From https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
 (setq gc-cons-threshold-original gc-cons-threshold)
@@ -13,18 +14,26 @@
 (hl-line-mode 1) ;; Highlight current line
 (recentf-mode 1) ;; Remember recent files (enables M-x recentf-open-files)
 
+(setq inhibit-startup-screen t)
 (setq history-length 25) ;; Only remember the last 25 files opened (for startup performance)
 (savehist-mode 1) ;; Remember what is typed into minibuffer. enables M-n (next-history-element) and M-p (previous-history-element)
 (save-place-mode 1) ;; Don't forget place when file is closed
 
 (overwrite-mode -1) ;; Disble overwrite mode so that text editing actually works
 (global-origami-mode 1) ;; Enable folding
+(icomplete-mode 1) ;; Enable minibuffer neat completion
 (setq evil-want-keybinding nil) ;; evil-collection tells me to use this if I'm using evil, so here it is
 (setq evil-undo-system 'undo-fu)
 (evil-mode 1) ;; Vim keybinds pretty please
 (evil-collection-init) ;; Vim keybinds in buffers like magit too
 (global-set-key (kbd "<escape>") 'keyboard-quit) ;; Make <ESC> do what C-g does as well
 
+;; Move autosaves away from the directory
+(setq backup-directory-alist `(("." . "~/.config/emacs/autosaves")))
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 ;; Move customization variables to a separate file and load it so that emacs doesn't pollute init.el
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
