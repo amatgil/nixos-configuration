@@ -14,6 +14,7 @@
   # environment.
   # # A list of them is at https://search.nixos.org/packages
   home.packages = with pkgs; [
+    rofi
     keepassxc
     zathura
     sxiv
@@ -60,6 +61,8 @@
     thunderbird
     silicon
     fzf
+    qdirstat
+    file
 
     neovim
 
@@ -149,6 +152,11 @@
       "p2++"="g++ -ansi -O2 -DNDEBUG -D_GLIBCXX_DEBUG -Wall -Wextra -Werror -Wno-sign-compare -Wshadow"; # Uni part 2
     };
   };
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
@@ -157,6 +165,7 @@
   programs.starship = {
     enable = true;
     settings = {
+      format = "[┌](bold #C74DED) [󰄛 ](bold #C74DED) '$directory' de $hostname ($all)[└>](bold #C74DED) $character\n";
       add_newline = false;
       buf = {symbol = " ";};
       c = {symbol = " ";};
@@ -177,7 +186,6 @@
         truncation_symbol = "../";
       };
       docker_context = {symbol = " ";};
-      format = "[┌](bold #C74DED) [󰄛 ](bold #C74DED) '$directory' de $hostname ($all)[└>](bold #C74DED) $character\n";
       git_branch = {symbol = " ";};
       haskell = {symbol = " ";};
       hg_branch = {symbol = " ";};
@@ -194,6 +202,7 @@
       ruby = {symbol = " ";};
       rust = {symbol = " ";};
       scala = {symbol = " ";};
+      #direnv.disabled = false;
       spack = {symbol = "🅢 ";};
       username = {
         disabled = false;
@@ -213,7 +222,10 @@
       epkgs.evil-collection
 			epkgs.magit
 			epkgs.rust-mode
+                        epkgs.lsp-mode
 			epkgs.origami
+                        epkgs.company
+                        epkgs.avy
       epkgs.undo-fu
 		];
 	};

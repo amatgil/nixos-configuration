@@ -56,8 +56,19 @@
     xkbVariant = "cat";
 
     # Plasma my beloved
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
+    #displayManager.sddm.enable = true;
+    #desktopManager.plasma5.enable = true;
+
+    # Friendship ended with plasma, now dwm is my (old and new) best friend
+    displayManager = {
+        sddm.enable = true;
+    };
+    windowManager.dwm = {
+      enable = true;
+      package = pkgs.dwm.overrideAttrs {
+        src = /etc/nixos/dwm;
+      };
+    };
 
     # Remaps
     xkbOptions = "esc:swapcaps";
@@ -119,5 +130,7 @@
     iosevka
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
-  system.stateVersion = "23.11"; # Did you read the comment?
+  virtualisation.docker.enable = true;
+  users.extraGroups.docker.members = [ "casenc" ]; # Equivalent to root, careful
+  system.stateVersion = "23.11"; # NO TOUCHY
 }

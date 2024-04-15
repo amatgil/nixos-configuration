@@ -67,3 +67,11 @@
 (load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
 ;(set-frame-font "Iosevka 11" nil t) ;; looks kind of bad for emacs, somehow
+
+;; Rust
+(add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
+(setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
+(setq company-minimum-prefix-length 1
+            company-idle-delay 0.0) ;; default is 0.2
+
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
