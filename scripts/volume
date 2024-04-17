@@ -1,44 +1,44 @@
 #!/bin/sh
 
-function mute_notify () {
-notify-send --icon="$HOME/scripts/images/speaker.png" -t 4000 --urgency normal "Audio Status" "Audio Muted" && echo "muted" 
-}
-
-function unmute_notify () {
-notify-send --icon="$HOME/scripts/images/speaker.png" -t 4000  --urgency critical "Audio Status" "Audio Unmuted" && echo "unmuted"
-}
-
-function display_muted () {
+#!/bin/sh
+display_muted () {
     amixer sget Master | grep "Front.*:" | awk -F" " '{print $5 " (M)"}' | tail -n1 | sed -e 's/\[//' -e 's/\]//'
 }
 
-function display_unmuted () {
+display_unmuted () {
     amixer sget Master | grep "Front.*:" | awk -F" " '{print $5}' | tail -n1 | sed -e 's/\[//' -e 's/\]//'
 }
 
-function display_volume() {
-    volume="$(amixer -c 0 get Master | tail -1 | awk '{print $4}' | sed 's/[^0-9]*//g')"
-    mute="$(amixer -c 0 get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
+display_volume() {
+    volume="$(amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
+    mute="$(amixer get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
     if [[ "$volume" == 0 || "$mute" == "off" ]]; then
-	# Show the sound muted notification
-	#dunstify -a "changeVolume" -u low -i audio-volume-muted -h string:x-dunst-stack-tag:$msgTag "Volume muted" 
-	echo "Vol: MM%";
+	echo "Vol: <b>MM%</b>";
     else
-	# Show the volume notification
-	#dunstify -a "changeVolume" -u low -i audio-volume-high -h string:x-dunst-stack-tag:$msgTag \
-	#	 -h int:value:"$volume" "Volume: ${volume}%"
-	echo "Vol: $volume%";
+	echo "Vol: <b>$volume%</b>";
     fi
 }
 
-STATUS=$(amixer)
+increment_volume() {
+    volume="$(amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
+    if [[ "$volume" -le 95 ]]; then
+	amixer set Master 5%+ > /dev/null
+    fi
+}
+decrement_volume() {
+    volume="$(amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
+    if [[ "$volume" -ge 5 ]]; then
+	amixer set Master 5%- > /dev/null
+    fi
+}
+
+toggle_mute() {
+    amixer set Master 1+ toggle;
+}
+
 case $1 in
-	# 2) awk -F"[][]" '/]/ { print $2 }' <(amixer sget Master);; #Output current volume levels with Mono Device
-	#2) amixer sget Master | awk -F"[][]" '/]/ { print $2 }' | head -n1 | xargs -I{} echo "Vol: {}" ;; #Output current volume levels with Mono Device
-    #2) grep "\[off\]" <<< $STATUS 1>/dev/null && display_muted || display_unmuted;;
     2) display_volume ;;
-    1) amixer set Master 5%+ || notify-send "An error ocurred" ;;
-    0) amixer set Master 5%- || notify-send "An error ocurred" ;;
-    -1) amixer set Master 1+ toggle;
-	amixer | grep off && mute_notify || unmute_notify ;;
+    1) increment_volume ;;
+    0) decrement_volume ;;
+    -1) toggle_mute ;;
 esac
