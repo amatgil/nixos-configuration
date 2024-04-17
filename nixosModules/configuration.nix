@@ -59,15 +59,18 @@
     #displayManager.sddm.enable = true;
     #desktopManager.plasma5.enable = true;
 
-    # Friendship ended with plasma, now dwm is my (old and new) best friend
+    # Friendship ended with plasma, now awesomewm is my (old and new) best friend
     displayManager = {
-        sddm.enable = true;
+      sddm.enable = true;
+      defaultSession = "none+awesome";
     };
-    windowManager.dwm = {
+
+    windowManager.awesome = {
       enable = true;
-      package = pkgs.dwm.overrideAttrs {
-        src = /etc/nixos/dwm;
-      };
+      luaModules = with pkgs.luaPackages; [
+        luarocks # package manager for lua
+        luadbi-mysql
+      ];
     };
 
     # Remaps
@@ -115,6 +118,7 @@
   # List packages installed in system profile. To search, run: $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
+    lua
     wget
     lf
     gitFull
@@ -125,12 +129,22 @@
     xclip # For (n)vim clipboard access
     ffmpeg
     kanata # Keyboard layout
+    pinentry-curses
   ];
+  environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
     iosevka
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    noto-fonts
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
   ];
-  virtualisation.docker.enable = true;
-  users.extraGroups.docker.members = [ "casenc" ]; # Equivalent to root, careful
+  #virtualisation.docker.enable = true;
+  #users.extraGroups.docker.members = [ "casenc" ]; # Equivalent to root, careful
   system.stateVersion = "23.11"; # NO TOUCHY
 }

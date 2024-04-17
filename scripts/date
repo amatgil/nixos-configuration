@@ -1,4 +1,2 @@
 #/bin/sh
-# date '+%b %d (%a) %I:%M%p' # 12h format
-date '+%b %d (%a) %k:%M' # 24h format, 0 padded
-#date '+%b %d (%a) %H:%M' # 24h format, not 0 padded
+date '+%a %d/%m (%b) -- %R'

@@ -1,0 +1,33 @@
+#!/bin/sh
+FILENAME="$HOME/screenshots/$(date +%y-%m-%d_%H:%M)"; # extension isn't here because it's missing the prefix
+NOTIFTEXT="Saved at $FILENAME"
+
+dTag="screenshotTag"
+
+function send_successful_notification() {
+    #notify-send -t 10000 "Screenshot taken" "Saved at ~/.scrot/$(date +%y-%m-%d_%H:%M).png"
+    dunstify -a "screenshotTaken" -u low -i audio-volume-muted -h string:x-dunst-stack-stag:$dTag "Screenshot fet: $NOTIFYTEXT"
+}
+
+function send_error_notification() {
+    dunstify -a "screenshotTaken" -u low -i audio-volume-muted -h string:x-dunst-stack-stag:$dTag "Screenshot NO fet"
+}
+
+#scrot -s ~/.scrot/%y-%m-%d_%H:%M.png && send_successful_notification || send_error_notification
+
+mkdir -p ~/screenshots/
+# This loop adds the number extension, to not override files
+if [[ -e $FILENAME-0.png || -L $FILENAME-0.png ]] ; then
+    i=1
+    while [[ -e $FILENAME-$i.png || -L $FILENAME-$i.png ]] ; do
+        let i++
+    done
+    FILENAME=$FILENAME-$i
+else
+    FILENAME=$FILENAME-0
+fi
+echo $FILENAME
+# import comes from imagemagick
+import "$FILENAME".png && send_successful_notification || send_error_notification
+xclip -selection c -t image/png < "$FILENAME".png
+

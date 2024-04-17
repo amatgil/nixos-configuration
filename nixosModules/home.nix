@@ -14,12 +14,14 @@
   # environment.
   # # A list of them is at https://search.nixos.org/packages
   home.packages = with pkgs; [
-    rofi
+    cinnamon.nemo
+    imagemagick
     keepassxc
     zathura
     sxiv
     neovim
     neovide
+    arandr
     bacon
     bat
     just
@@ -66,7 +68,6 @@
 
     neovim
 
-    dunst
     dmenu
     mold
     xmousepasteblock
@@ -81,6 +82,10 @@
     iosevka # Untested
   ];
 
+  programs.rofi = {
+    enable = true;
+    theme = "android_notification";
+  };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -211,7 +216,10 @@
       };
     };
   };
-  xdg.configFile.dunst.source = ../dotfiles/dunst;
+  #xdg.configFile.dunst.source = ../dotfiles/dunst;
+  services.dunst = {
+    enable = true;
+  };
   xdg.configFile.plantill.source = ../dotfiles/plantill;
 
 	programs.emacs = {
@@ -222,10 +230,12 @@
       epkgs.evil-collection
 			epkgs.magit
 			epkgs.rust-mode
-                        epkgs.lsp-mode
+			epkgs.lua-mode
+      epkgs.lsp-mode
+      epkgs.rainbow-mode
 			epkgs.origami
-                        epkgs.company
-                        epkgs.avy
+      epkgs.company
+      epkgs.avy
       epkgs.undo-fu
 		];
 	};
@@ -245,14 +255,14 @@
 			core = {
 				pager = "delta";
 				editor = "emacs";
-                                fileMode = false;
+        fileMode = false;
 			};
-                        merge.tool = "emacs";
+      merge.tool = "emacs";
 			interactive.diffFilter = "delta --color-only";
-                        alias = {
-                          add = "add -p";
-                          wdiff = "diff --word-diff";
-                        };
+      alias = {
+        add = "add -p";
+        wdiff = "diff --word-diff";
+      };
 			delta = {
 				navigate = true; # change sections with n/N
 				light = false;   # for terminals with white bg

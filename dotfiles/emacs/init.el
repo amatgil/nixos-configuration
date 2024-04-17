@@ -18,6 +18,7 @@
 (setq history-length 25) ;; Only remember the last 25 files opened (for startup performance)
 (savehist-mode 1) ;; Remember what is typed into minibuffer. enables M-n (next-history-element) and M-p (previous-history-element)
 (save-place-mode 1) ;; Don't forget place when file is closed
+(rainbow-mode 1) ;; Enable showing colors for hexcolors like (#ed8796)
 
 (overwrite-mode -1) ;; Disble overwrite mode so that text editing actually works
 (global-origami-mode 1) ;; Enable folding
@@ -75,3 +76,4 @@
             company-idle-delay 0.0) ;; default is 0.2
 
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
+(global-set-key (kbd "C-c g") 'magit)
