@@ -117,7 +117,7 @@
       doas="doas ";
       sudo="sudo ";
       fucking="sudo";
-      please="sudo !!"; #Lmao
+      please="sudo $(fc -ln -1)"; # Apparently works with both bash and zsh, `fc` is a shell builtin
 
       glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
 
@@ -216,11 +216,12 @@
       };
     };
   };
-  #xdg.configFile.dunst.source = ../dotfiles/dunst;
   services.dunst = {
     enable = true;
   };
   xdg.configFile.plantill.source = ../dotfiles/plantill;
+
+	xdg.configFile.awesome.source = ../dotfiles/awesome;
 
 	programs.emacs = {
 		enable = true;
