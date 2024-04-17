@@ -6,7 +6,12 @@ dTag="screenshotTag"
 
 function send_successful_notification() {
     #notify-send -t 10000 "Screenshot taken" "Saved at ~/.scrot/$(date +%y-%m-%d_%H:%M).png"
-    dunstify -a "screenshotTaken" -u low -i audio-volume-muted -h string:x-dunst-stack-stag:$dTag "Screenshot fet: $NOTIFYTEXT"
+    notif=$(dunstify --appname "screenshotTaken" --urgency low --icon audio-volume-muted "Screenshot fet: $NOTIFYTEXT" \
+	     --action="openWithExplorer,View with Nemo")
+    if [[ $notif == "openWithExplorer" ]]; then
+	echo "Opening '$FILENAME.png' with nemo"
+	nemo $FILENAME.png
+    fi
 }
 
 function send_error_notification() {
