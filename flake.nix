@@ -10,16 +10,30 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
-    nixosConfigurations.dreanix = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./nixosModules/configuration.nix
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.casenc = import ./nixosModules/home.nix;
-        }
-      ];
+    nixosConfigurations = {
+      dreanix = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./nixosModules/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.casenc = import ./nixosModules/home.nix;
+          }
+        ];
+      };
+      iso = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./nixosModules/isoimage/configuration.nix # Nix one
+          ./nixosModules/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.casenc = import ./nixosModules/home.nix;
+          }
+        ];
+      };
     };
   };
 }
