@@ -27,18 +27,18 @@
         ];
       };
 
-      iso = nixos-generators.nixosGenerate {
-        system = "x86_64-linux";
-        format = "iso";
-        modules = [
-          ./nixosModules/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.casenc = import ./nixosModules/home.nix;
-          }
-        ];
-      };
+    };
+    iso = nixos-generators.nixosGenerate {
+      system = "x86_64-linux";
+      format = "iso";
+      modules = [
+        ./nixosModules/configuration.nix
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.casenc = import ./nixosModules/home.nix;
+        }
+      ];
     };
   };
 }
