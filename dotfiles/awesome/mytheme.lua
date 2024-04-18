@@ -27,9 +27,9 @@ theme.fg_urgent     = "#ff0000" -- Pure red, might be bad
 theme.fg_minimize   = "#ffffff" -- Haven't bothered
 
 theme.useless_gap   = dpi(2)
-theme.border_width  = dpi(2.5)
+theme.border_width  = dpi(4)
 theme.border_normal = catppuccin.base
-theme.border_focus  = catppuccin.sapphire
+theme.border_focus  = catppuccin.peach
 theme.border_marked = "#91231c" -- This was the default
 
 -- There are other variable sets

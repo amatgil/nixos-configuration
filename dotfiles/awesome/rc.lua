@@ -310,9 +310,9 @@ globalkeys = gears.table.join(
               {description = "increase the number of master clients", group = "layout"}),
     awful.key({ modkey, "Control"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
               {description = "decrease the number of master clients", group = "layout"}),
-    awful.key({ modkey, "Shift" }, "h",     function (c) awful.client.incwfact(-0.1)    end,
+    awful.key({ modkey, "Shift" }, "l",     function (c) awful.client.incwfact(-0.1)    end,
               {description = "decrease height of client in stack", group = "layout"}),
-    awful.key({ modkey, "Shift" }, "l",     function (c) awful.client.incwfact(0.1)    end,
+    awful.key({ modkey, "Shift" }, "h",     function (c) awful.client.incwfact(0.1)    end,
               {description = "increase height of client in stack", group = "layout"}),
     -- TODO: Revisit this, slave resizing
     --awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
@@ -341,10 +341,14 @@ clientkeys = gears.table.join(
               {description = "take screenshot", group = "client"}),
     awful.key({ modkey,           }, "space", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
-    awful.key({ modkey,           }, ",",      function (c) awful.screen.focus_relative( 1)  end,
-              {description = "move client to screen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, ",",      function (c) c:move_to_screen()               end,
+    awful.key({ modkey,           }, ",",      function () awful.screen.focus_relative( 1)  end,
               {description = "move focus to screen", group = "client"}),
+    awful.key({ modkey,           }, ".",      function () awful.screen.focus_relative(-1)  end,
+              {description = "move focus to screen (other dir)", group = "client"}),
+    awful.key({ modkey, "Shift"   }, ",",      function (c) c:move_to_screen()               end,
+              {description = "move client to screen", group = "client"}),
+    awful.key({ modkey, "Shift"   }, ".",      function (c) c:move_to_screen()  end,
+              {description = "move client to screen (other dir)", group = "client"}),
     awful.key({ modkey,           }, "v",      function (c) awful.spawn("firefox")      end,
               {description = "open firefox", group = "launcher"}),
     awful.key({ modkey,           }, "e",      function (c) awful.spawn("emacs")      end,
@@ -564,27 +568,19 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- They look weird because one is inside the function of the other (because they need to be executed in order, otherwise it's a guaranteed race condition and it sucks)
 update_volume_widget = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 2", function(stdout)
-				     volume_widget.markup = stdout 
-   end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function(stdout) volume_widget.markup = "72" end)
 end
 
 increase_volume = function () 
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 1", function()
-			     update_volume_widget()
-   end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 1", function() update_volume_widget() end)
 end
 
 decrease_volume = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function()
-			     update_volume_widget()
-   end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 2", function() update_volume_widget() end)
 end
 
 toggle_mute_volume = function ()
-   awful.spawn.with_shell("/etc/nixos/scripts/volume -1")
-   update_volume_widget()
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 3", function() update_volume_widget() end)
 end
-
 
 update_volume_widget() -- Open up displaying the current volume

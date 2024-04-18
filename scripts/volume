@@ -1,44 +1,66 @@
-#!/bin/sh
+#!/run/current-system/sw/bin/lua
 
-#!/bin/sh
-display_muted () {
-    amixer sget Master | grep "Front.*:" | awk -F" " '{print $5 " (M)"}' | tail -n1 | sed -e 's/\[//' -e 's/\]//'
+function current_vol () 
+   local cmd = "amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g'"
+   local vol_handle = io.popen(cmd)
+   local vol = vol_handle:read("*a")
+   vol_handle:close()
+
+   local formatted
+   if is_muted() then
+       formatted = "Vol: <b>" .. "MM" .. "%</b>"
+   elseif tonumber(vol) <= 4 then
+       formatted = "Vol: <b>" .. "--" .. "%</b>"
+   else 
+       formatted = "Vol: <b>" .. string.gsub(vol, "\n", "") .. "%</b>"
+   end
+
+   print(formatted)
+   return vol
+end 
+			
+
+function inc_vol () 
+   local curr_vol = current_vol()
+   if tonumber(curr_vol) <= 95 then
+      local h = io.popen("amixer set Master 5%+ > /dev/null")
+      h:close()
+   end
+end
+
+function dec_vol () 
+   local curr_vol = current_vol()
+   if tonumber(curr_vol) >= 5 then
+      local h = io.popen("amixer set Master 5%- > /dev/null")
+      h:close()
+   end
+end
+
+function toggle_mute () 
+   local h = io.popen("amixer set Master 1+ toggle")
+   h:close()
+end
+
+function is_muted()
+   local cmd = "amixer get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g'"
+   local h = io.popen(cmd)
+   local raw_output = h:read("*a")
+   return string.match(raw_output, "off")
+end
+
+function arg_error() 
+   print("VOL: ERROR d'ARG")
+end
+		
+
+local n = arg[1]
+
+local calling_table = {
+   ["0"] = current_vol,
+   ["1"] = inc_vol,
+   ["2"] = dec_vol,
+   ["3"] = toggle_mute
 }
 
-display_unmuted () {
-    amixer sget Master | grep "Front.*:" | awk -F" " '{print $5}' | tail -n1 | sed -e 's/\[//' -e 's/\]//'
-}
+(calling_table[n] or arg_error)()
 
-display_volume() {
-    volume="$(amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
-    mute="$(amixer get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g')"
-    if [[ "$volume" == 0 || "$mute" == "off" ]]; then
-	echo "Vol: <b>MM%</b>";
-    else
-	echo "Vol: <b>$volume%</b>";
-    fi
-}
-
-increment_volume() {
-    volume="$(amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
-    if [[ "$volume" -le 95 ]]; then
-	amixer set Master 5%+ > /dev/null
-    fi
-}
-decrement_volume() {
-    volume="$(amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g')"
-    if [[ "$volume" -ge 5 ]]; then
-	amixer set Master 5%- > /dev/null
-    fi
-}
-
-toggle_mute() {
-    amixer set Master 1+ toggle;
-}
-
-case $1 in
-    2) display_volume ;;
-    1) increment_volume ;;
-    0) decrement_volume ;;
-    -1) toggle_mute ;;
-esac
