@@ -1,9 +1,0 @@
-#!/bin/sh
-
-MAX_BRIGHTNESS=937
-BRIGHTNESS_OFFSET=93 #Solution for MAX_BRIGHTNESS/x = 10, since 10 is 100/10 (usual max and offset)
-case $1 in
-    2) echo $((100 * $(/usr/bin/cat /sys/class/backlight/intel_backlight/actual_brightness) / $MAX_BRIGHTNESS ))%;;
-    1) echo $(($(/usr/bin/cat /sys/class/backlight/intel_backlight/actual_brightness)+$BRIGHTNESS_OFFSET)) > /sys/class/backlight/intel_backlight/brightness && pkill -RTMIN+4 dwmblocks || notify-send "An error ocurred" ;; # Increase brightness
-    0) echo $(($(/usr/bin/cat /sys/class/backlight/intel_backlight/actual_brightness)-$BRIGHTNESS_OFFSET)) > /sys/class/backlight/intel_backlight/brightness && pkill -RTMIN+4 dwmblocks || notify-send "An error ocurred" ;; # Decrease brightness
-esac

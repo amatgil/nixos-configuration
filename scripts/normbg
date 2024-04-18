@@ -1,2 +1,0 @@
-#!/bin/bash
-feh --no-fehbg --bg-fill $HOME'/scripts/images/0001.jpg'
