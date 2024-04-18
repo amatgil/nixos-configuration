@@ -1,4 +1,4 @@
-#!/run/current-system/sw/bin/lua
+#!/usr/bin/env lua
 
 function current_vol () 
    local cmd = "amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g'"

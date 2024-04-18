@@ -1,4 +1,4 @@
-#!/run/current-system/sw/bin/lua
+#!/usr/bin/env lua
 
 get_output = function(cmd)
    local handle = io.popen(cmd)
