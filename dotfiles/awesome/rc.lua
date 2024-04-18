@@ -162,6 +162,10 @@ local volume_widget =
       widget = wibox.widget.textbox
    }
 
+local ram_widget = awful.widget.watch('/etc/nixos/scripts/display_ram', 10, function (widget, stdout)
+					 widget.markup = stdout
+end)
+
 -- I think we can afford to check the time every five seconds? We might not, i genuinely don't know
 local date_widget = awful.widget.watch('/etc/nixos/scripts/date', 5, function (widget, stdout)
 					  widget.markup = stdout
@@ -227,6 +231,8 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
             wibox.widget.systray(),
+	    widget_separator,
+	    ram_widget,
 	    widget_separator,
 	    volume_widget,
 	    widget_separator,
@@ -568,7 +574,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- They look weird because one is inside the function of the other (because they need to be executed in order, otherwise it's a guaranteed race condition and it sucks)
 update_volume_widget = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function(stdout) volume_widget.markup = "72" end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function(stdout) volume_widget.markup = stdout end)
 end
 
 increase_volume = function () 

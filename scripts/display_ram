@@ -1,0 +1,19 @@
+#!/run/current-system/sw/bin/lua
+
+
+local curr_command = "free -h --si | awk 'FNR == 2 { print $3 }'"
+local total_command = "free -h --si | awk 'FNR == 2 { print $2 }'"
+
+local curr_handle = io.popen(curr_command)
+local total_handle = io.popen(total_command)
+
+local current = curr_handle:read('*a')
+local total = total_handle:read('*a')
+
+print("<b>"
+      .. string.gsub(string.gsub(current, "\n", ""), "G", "")
+      .. "</b>"
+      .. "G"
+      .. "/"
+      .. string.gsub(total, "\n", "")
+)
