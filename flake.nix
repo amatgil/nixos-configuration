@@ -7,9 +7,13 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs"; # Keep HA and the system's nixpkgs version the same
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ self, nixpkgs, home-manager, nixos-generators, ... }: {
     nixosConfigurations = {
       dreanix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -22,10 +26,11 @@
           }
         ];
       };
-      iso = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+
+      iso = nixos-generators.nixosGenerate {
+        system = "x86_64-linux";
+        format = "iso";
         modules = [
-          ./nixosModules/isoimage/configuration.nix # Nix one
           ./nixosModules/configuration.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
