@@ -16,7 +16,7 @@
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot";
     };
-    
+    kernel.sysctl."kernel.sysrq" = 1;
     supportedFilesystems = [ "ntfs" ];
   };
 

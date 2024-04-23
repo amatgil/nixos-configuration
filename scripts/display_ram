@@ -6,16 +6,18 @@ get_output = function(cmd)
    return output
 end
 
-local curr_command = "free -h --si | awk 'FNR == 2 { print $3 }'"
-local total_command = "free -h --si | awk 'FNR == 2 { print $2 }'"
+local cmds = {
+   ["curr"] =  "free -h --si | awk 'FNR == 2 { print $3 }'",
+   ["total"] = "free -h --si | awk 'FNR == 2 { print $2 }'",
+}
 
-local current = get_output(curr_command)
-local total = get_output(total_command)
+local outputs = {}
+for name, cmd in pairs(cmds) do outputs[name] = get_output(cmd) end
 
 print("<b>"
-      .. string.gsub(string.gsub(current, "\n", ""), "G", "")
+      .. string.gsub(string.gsub(outputs["curr"], "\n", ""), "G", "")
       .. "</b>"
       .. "G"
       .. "/"
-      .. string.gsub(total, "\n", "")
+      .. string.gsub(outputs["total"], "\n", "")
 )
