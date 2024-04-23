@@ -25,7 +25,6 @@
     randomizedDelaySec = "14m";
     options = "--delete-older-than 10d";
   };
-
   # Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -80,7 +79,8 @@
   };
   programs.gnupg.agent = {
 	  enable = true;
-	  pinentryFlavor = "curses";
+	  #pinentryFlavor = "curses";
+	  pinentryFlavor = "emacs";
 	  enableSSHSupport = true;
   };
 

@@ -69,6 +69,10 @@
 
 ;(set-frame-font "Iosevka 11" nil t) ;; looks kind of bad for emacs, somehow
 
+(setq-default indent-tabs-mode nil) ; Emacs mixes tabs and spaces (i didn't know there was an objectively bad option about the two)
+(direnv-mode 1)
+(setq epa-pinentry-mode 'loopback) 
+(pinentry-start)
 ;; Rust
 (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
 (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)

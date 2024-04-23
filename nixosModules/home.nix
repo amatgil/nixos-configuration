@@ -52,6 +52,7 @@
     mullvad-vpn
     yakuake
     alacritty
+    pinentry-emacs
     delta
     meld
     pandoc
@@ -233,6 +234,8 @@
 			epkgs.magit
 			epkgs.rust-mode
 			epkgs.lua-mode
+                        epkgs.direnv
+                        epkgs.pinentry
       epkgs.lsp-mode
       epkgs.rainbow-mode
 			epkgs.origami
