@@ -80,7 +80,7 @@
   programs.gnupg.agent = {
 	  enable = true;
 	  #pinentryFlavor = "curses";
-	  pinentryFlavor = "emacs";
+	  pinentryFlavor = "qt";
 	  enableSSHSupport = true;
   };
 

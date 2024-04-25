@@ -236,6 +236,7 @@
 			epkgs.lua-mode
                         epkgs.direnv
                         epkgs.pinentry
+      epkgs.lsp-ui
       epkgs.lsp-mode
       epkgs.rainbow-mode
 			epkgs.origami

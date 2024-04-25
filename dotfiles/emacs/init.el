@@ -69,8 +69,23 @@
 
 ;(set-frame-font "Iosevka 11" nil t) ;; looks kind of bad for emacs, somehow
 
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(setq ido-file-extensions-order '(".rs" ".org" ".txt" ".emacs"))
+(ido-mode 1) ; Fancy, way cooler buffer/file switching
+
+(setq lsp-ui-sideline-show-hover t)
+(setq lsp-ui-sideline-show-code-actions t)
+(global-set-key (kbd "C-c e s") 'flymake-show-buffer-diagnostics) ; Error (diagnostics) show (project is also an option, but we've got bacon for that in general)
+(global-set-key (kbd "C-c e n") 'flymake-goto-next-error) ; Error next
+(global-set-key (kbd "C-c e p") 'flymake-goto-prev-error) ; Error previous
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
 (setq-default indent-tabs-mode nil) ; Emacs mixes tabs and spaces (i didn't know there was an objectively bad option about the two)
+
 (direnv-mode 1)
+
 (setq epa-pinentry-mode 'loopback) 
 (pinentry-start)
 ;; Rust
@@ -81,3 +96,4 @@
 
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
 (global-set-key (kbd "C-c g") 'magit)
+(global-set-key (kbd "C-c C-f r") 'recentf-open-files)
