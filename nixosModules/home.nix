@@ -13,7 +13,14 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   # # A list of them is at https://search.nixos.org/packages
+
   home.packages = with pkgs; [
+    (callPackage (fetchFromGitHub {
+      owner = "amatgil";
+      repo = "plantill";
+      rev = "fdda8d9";
+      sha256 = "sha256-SA9CvD21l2USRDsMYZ1aYv26ACdWMbwRTxIrG+HiWZc=";
+    }) {})
     cinnamon.nemo
     imagemagick
     keepassxc
@@ -236,6 +243,7 @@
 			epkgs.lua-mode
                         epkgs.direnv
                         epkgs.pinentry
+                        epkgs.helpful
       epkgs.lsp-ui
       epkgs.lsp-mode
       epkgs.rainbow-mode

@@ -88,12 +88,38 @@
 
 (setq epa-pinentry-mode 'loopback) 
 (pinentry-start)
+
+;;;;;;;; Replace emacs' help page with `helpful`s
+;; Note that the built-in `describe-function' includes both functions
+;; and macros. `helpful-function' is functions only, so we provide
+;; `helpful-callable' as a drop-in replacement.
+(global-set-key (kbd "C-h f") #'helpful-callable)
+
+(global-set-key (kbd "C-h v") #'helpful-variable)
+(global-set-key (kbd "C-h k") #'helpful-key)
+(global-set-key (kbd "C-h x") #'helpful-command)
+;;;;;;;;;
+
+(global-set-key (kbd "C-c C-g") 'avy-goto-char-2)
+
+(global-set-key (kbd "C-c g") 'magit)
+(global-set-key (kbd "C-c C-f r") 'recentf-open-files)
+
+(setq company-minimum-prefix-length 1 ;; Autocomplete and such
+            company-idle-delay 0.0) ;; default is 0.2
+
 ;; Rust
 (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
 (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
-(setq company-minimum-prefix-length 1
-            company-idle-delay 0.0) ;; default is 0.2
 
-(global-set-key (kbd "C-'") 'avy-goto-char-2)
-(global-set-key (kbd "C-c g") 'magit)
-(global-set-key (kbd "C-c C-f r") 'recentf-open-files)
+
+
+;; C++
+
+
+; Org mode languages
+(org-babel-do-load-languages
+   'org-babel-load-languages
+    '((python . t)
+      (haskell . t)
+      (emacs-lisp . t)))
