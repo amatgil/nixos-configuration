@@ -13,3 +13,11 @@ should_replace_name = true
 [AdventOfCode]
 source = "AdventOfCodeDay"
 should_replace_name = true
+
+[copet-rust]
+source = "copet-rust"
+should_replace_name = true
+
+[copet-cpp]
+source = "copet-cpp"
+should_replace_name = true

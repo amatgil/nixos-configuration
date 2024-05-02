@@ -31,6 +31,7 @@
     arandr
     bacon
     bat
+    qbittorrent
     just
     sccache
     tealdeer
