@@ -18,8 +18,8 @@
     (callPackage (fetchFromGitHub {
       owner = "amatgil";
       repo = "plantill";
-      rev = "fdda8d9";
-      sha256 = "sha256-SA9CvD21l2USRDsMYZ1aYv26ACdWMbwRTxIrG+HiWZc=";
+      rev = "master";
+      sha256 = "sha256-bLYLZ6SLRKYOQcOkc3pB4jK7APjCSdaA5uZR0T+lq5U=";
     }) {})
     cinnamon.nemo
     imagemagick
@@ -238,20 +238,24 @@
 		extraPackages = epkgs: [
 			epkgs.nix-mode
 			epkgs.evil
-      epkgs.evil-collection
+                        epkgs.evil-collection
 			epkgs.magit
 			epkgs.rust-mode
 			epkgs.lua-mode
+			epkgs.haskell-mode
+                        epkgs.lsp-haskell
                         epkgs.direnv
+			epkgs.rainbow-delimiters
+			epkgs.paredit
                         epkgs.pinentry
                         epkgs.helpful
-      epkgs.lsp-ui
-      epkgs.lsp-mode
-      epkgs.rainbow-mode
+                        epkgs.lsp-ui
+                        epkgs.lsp-mode
+                        epkgs.rainbow-mode
 			epkgs.origami
-      epkgs.company
-      epkgs.avy
-      epkgs.undo-fu
+                        epkgs.company
+                        epkgs.avy
+                        epkgs.undo-fu
 		];
 	};
 	xdg.configFile.emacs = {

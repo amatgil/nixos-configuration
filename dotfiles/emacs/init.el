@@ -89,6 +89,17 @@
 (setq epa-pinentry-mode 'loopback) 
 (pinentry-start)
 
+(rainbow-delimiters-mode 1)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+
 ;;;;;;;; Replace emacs' help page with `helpful`s
 ;; Note that the built-in `describe-function' includes both functions
 ;; and macros. `helpful-function' is functions only, so we provide
@@ -112,10 +123,13 @@
 (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
 (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
 
-
+;; Haskell
+(add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-literate-mode-hook #'lsp)
 
 ;; C++
-
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
 
 ; Org mode languages
 (org-babel-do-load-languages

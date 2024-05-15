@@ -1,5 +1,5 @@
 {
-  description = "Sneak";
+  description = "Default Rust flake (casenc)";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };

@@ -9,9 +9,9 @@ let
     clippy
     mold
 
-    wayland
-    xorg.libX11
-    xorg.libXcursor
+    #wayland
+    #xorg.libX11
+    #xorg.libXcursor
   ];
 in
 pkgs.mkShell {
