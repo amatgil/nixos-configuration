@@ -7,18 +7,16 @@ let
     rust-analyzer
     rustfmt
     clippy
-    clang
     mold
 
-    (rust-bin.stable.latest.default.override {
-      extensions = [ "rust-src" ];
-      targets = [ "wasm32-unknown-unknown" ];
-    })
-    wasm-pack
-    wasm-bindgen-cli
+    wayland
+    xorg.libX11
+    xorg.libXcursor
   ];
 in
 pkgs.mkShell {
+  # Get dependencies from the main package
+  inputsFrom = [ (pkgs.callPackage ./default.nix { }) ];
   nativeBuildInputs = packages;
   buildInputs = packages;
   env = {

@@ -1,26 +1,21 @@
 {
-  description = "Basic Rust development flake (per a mi)";
+  description = "Sneak";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    rust-overlay = { url = "github:oxalica/rust-overlay"; };
   };
-  outputs = { self, nixpkgs, rust-overlay }:
+  outputs =
+    { self, nixpkgs }:
     let
       supportedSystems = [ "x86_64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      pkgs = (import nixpkgs { system = "x86_64-linux"; });
     in
     {
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ rust-overlay.overlay ];
-          };
-        in
-        {
-          default = pkgs.callPackage ./shell.nix { inherit pkgs; };
-        }
-      );
+      packages = forAllSystems (system: {
+        default = pkgs.callPackage ./default.nix { inherit pkgs; };
+      });
+      devShells = forAllSystems (system: {
+        default = pkgs.callPackage ./shell.nix { inherit pkgs; };
+      });
     };
 }
