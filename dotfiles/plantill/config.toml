@@ -18,6 +18,10 @@ should_replace_name = true
 source = "copet-rust"
 should_replace_name = true
 
+[copet-haskell]
+source = "copet-haskell"
+should_replace_name = true
+
 [copet-cpp]
 source = "copet-cpp"
 should_replace_name = true
