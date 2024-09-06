@@ -8,6 +8,7 @@
 ;;; Most of these are stolen from https://systemcrafters.net/emacs-from-scratch/the-best-default-settings/
 (setq visible-bell t) ;; Make the flashing visible, like when scrolling up when at the top
 (tool-bar-mode -1)   ;; disable tool-bar
+(menu-bar-mode -1)   ;; disable menu-bar
 (scroll-bar-mode -1) ;; disable scroll bar
 (setq display-line-numbers 'relative) ;; make line numbers be relative
 (global-display-line-numbers-mode 1) ;; enable line numbers
@@ -67,12 +68,15 @@
         (t . (semilight 1.1))))
 (load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
-;(set-frame-font "Iosevka 11" nil t) ;; looks kind of bad for emacs, somehow
+(set-frame-font "FiraCode Nerd Font-10" nil t)
 
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (setq ido-file-extensions-order '(".rs" ".org" ".txt" ".emacs"))
 (ido-mode 1) ; Fancy, way cooler buffer/file switching
+(global-set-key (kbd "M-x") 'smex) ; smex is ido for M-x
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 (setq lsp-ui-sideline-show-hover t)
 (setq lsp-ui-sideline-show-code-actions t)
@@ -125,7 +129,9 @@
 
 ;; Haskell
 (add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'haskell-mode-hook #'interactive-haskell-mode)
 (add-hook 'haskell-literate-mode-hook #'lsp)
+(setq haskell-interactive-popup-errors nil) ; Make C-c C-l errors usable
 
 ;; C++
 (add-hook 'c-mode-hook 'lsp)
