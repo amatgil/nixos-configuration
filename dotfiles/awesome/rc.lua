@@ -152,7 +152,8 @@ local widget_separator = wibox.widget {
    widget = wibox.widget.textbox
 }
 
-local cpu_widget = require("widgets.cpu-widget.cpu-widget")
+local cpu_widget     = require("widgets.cpu-widget.cpu-widget")
+local battery_widget = require("widgets.batteryarc-widget.batteryarc")
 
 local volume_widget = 
    wibox.widget{
@@ -230,6 +231,10 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
+            battery_widget({
+                  show_current_level = true,
+                  arc_thickness = 1,
+            }),
             wibox.widget.systray(),
 	    widget_separator,
 	    ram_widget,
