@@ -94,26 +94,22 @@
     polarity = "dark";
     cursor.package = pkgs.qogir-icon-theme;
     cursor.name = "Qogir Cursors";
-    base16Scheme = { 
-      # Can more than 16 cols be used for this?
-      base00 = "24273a"; # base
-      base01 = "1e2030"; # mantle
-      base02 = "363a4f"; # surface0
-      base03 = "494d64"; # surface1
-      base04 = "5b6078"; # surface2
-      base05 = "cad3f5"; # text
-      base06 = "f4dbd6"; # rosewater
-      base07 = "b7bdf8"; # lavender
-      base08 = "ed8796"; # red
-      base09 = "f5a97f"; # peach
-      base0A = "eed49f"; # yellow
-      base0B = "a6da95"; # green
-      base0C = "8bd5ca"; # teal
-      base0D = "8aadf4"; # blue
-      base0E = "c6a0f6"; # mauve
-      base0F = "f0c6c6"; # flamingo
+    #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
+    opacity = {
+      applications = 1.0;
+      terminal = 0.9;
+      desktop = 1.0;
+      popups = 1.0;
     };
     fonts = {
+      sizes = {
+        applications = 12;
+        terminal = 12;
+        desktop = 10;
+        popups = 13;
+      };
       serif = {
         package = pkgs.iosevka;
         name = "Iosevka";
@@ -138,6 +134,8 @@
   console.keyMap = "es";
 
   services.printing.enable = true; # Enable CUPS to print documents.
+  services.picom.enable = true;  # Compositor
+
 
   # Enable sound with pipewire.
   sound.enable = true;

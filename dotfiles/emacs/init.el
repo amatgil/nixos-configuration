@@ -145,6 +145,23 @@
           (lambda () (add-hook 'after-save-hook
                                (lambda () (revert-buffer t t))
                                nil 'make-it-local)))
+(add-hook 'uiua-base-mode-hook (lambda ()
+                                 (setq buffer-face-mode-face '(:family "Uiua386"))
+                                 (buffer-face-mode)))
+
+; reverting the buffer resets the font scale, so we save
+; and reapply (Source: https://gist.github.com/ustun/f5b5eb447c0e7a02ef67a90324bd8f28)
+(defun save-text-scale ()
+  "Save text-scale."
+  (message "saving prev text scale %d" text-scale-mode-amount)
+  (setq text-scale-previous (buffer-local-value 'text-scale-mode-amount (current-buffer))))
+(add-hook 'before-revert-hook 'save-text-scale)
+
+(defun restore-text-scale ()
+  "Restore text-scale."
+  (message "restoring prev text scale %d" text-scale-previous)
+  (text-scale-increase text-scale-previous))
+(add-hook 'after-revert-hook 'restore-text-scale)
 
 
 ;; Org mode languages
@@ -153,3 +170,11 @@
  '((python . t)
    (haskell . t)
    (emacs-lisp . t)))
+
+
+;; The selected line number doesn't scale when the font size changes (very noticeable in uiua)
+;; This hacks around that (source: M-x customize-face)
+(custom-set-faces
+ '(line-number-current-line ((t (:inherit 'default)))))
+
+

@@ -239,7 +239,6 @@
   services.dunst = {
     enable = true;
   };
-
   xdg.configFile.plantill.source = ../dotfiles/plantill;
 	xdg.configFile.awesome.source = ../dotfiles/awesome;
 
