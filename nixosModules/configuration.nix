@@ -20,12 +20,7 @@
     supportedFilesystems = [ "ntfs" ];
   };
 
-  nix.gc = {
-    automatic = true;
-    randomizedDelaySec = "14m";
-    options = "--delete-older-than 10d";
-  };
-  # Flakes
+  # Flakes enable
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # I don't know why these have to be here, they're already in home.nix
@@ -49,20 +44,23 @@
     LC_TIME = "ca_ES.UTF-8";
   };
 
+  services.displayManager = {
+	# Friendship ended with plasma, now awesomewm is my (old and new) best friend
+	  sddm.enable = true;
+	  defaultSession = "none+awesome";
+  };
   services.xserver = {
     enable = true;
-    layout = "es";
-    xkbVariant = "cat";
+    xkb = {
+    	layout = "es";
+    	variant = "cat";
+    	options = "esc:swapcaps";
+    };
 
     # Plasma my beloved
     #displayManager.sddm.enable = true;
     #desktopManager.plasma5.enable = true;
 
-    # Friendship ended with plasma, now awesomewm is my (old and new) best friend
-    displayManager = {
-      sddm.enable = true;
-      defaultSession = "none+awesome";
-    };
 
     windowManager.awesome = {
       enable = true;
@@ -72,18 +70,25 @@
       ];
     };
 
-    # Remaps
-    xkbOptions = "esc:swapcaps";
     autoRepeatDelay = 300;
     autoRepeatInterval = 50;
   };
   programs.gnupg.agent = {
 	  enable = true;
 	  #pinentryFlavor = "curses";
-	  pinentryFlavor = "qt";
+	  pinentryPackage = pkgs.pinentry-qt;
 	  enableSSHSupport = true;
   };
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    # It's an OR: if it's older than 4d OR it's not the last three gens, it's byebye'd
+    clean.extraArgs = "--keep-since 4d --keep 3";
+    flake = "/etc/nixos";
+  };
 
+
+  programs.steam.enable = true;
 
   console.keyMap = "es";
 
@@ -130,16 +135,21 @@
     ffmpeg
     kanata # Keyboard layout
     pinentry-curses
+    nh
+    nix-output-monitor
+    nvd
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
     iosevka
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    jetbrains-mono
     noto-fonts
     noto-fonts-emoji
     liberation_ttf
     fira-code
     fira-code-symbols
+    inconsolata
     mplus-outline-fonts.githubRelease
     dina-font
     proggyfonts
@@ -148,3 +158,4 @@
   #users.extraGroups.docker.members = [ "casenc" ]; # Equivalent to root, careful
   system.stateVersion = "23.11"; # NO TOUCHY
 }
+

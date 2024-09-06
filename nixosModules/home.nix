@@ -73,6 +73,12 @@
     silicon
     fzf
     qdirstat
+    (prismlauncher.override {
+      jdks = [
+        temurin-bin-21
+        temurin-bin-8
+        temurin-bin-17
+      ];})
     file
 
     neovim
@@ -84,7 +90,7 @@
     thunderbird
     devour
     imagemagick
-    youtube-dl
+    yt-dlp
 
     korganizer
     
@@ -97,7 +103,7 @@
   };
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     history = {
       size = 10000;
@@ -114,6 +120,8 @@
       ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
       lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
       lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
+     
+      e="emacs . &";
 
       grep="grep -i --color=auto";
       egrep="egrep --color=auto";
@@ -243,6 +251,7 @@
 			epkgs.rust-mode
 			epkgs.lua-mode
 			epkgs.haskell-mode
+			epkgs.hindent
                         epkgs.lsp-haskell
                         epkgs.direnv
 			epkgs.rainbow-delimiters
@@ -254,8 +263,10 @@
                         epkgs.rainbow-mode
 			epkgs.origami
                         epkgs.company
+                        epkgs.smex
                         epkgs.avy
                         epkgs.undo-fu
+                        epkgs.uiua-ts-mode
 		];
 	};
 	xdg.configFile.emacs = {
