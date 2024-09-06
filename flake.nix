@@ -7,17 +7,19 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs"; # Keep HA and the system's nixpkgs version the same
     };
+    stylix.url = "github:danth/stylix";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixos-generators, ... }: {
+  outputs ={ self, nixpkgs, home-manager, nixos-generators, stylix, ... }@inputs: {
     nixosConfigurations = {
       dreanix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          stylix.nixosModules.stylix
           ./nixosModules/configuration.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
@@ -26,7 +28,6 @@
           }
         ];
       };
-
     };
     iso = nixos-generators.nixosGenerate {
       system = "x86_64-linux";
