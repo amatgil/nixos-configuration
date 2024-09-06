@@ -49,7 +49,7 @@
 ;; Same as above for Dired and such
 (setq global-auto-revert-non-file-buffers t)
 
-;; Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/
+;; Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/ (but updated)
 (setq modus-themes-mode-line '(accented borderless)
       modus-themes-bold-constructs t
       modus-themes-italic-constructs t
@@ -72,7 +72,7 @@
 
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
-(setq ido-file-extensions-order '(".rs" ".org" ".txt" ".emacs"))
+(setq ido-file-extensions-order '(".rs" ".ua" ".org" ".txt" ".emacs"))
 (ido-mode 1) ; Fancy, way cooler buffer/file switching
 (global-set-key (kbd "M-x") 'smex) ; smex is ido for M-x
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -123,23 +123,33 @@
 (setq company-minimum-prefix-length 1 ;; Autocomplete and such
             company-idle-delay 0.0) ;; default is 0.2
 
-;; Rust
+;;; Rust
 (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
 (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
 
-;; Haskell
+;;; Haskell
 (add-hook 'haskell-mode-hook #'lsp)
 (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
 (add-hook 'haskell-literate-mode-hook #'lsp)
 (setq haskell-interactive-popup-errors nil) ; Make C-c C-l errors usable
 
-;; C++
+;;; C++
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
 
-; Org mode languages
+;;; Uiua
+;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
+(add-hook 'uiua-base-mode-hook 
+          (lambda () (uiua-format-on-save-mode -1))) 
+(add-hook 'uiua-base-mode-hook
+          (lambda () (add-hook 'after-save-hook
+                               (lambda () (revert-buffer t t))
+                               nil 'make-it-local)))
+
+
+;; Org mode languages
 (org-babel-do-load-languages
-   'org-babel-load-languages
-    '((python . t)
-      (haskell . t)
-      (emacs-lisp . t)))
+ 'org-babel-load-languages
+ '((python . t)
+   (haskell . t)
+   (emacs-lisp . t)))
