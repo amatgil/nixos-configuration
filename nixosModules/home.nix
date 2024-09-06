@@ -70,6 +70,8 @@
     qalculate-gtk
     firefox
     thunderbird
+    zip
+    unzip
     silicon
     fzf
     qdirstat
@@ -99,7 +101,7 @@
 
   programs.rofi = {
     enable = true;
-    theme = "android_notification";
+    #theme = "android_notification"; # stylix takes care of it
   };
   programs.zsh = {
     enable = true;
@@ -313,12 +315,12 @@
   programs.alacritty = {
   	enable = true;
   	settings = {
-  	  font = {
-  	    size = 12;
-  	    normal.family = "iosevka";
-  	  };
+  	  #font = {
+  	  #  size = 12;
+  	  #  normal.family = "iosevka";
+  	  #};
+  	  #window.opacity = 1;
   	  shell.program = "${pkgs.zsh}/bin/zsh";
-  	  window.opacity = 1;
       cursor = {
         style = {
           shape = "Beam";
