@@ -159,6 +159,7 @@
     nh
     nix-output-monitor
     nvd
+    acpi
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
