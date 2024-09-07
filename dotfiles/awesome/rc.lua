@@ -158,6 +158,7 @@ local cpu_widget     = require("widgets.cpu-widget.cpu-widget")
 local battery_widget = require("widgets.batteryarc-widget.batteryarc")
 
 local volume_widget = wibox.widget { markup = "", align = 'center', valign = 'center', widget = wibox.widget.textbox }
+local brightness_widget = wibox.widget { markup = "", align = 'center', valign = 'center', widget = wibox.widget.textbox }
 
 local ram_widget = awful.widget.watch('/etc/nixos/scripts/display_ram', 10, function (widget, stdout)
 					 widget.markup = stdout
@@ -237,6 +238,8 @@ awful.screen.connect_for_each_screen(function(s)
 	    widget_separator,
 	    ram_widget,
 	    widget_separator,
+            brightness_widget,
+	    widget_separator,
             volume_widget,
 	    widget_separator,
 	    cpu_widget({
@@ -281,6 +284,20 @@ volume_toggle = function ()
 end
 -- }}}
 
+-- {{{ Brightness stuffs
+update_brightness_widget = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/bright 0", function(stdout) brightness_widget.markup = stdout end)
+end
+
+brightness_inc = function () 
+   awful.spawn.easy_async("/etc/nixos/scripts/bright 1", function() update_brightness_widget() end)
+end
+
+brightness_dec = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/bright 2", function() update_brightness_widget() end)
+end
+-- }}}
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -301,33 +318,39 @@ globalkeys = gears.table.join(
               {description = "move focus to screen (other dir)", group = "client"}),
 
     -- VOLUME STUFFS
-    awful.key({ modkey,           }, "m", function(c) volume_inc() end,
+    awful.key({ modkey,           }, "m", function() volume_inc() end,
        {description = "increase volume", group = 'client'}),
     awful.key({}, "XF86AudioRaiseVolume", function() volume_inc() end,
        {description = 'increase volume', group = 'client'}),
 
-    awful.key({ modkey, "Shift"   }, "m", function(c) volume_dec() end,
+    awful.key({ modkey, "Shift"   }, "m", function() volume_dec() end,
        {description = 'decrease volume', group = 'client'}),
     awful.key({}, "XF86AudioLowerVolume", function() volume_dec() end,
        {description = 'decrease volume', group = 'client'}),
 
-    awful.key({ modkey, "Shift", "Control" }, "m", function (c) volume_toggle() end,
+    awful.key({ modkey, "Shift", "Control" }, "m", function () volume_toggle() end,
        {description = 'toggle (mute) volume', group = 'client'}),
     awful.key({}, "XF86AudioMute", function() volume_toggle() end,
        {description = 'toggle (mute) volume', group = 'client'}),
     -- END OF VOLUME STUFFS
 
-    awful.key({ modkey,           }, "j",
-        function ()
-            awful.client.focus.byidx( 1)
-        end,
-        {description = "focus next by index", group = "client"}
+    -- BRIGHTNESS STUFFS
+    awful.key({ modkey,           }, "b",      function () brightness_inc()  end,
+       {description = "increase brightness by 5%", group = "client"}),
+    awful.key({ modkey, "Shift"   }, "b",      function ()  brightness_dec() end,
+       {description = "decrease brightness by 5%", group = "client"}),
+    
+    awful.key({ }, "XF86MonBrightnessDown", function () brightness_inc() end,
+       {description = "increase brightness by 5%", group = "client"}),
+    awful.key({ }, "XF86MonBrightnessUp",   function () brightness_dec() end,
+       {description = "decrease brightness by 5%", group = "client"}),
+    -- END OF BRIGHTNESS STUFFS
+
+    awful.key({ modkey,           }, "j", function () awful.client.focus.byidx( 1) end,
+       {description = "focus next by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "k",
-        function ()
-            awful.client.focus.byidx(-1)
-        end,
-        {description = "focus previous by index", group = "client"}
+    awful.key({ modkey,           }, "k", function () awful.client.focus.byidx(-1) end,
+       {description = "focus previous by index", group = "client"}
     ),
     --awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
      --         {description = "show main menu", group = "awesome"}),
@@ -399,9 +422,12 @@ clientkeys = gears.table.join(
               {description = "move client to screen (other dir)", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey, 'Shift'   }, 't', awful.titlebar.toggle,
+    awful.key({ modkey, 'Shift'   }, "t", awful.titlebar.toggle,
               {description = 'toggle title bar', group = 'client'}),
-    awful.key({ modkey, 'Alt'     }, "t",      function (c) c.maximized = not c.maximized     end,
+    awful.key({ modkey, 'Alt'     }, "t",      function (c)
+          c.maximized = false -- i hate that this exists
+          c:raise()
+    end,
               {description = "toggle maximized", group = "client"})
 )
 
@@ -606,3 +632,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 update_volume_widget() -- Open up displaying the current volume
+update_brightness_widget() -- Open up displaying the current brightness

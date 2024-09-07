@@ -1,0 +1,43 @@
+#!/usr/bin/env lua
+
+-- This currently fails astronomically if there's no backlight
+-- TODO: Make it fail gracefully
+function current()
+   local currhandle = io.popen("brightnessctl get")
+   local curr = currhandle:read("*a")
+
+   local maxhandle = io.popen("brightnessctl max")
+   local max = maxhandle:read("*a")
+
+   currhandle:close()
+   maxhandle:close()
+
+   local percentage = math.floor(curr * 100 / max)
+   if curr*1 < max*0.2 then -- if under 10%, show a decimal place
+      percentage = math.floor(curr * 1000 / max) / 10
+   end
+   print("Bright: " .. "<b>" .. percentage .. "%</b>")
+end
+
+function inc()
+   local h = io.popen("brightnessctl -e set +5%")
+   h:close()
+end
+
+function dec()
+   local h = io.popen("brightnessctl -e set 5%-")
+   h:close()
+end
+
+
+local calling_table = {
+   ["0"] = current,
+   ["1"] = inc,
+   ["2"] = dec
+}
+
+local n = arg[1]
+
+function arg_error() print("ARG ERROR") end
+
+(calling_table[n] or arg_error)()

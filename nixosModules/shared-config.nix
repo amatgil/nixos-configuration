@@ -120,6 +120,11 @@
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.polkit = {
+    enable = true;
+    #package = pkgs.lxqt.lxqt-policykit;
+  };
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -138,7 +143,7 @@
   users.users.casenc = {
     isNormalUser = true;
     description = "casenc";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     packages = []; # They're all in home-manager
   };
 
@@ -162,6 +167,7 @@
     nvd
     acpi
     pavucontrol
+    brightnessctl # dkhfhdsfklhsf brighmthrness
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
