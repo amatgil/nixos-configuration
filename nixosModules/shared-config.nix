@@ -8,27 +8,13 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
-  boot = {
-    loader = {
-      systemd-boot.enable = true;
-      systemd-boot.configurationLimit = 3;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot";
-    };
-    kernel.sysctl."kernel.sysrq" = 1;
-    supportedFilesystems = [ "ntfs" ];
-  };
-
   # Flakes enable
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # I don't know why these have to be here, they're already in home.nix
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.hostName = "dreanix"; # Define your hostname.
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Madrid";
   i18n.defaultLocale = "en_US.UTF-8";
