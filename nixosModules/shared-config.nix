@@ -3,11 +3,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # Flakes enable
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -35,6 +30,7 @@
 	  sddm.enable = true;
 	  defaultSession = "none+awesome";
   };
+
   services.xserver = {
     enable = true;
     xkb = {
@@ -42,11 +38,6 @@
     	variant = "cat";
     	options = "esc:swapcaps";
     };
-
-    # Plasma my beloved
-    #displayManager.sddm.enable = true;
-    #desktopManager.plasma5.enable = true;
-
 
     windowManager.awesome = {
       enable = true;
@@ -59,6 +50,7 @@
     autoRepeatDelay = 300;
     autoRepeatInterval = 50;
   };
+
   programs.gnupg.agent = {
 	  enable = true;
 	  #pinentryFlavor = "curses";
@@ -92,7 +84,7 @@
     fonts = {
       sizes = {
         applications = 12;
-        terminal = 12;
+        terminal = 10;
         desktop = 10;
         popups = 13;
       };

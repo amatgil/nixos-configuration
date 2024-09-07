@@ -17,7 +17,8 @@
         modules = [
           stylix.nixosModules.stylix
           ./nixosModules/shared-config.nix
-          ./nixosModules/specific-dreanix.nix
+          ./nixosModules/dreanix/hardware-config.nix
+          ./nixosModules/dreanix/dreanix-config.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -30,7 +31,8 @@
         modules = [
           stylix.nixosModules.stylix
           ./nixosModules/shared-config.nix
-          ./nixosModules/specific-nixpad.nix
+          ./nixosModules/nixpad/hardware-config.nix
+          ./nixosModules/nixpad/nixpad-config.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
