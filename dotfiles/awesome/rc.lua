@@ -133,6 +133,8 @@ local tasklist_buttons = gears.table.join(
                                               awful.client.focus.byidx(-1)
                                           end))
 
+-- Spaghetti volume managing
+
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -155,20 +157,18 @@ local widget_separator = wibox.widget {
 local cpu_widget     = require("widgets.cpu-widget.cpu-widget")
 local battery_widget = require("widgets.batteryarc-widget.batteryarc")
 
-local volume_widget = require('widgets.volume-widget.volume')
--- local volume_widget = wibox.widget { markup = "", align  = 'center', valign = 'center', widget = wibox.widget.textbox }
+local volume_widget = wibox.widget { markup = "", align = 'center', valign = 'center', widget = wibox.widget.textbox }
 
 local ram_widget = awful.widget.watch('/etc/nixos/scripts/display_ram', 10, function (widget, stdout)
 					 widget.markup = stdout
 end)
 
 -- I think we can afford to check the time every five seconds? We might not, i genuinely don't know
-local date_widget = awful.widget.watch('/etc/nixos/scripts/date', 5, function (widget, stdout)
-					  widget.markup = stdout
-end)
+local date_widget = awful.widget.watch('/etc/nixos/scripts/date', 5,
+                                       function (widget, stdout) widget.markup = stdout end)
 
 local empty_space_widget =
-   wibox.widget{
+   wibox.widget {
       markup = "  ",
       align  = 'center',
       valign = 'center',
@@ -225,8 +225,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+
             --mykeyboardlayout,
 	    widget_separator,
+            wibox.widget { markup = "Bat: ", align = 'center', valign = 'center', widget = wibox.widget.textbox },
             battery_widget({
                   show_current_level = true,
                   arc_thickness = 1,
@@ -235,9 +237,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    widget_separator,
 	    ram_widget,
 	    widget_separator,
-            volume_widget {
-               widget_type = 'arc'
-            },
+            volume_widget,
 	    widget_separator,
 	    cpu_widget({
 	    	  width = 55,
@@ -263,6 +263,24 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
+-- {{{ Volume stuffs
+update_volume_widget = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function(stdout) volume_widget.markup = stdout end)
+end
+
+volume_inc = function () 
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 1", function() update_volume_widget() end)
+end
+
+volume_dec = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 2", function() update_volume_widget() end)
+end
+
+volume_toggle = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/volume 3", function() update_volume_widget() end)
+end
+-- }}}
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -281,20 +299,23 @@ globalkeys = gears.table.join(
               {description = "move focus to screen", group = "client"}),
     awful.key({ modkey,           }, ".",      function () awful.screen.focus_relative(-1)  end,
               {description = "move focus to screen (other dir)", group = "client"}),
-    awful.key({ modkey,           }, "m", function(c) increase_volume() end,
-              {description = "increase volume", group = 'client'}),
-    awful.key({ modkey,           }, "m", function(c) increase_volume() end,
-              {description = "increase volume", group = 'client'}),
-    awful.key({ modkey, "Shift"   }, "m", function(c) decrease_volume() end,
-              {description = 'decrease volume', group = 'client'}),
-    awful.key({ modkey, "Shift", "Control" }, "m", function (c) toggle_mute_volume() end,
-       {description = 'toggle volume', group = 'client'}),
-    awful.key({}, "XF86AudioRaiseVolume", function() volume_widget.inc() end,
+
+    -- VOLUME STUFFS
+    awful.key({ modkey,           }, "m", function(c) volume_inc() end,
+       {description = "increase volume", group = 'client'}),
+    awful.key({}, "XF86AudioRaiseVolume", function() volume_inc() end,
        {description = 'increase volume', group = 'client'}),
-    awful.key({}, "XF86AudioLowerVolume", function() volume_widget.dec() end,
+
+    awful.key({ modkey, "Shift"   }, "m", function(c) volume_dec() end,
        {description = 'decrease volume', group = 'client'}),
-    awful.key({}, "XF86AudioMute", function() volume_widget.toggle() end,
-       {description = 'toggle volume', group = 'client'}),
+    awful.key({}, "XF86AudioLowerVolume", function() volume_dec() end,
+       {description = 'decrease volume', group = 'client'}),
+
+    awful.key({ modkey, "Shift", "Control" }, "m", function (c) volume_toggle() end,
+       {description = 'toggle (mute) volume', group = 'client'}),
+    awful.key({}, "XF86AudioMute", function() volume_toggle() end,
+       {description = 'toggle (mute) volume', group = 'client'}),
+    -- END OF VOLUME STUFFS
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -583,25 +604,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 
--- Spaghetti volume managing
 
--- They look weird because one is inside the function of the other (because they need to be executed in order, otherwise it's a guaranteed race condition and it sucks)
---update_volume_widget = function ()
---   --awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function(stdout) volume_widget.markup = stdout end)
---   awful.spawn.easy_async("/etc/nixos/scripts/volume 0")
---end
-
-increase_volume = function () 
-   --awful.spawn.easy_async("/etc/nixos/scripts/volume 1", function() update_volume_widget() end)
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 1", function() volume_widget:inc(5) end)
-end
-
-decrease_volume = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 2", function() volume_widget:dec(5) end)
-end
-
-toggle_mute_volume = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 3", function() volume_widget:toggle() end)
-end
-
---update_volume_widget() -- Open up displaying the current volume
+update_volume_widget() -- Open up displaying the current volume
