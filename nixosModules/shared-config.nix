@@ -160,6 +160,7 @@
     nix-output-monitor
     nvd
     acpi
+    pavucontrol
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
