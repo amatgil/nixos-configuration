@@ -12,6 +12,7 @@
 (scroll-bar-mode -1) ;; disable scroll bar
 (setq display-line-numbers 'relative) ;; make line numbers be relative
 (global-display-line-numbers-mode 1) ;; enable line numbers
+(setq column-number-mode t) ;; enable line columns
 (hl-line-mode 1) ;; Highlight current line
 (recentf-mode 1) ;; Remember recent files (enables M-x recentf-open-files)
 
