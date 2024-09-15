@@ -95,8 +95,9 @@
     yt-dlp
 
     korganizer
+    libreoffice
     
-    iosevka # Untested
+    #iosevka # Untested
   ];
 
   programs.rofi = {

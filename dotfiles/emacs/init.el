@@ -139,16 +139,6 @@
 (add-hook 'c++-mode-hook 'lsp)
 
 ;;; Uiua
-;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
-(add-hook 'uiua-base-mode-hook 
-          (lambda () (uiua-format-on-save-mode -1))) 
-(add-hook 'uiua-base-mode-hook
-          (lambda () (add-hook 'after-save-hook
-                               (lambda () (revert-buffer t t))
-                               nil 'make-it-local)))
-(add-hook 'uiua-base-mode-hook (lambda ()
-                                 (setq buffer-face-mode-face '(:family "Uiua386"))
-                                 (buffer-face-mode)))
 
 ; reverting the buffer resets the font scale, so we save
 ; and reapply (Source: https://gist.github.com/ustun/f5b5eb447c0e7a02ef67a90324bd8f28)
@@ -161,8 +151,19 @@
 (defun restore-text-scale ()
   "Restore text-scale."
   (message "restoring prev text scale %d" text-scale-previous)
-  (text-scale-increase text-scale-previous))
+  (text-scale-set text-scale-previous))
 (add-hook 'after-revert-hook 'restore-text-scale)
+
+;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
+(add-hook 'uiua-base-mode-hook 
+          (lambda () (uiua-format-on-save-mode -1))) 
+(add-hook 'uiua-base-mode-hook
+          (lambda () (add-hook 'after-save-hook
+                               (lambda () 
+				 (sleep-for 0.1)
+				 (revert-buffer t t)) 95 'make-it-local)))
+(add-hook 'uiua-base-mode-hook 
+	  (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
 
 
 ;; Org mode languages

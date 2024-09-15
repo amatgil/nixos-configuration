@@ -424,11 +424,12 @@ clientkeys = gears.table.join(
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey, 'Shift'   }, "t", awful.titlebar.toggle,
               {description = 'toggle title bar', group = 'client'}),
-    awful.key({ modkey, 'Alt'     }, "t",      function (c)
+    awful.key({ modkey, 'Mod1'     }, "t",      function (c)
           c.maximized = false -- i hate that this exists
+          c.minimized = false -- i hate that this exists as well
           c:raise()
     end,
-              {description = "toggle maximized", group = "client"})
+              {description = "set maximized and minimized to false", group = "client"})
 )
 
 -- Bind all key numbers to tags.

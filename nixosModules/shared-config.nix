@@ -168,6 +168,7 @@
     acpi
     pavucontrol
     brightnessctl # dkhfhdsfklhsf brighmthrness
+    fdupes
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
