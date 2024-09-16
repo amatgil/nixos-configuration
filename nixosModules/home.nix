@@ -96,6 +96,9 @@
 
     korganizer
     libreoffice
+    inkscape
+    fontforge-gtk
+    ascii
     
     #iosevka # Untested
   ];
