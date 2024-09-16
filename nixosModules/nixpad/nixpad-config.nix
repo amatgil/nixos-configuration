@@ -20,23 +20,24 @@
   networking.wireless.userControlled.enable = true;
   networking.networkmanager.unmanaged = ["eduroam"];
   networking.wireless.networks.eduroam = {
-     key_mgmt=WPA-EAP;
-     eap=TTLS;
-     group=CCMP;
-     phase2="auth=MSCHAPV2";
-     anonymous_identity="anonymous@upc.edu";
-     identity="amat.gil";
-     password="${builtins.readFile ../../secrets/uni/uni-pass}";
-     ca_cert="/etc/nixos/secrets/uni/gd_bundle-g2-g1.crt";
-     domain="triangulum.upc.es";
-     priority=10;
+    auth = ''
+      key_mgmt=WPA-EAP
+      pairwise=CCMP
+      group=CCMP TKIP
+      eap=TTLS
+      ca_cert="/etc/nixos/secrets/uni/gd_bundle-g2-g1.crt"
+      identity="amat.gil"
+      altsubject_match="DNS:triangulum.upc.es"
+      phase2="auth=PAP"
+      password="${builtins.readFile ../../secrets/uni/uni-pass}"
+      anonymous_identity="cat.20210081836@upc.edu"
+    '';
   };
 
 }
-
 #    auth = ''
 #     key_mgmt=WPA-EAP
-#     eap=PWD
+#     eap=PEAP
 #     identity="amat.gil"
 #     password=${builtins.readFile ../../secrets/uni/uni-pass}
 #   '';
