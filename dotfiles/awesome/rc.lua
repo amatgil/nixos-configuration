@@ -334,6 +334,11 @@ globalkeys = gears.table.join(
        {description = 'toggle (mute) volume', group = 'client'}),
     -- END OF VOLUME STUFFS
 
+    awful.key({}, "XF86Launch1", function() awful.spawn.easy_async("/etc/nixos/scripts/thinkpadbutton", function() end) end,
+       {description = 'Thinkpad wild card', group = 'client'}),
+
+
+
     -- BRIGHTNESS STUFFS
     awful.key({ modkey,           }, "b",      function () brightness_inc()  end,
        {description = "increase brightness by 5%", group = "client"}),

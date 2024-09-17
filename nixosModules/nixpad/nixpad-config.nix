@@ -7,6 +7,9 @@
     useOSProber = true;
   };
 
+}
+
+# all these comments are garbage
   # Source: https://serveistic.upc.edu/ca/wifiupc/documentacio/configurar-eduroam-amb-archlinux
 
 
@@ -16,6 +19,7 @@
   #
      #phase2="auth=PAP"
 
+  /*
   networking.wireless.enable  = true;
   networking.wireless.userControlled.enable = true;
   networking.networkmanager.unmanaged = ["eduroam"];
@@ -33,8 +37,8 @@
       anonymous_identity="cat.20210081836@upc.edu"
     '';
   };
+*/
 
-}
 #    auth = ''
 #     key_mgmt=WPA-EAP
 #     eap=PEAP
