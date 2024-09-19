@@ -36,7 +36,7 @@
     xkb = {
     	layout = "es";
       variant = "cat";
-      options = "caps:swapescape,compose:Menu";
+      options = "caps:escape,compose:menu";
     };
     #xkbOptions = "esc:swapcaps,compose:Menu";
 
@@ -173,6 +173,7 @@
     pavucontrol
     brightnessctl # dkhfhdsfklhsf brighmthrness
     networkmanagerapplet
+    xsane
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
