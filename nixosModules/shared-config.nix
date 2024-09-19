@@ -35,9 +35,10 @@
     enable = true;
     xkb = {
     	layout = "es";
-    	variant = "cat";
-    	options = "esc:swapcaps";
+      variant = "cat";
+      options = "caps:swapescape,compose:Menu";
     };
+    #xkbOptions = "esc:swapcaps,compose:Menu";
 
     windowManager.awesome = {
       enable = true;
@@ -118,6 +119,10 @@
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.sane = {
+    enable = true; # enables support for SANE scanners
+    extraBackends = [ pkgs.hplipWithPlugin ];
+  };
   security.rtkit.enable = true;
   security.polkit = {
     enable = true;
@@ -142,7 +147,7 @@
   users.users.casenc = {
     isNormalUser = true;
     description = "casenc";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "scanner" "lp"];
     packages = []; # They're all in home-manager
   };
 
