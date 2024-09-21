@@ -310,7 +310,7 @@ globalkeys = gears.table.join(
               {description = "go back", group = "tag"}),
     awful.key({ modkey,           }, "v",      function () awful.spawn("firefox")      end,
               {description = "open firefox", group = "launcher"}),
-    awful.key({ modkey,           }, "e",      function () awful.spawn("emacs")      end,
+    awful.key({ modkey,           }, "e",      function () awful.spawn("/etc/nixos/scripts/emacs_launch")      end,
               {description = "open emacs", group = "launcher"}),
     awful.key({ modkey,           }, ",",      function () awful.screen.focus_relative( 1)  end,
               {description = "move focus to screen", group = "client"}),
@@ -429,7 +429,10 @@ clientkeys = gears.table.join(
           c.minimized = false -- i hate that this exists as well
           c:raise()
     end,
-              {description = "set maximized and minimized to false", group = "client"})
+       {description = "set maximized and minimized to false", group = "client"}),
+
+    awful.key({ modkey,          }, "y",  function (c) awful.placement.centered(c) end,
+              {description = "place window placement on center of screen", group = "client"})
 )
 
 -- Bind all key numbers to tags.

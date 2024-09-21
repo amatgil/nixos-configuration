@@ -249,29 +249,30 @@
 	programs.emacs = {
 		enable = true;
 		extraPackages = epkgs: [
-			epkgs.nix-mode
-			epkgs.evil
-                        epkgs.evil-collection
-			epkgs.magit
-			epkgs.rust-mode
-			epkgs.lua-mode
-			epkgs.haskell-mode
-			epkgs.hindent
-                        epkgs.lsp-haskell
-                        epkgs.direnv
-			epkgs.rainbow-delimiters
-			epkgs.paredit
-                        epkgs.pinentry
-                        epkgs.helpful
-                        epkgs.lsp-ui
-                        epkgs.lsp-mode
-                        epkgs.rainbow-mode
-			epkgs.origami
-                        epkgs.company
-                        epkgs.smex
-                        epkgs.avy
-                        epkgs.undo-fu
-                        epkgs.uiua-ts-mode
+      epkgs.nix-mode
+      epkgs.evil
+      epkgs.evil-collection
+      epkgs.magit
+      epkgs.rust-mode
+      epkgs.lua-mode
+      epkgs.haskell-mode
+      epkgs.hindent
+      epkgs.lsp-haskell
+      epkgs.direnv
+      epkgs.rainbow-delimiters
+      epkgs.paredit
+      epkgs.pinentry
+      epkgs.helpful
+      epkgs.lsp-ui
+      epkgs.lsp-mode
+      epkgs.rainbow-mode
+      epkgs.origami
+      epkgs.company
+      epkgs.smex
+      epkgs.avy
+      epkgs.undo-fu
+      epkgs.uiua-ts-mode
+      epkgs.forge # GitHub/GitLab integration with magit
 		];
 	};
 	xdg.configFile.emacs = {

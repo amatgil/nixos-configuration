@@ -32,25 +32,49 @@
 	  defaultSession = "none+awesome";
   };
 
-  services.xserver = {
-    enable = true;
-    xkb = {
-    	layout = "es";
-    	variant = "cat";
-    	options = "esc:swapcaps";
-    };
+  services = {
+    printing.enable = true; # Enable CUPS to print documents.
+    picom.enable = true;  # Compositor
 
-    windowManager.awesome = {
+    pipewire = {
       enable = true;
-      luaModules = with pkgs.luaPackages; [
-        luarocks # package manager for lua
-        luadbi-mysql
-      ];
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+    xserver = {
+      enable = true;
+      xkb = {
+        layout = "es";
+        variant = "cat";
+        options = "esc:swapcaps";
+      };
+
+      windowManager.awesome = {
+        enable = true;
+        luaModules = with pkgs.luaPackages; [
+          luarocks # package manager for lua
+          luadbi-mysql
+        ];
+      };
+
+      autoRepeatDelay = 300;
+      autoRepeatInterval = 50;
     };
 
-    autoRepeatDelay = 300;
-    autoRepeatInterval = 50;
+    emacs = {
+      enable = true;
+      package = pkgs.emacs;
+    };
   };
+
+
 
   programs.gnupg.agent = {
 	  enable = true;
@@ -112,9 +136,6 @@
 
   console.keyMap = "es";
 
-  services.printing.enable = true; # Enable CUPS to print documents.
-  services.picom.enable = true;  # Compositor
-
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -123,19 +144,6 @@
   security.polkit = {
     enable = true;
     #package = pkgs.lxqt.lxqt-policykit;
-  };
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
 

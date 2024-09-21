@@ -50,6 +50,9 @@
 ;; Same as above for Dired and such
 (setq global-auto-revert-non-file-buffers t)
 
+(setq dired-dwim-target 'dired-dwim-target-recent)
+(setq auto-revert-use-notify nil)
+
 ;; Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/ (but updated)
 (setq modus-themes-mode-line '(accented borderless)
       modus-themes-bold-constructs t
@@ -78,6 +81,8 @@
 (global-set-key (kbd "M-x") 'smex) ; smex is ido for M-x
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(global-set-key (kbd "C-c ç") 'shrink-window-horizontally)
+(global-set-key (kbd "C-c Ç") 'enlarge-window-horizontally)
 
 (setq lsp-ui-sideline-show-hover t)
 (setq lsp-ui-sideline-show-code-actions t)
@@ -119,6 +124,9 @@
 (global-set-key (kbd "C-c C-g") 'avy-goto-char-2)
 
 (global-set-key (kbd "C-c g") 'magit)
+(with-eval-after-load 'magit
+  (require 'forge))
+
 (global-set-key (kbd "C-c C-f r") 'recentf-open-files)
 
 (setq company-minimum-prefix-length 1 ;; Autocomplete and such
