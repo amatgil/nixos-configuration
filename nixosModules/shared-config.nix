@@ -6,7 +6,6 @@
 {
   # Flakes enable
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
 
@@ -48,14 +47,15 @@
       # no need to redefine it in your config for now)
       #media-session.enable = true;
     };
+
     xserver = {
       enable = true;
       xkb = {
         layout = "es";
         variant = "cat";
-        options = "caps:escape";
+        options = "caps:escape,compose:menu"; # TODO: disable normal escape
       };
-
+      #xkbOptions = "esc:swapcaps,compose:Menu";
       windowManager.awesome = {
         enable = true;
         luaModules = with pkgs.luaPackages; [
@@ -135,6 +135,10 @@
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.sane = {
+    enable = true; # enables support for SANE scanners
+    extraBackends = [ pkgs.hplipWithPlugin ];
+  };
   security.rtkit.enable = true;
   security.polkit = {
     enable = true;
@@ -146,7 +150,7 @@
   users.users.casenc = {
     isNormalUser = true;
     description = "casenc";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "scanner" "lp"];
     packages = []; # They're all in home-manager
   };
 
@@ -172,6 +176,8 @@
     pavucontrol
     brightnessctl # dkhfhdsfklhsf brighmthrness
     fdupes
+    networkmanagerapplet
+    xsane
   ];
   environment.variables.EDITOR = "emacs";
   fonts.packages = with pkgs; [
