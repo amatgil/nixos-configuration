@@ -123,9 +123,13 @@
 
 (global-set-key (kbd "C-c C-g") 'avy-goto-char-2)
 
+; (Ma)Git / Forge
 (global-set-key (kbd "C-c g") 'magit)
 (with-eval-after-load 'magit
   (require 'forge))
+; `~/.authinfo.gpg` must be encrypted with my public key and contain
+; what is said here: https://magit.vc/manual/forge/Setup-for-Githubcom.html
+(setq auth-sources '("~/.authinfo.gpg")) 
 
 (global-set-key (kbd "C-c C-f r") 'recentf-open-files)
 
@@ -152,14 +156,15 @@
 ; and reapply (Source: https://gist.github.com/ustun/f5b5eb447c0e7a02ef67a90324bd8f28)
 (defun save-text-scale ()
   "Save text-scale."
-  (message "saving prev text scale %d" text-scale-mode-amount)
+  (message "saving prev text scale")
   (setq text-scale-previous (buffer-local-value 'text-scale-mode-amount (current-buffer))))
-(add-hook 'before-revert-hook 'save-text-scale)
 
 (defun restore-text-scale ()
   "Restore text-scale."
-  (message "restoring prev text scale %d" text-scale-previous)
+  (message "restoring prev text scale" text-scale-previous)
   (text-scale-set text-scale-previous))
+
+(add-hook 'before-revert-hook 'save-text-scale)
 (add-hook 'after-revert-hook 'restore-text-scale)
 
 ;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
@@ -168,7 +173,7 @@
 (add-hook 'uiua-base-mode-hook
           (lambda () (add-hook 'after-save-hook
                                (lambda () 
-				 (sleep-for 0.1)
+				 (sleep-for 0.1) ; Give time for the formatter to run
 				 (revert-buffer t t)) 95 'make-it-local)))
 (add-hook 'uiua-base-mode-hook 
 	  (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))

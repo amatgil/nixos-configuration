@@ -53,7 +53,7 @@
       xkb = {
         layout = "es";
         variant = "cat";
-        options = "esc:swapcaps";
+        options = "caps:escape";
       };
 
       windowManager.awesome = {
@@ -66,11 +66,6 @@
 
       autoRepeatDelay = 300;
       autoRepeatInterval = 50;
-    };
-
-    emacs = {
-      enable = true;
-      package = pkgs.emacs;
     };
   };
 

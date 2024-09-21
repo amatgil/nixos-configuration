@@ -279,7 +279,6 @@
   	source = ../dotfiles/emacs;
   	recursive = true;
 	};
-	services.emacs.enable = true;
 
 	programs.git = {
 		enable = true;
@@ -300,6 +299,7 @@
         wdiff = "diff --word-diff";
       };
 			delta = {
+        enable = true;
 				navigate = true; # change sections with n/N
 				light = false;   # for terminals with white bg
 			};
@@ -313,6 +313,7 @@
 			pull.rebaes = true;
 			credential.helper = "cache --timeout 7200";
 			safe.directory="*";
+      github.user = "amatgil";
 		};
 	};
 
