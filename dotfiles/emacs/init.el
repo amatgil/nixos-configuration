@@ -131,6 +131,10 @@
 ; what is said here: https://magit.vc/manual/forge/Setup-for-Githubcom.html
 (setq auth-sources '("~/.authinfo.gpg")) 
 
+(setq ediff-split-window-function 'split-window-horizontally) 
+(setq ediff-window-setup-function 'ediff-setup-windows-plain) ; Ediff window inside of buffer
+
+
 (global-set-key (kbd "C-c C-f r") 'recentf-open-files)
 
 (setq company-minimum-prefix-length 1 ;; Autocomplete and such
