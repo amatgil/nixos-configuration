@@ -178,8 +178,13 @@
     fdupes
     networkmanagerapplet
     xsane
+    man-pages
+    man-pages-posix
   ];
+  documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
+
   environment.variables.EDITOR = "emacs";
+
   fonts.packages = with pkgs; [
     iosevka
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
