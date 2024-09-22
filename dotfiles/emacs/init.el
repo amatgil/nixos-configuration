@@ -15,6 +15,7 @@
 (setq column-number-mode t) ;; enable line columns
 (hl-line-mode 1) ;; Highlight current line
 (recentf-mode 1) ;; Remember recent files (enables M-x recentf-open-files)
+(setq recentf-max-menu-items 25)
 
 (setq inhibit-startup-screen t)
 (setq history-length 25) ;; Only remember the last 25 files opened (for startup performance)
@@ -24,7 +25,7 @@
 
 (overwrite-mode -1) ;; Disble overwrite mode so that text editing actually works
 (global-origami-mode 1) ;; Enable folding
-(icomplete-mode 1) ;; Enable minibuffer neat completion
+(fido-mode 1) ;; Enable minibuffer neat completion (comes from icomplete-mode)
 (setq evil-want-keybinding nil) ;; evil-collection tells me to use this if I'm using evil, so here it is
 (setq evil-undo-system 'undo-fu)
 (evil-mode 1) ;; Vim keybinds pretty please
@@ -90,8 +91,6 @@
 (global-set-key (kbd "C-c e n") 'flymake-goto-next-error) ; Error next
 (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error) ; Error previous
 
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
 (setq-default indent-tabs-mode nil) ; Emacs mixes tabs and spaces (i didn't know there was an objectively bad option about the two)
 
 (direnv-mode 1)
@@ -121,7 +120,7 @@
 (global-set-key (kbd "C-h x") #'helpful-command)
 ;;;;;;;;;
 
-(global-set-key (kbd "C-c C-g") 'avy-goto-char-2)
+(global-set-key (kbd "C-c C-r") 'avy-goto-char-2)
 
 ; (Ma)Git / Forge
 (global-set-key (kbd "C-c g") 'magit)
@@ -135,7 +134,7 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain) ; Ediff window inside of buffer
 
 
-(global-set-key (kbd "C-c C-f r") 'recentf-open-files)
+(global-set-key (kbd "C-c f r") 'recentf-open-files)
 
 (setq company-minimum-prefix-length 1 ;; Autocomplete and such
             company-idle-delay 0.0) ;; default is 0.2
@@ -158,6 +157,9 @@
 
 ; reverting the buffer resets the font scale, so we save
 ; and reapply (Source: https://gist.github.com/ustun/f5b5eb447c0e7a02ef67a90324bd8f28)
+
+
+
 (defun save-text-scale ()
   "Save text-scale."
   (message "saving prev text scale")
@@ -165,7 +167,8 @@
 
 (defun restore-text-scale ()
   "Restore text-scale."
-  (message "restoring prev text scale" text-scale-previous)
+  (message "about to load text-scale-previous")
+  (message "restoring prev text scale %d" text-scale-previous)
   (text-scale-set text-scale-previous))
 
 (add-hook 'before-revert-hook 'save-text-scale)
