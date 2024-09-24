@@ -25,13 +25,21 @@
     LC_TIME = "ca_ES.UTF-8";
   };
 
-  services.displayManager = {
-	# Friendship ended with plasma, now awesomewm is my (old and new) best friend
-	  sddm.enable = true;
-	  defaultSession = "none+awesome";
-  };
 
   services = {
+    syncthing = {
+      enable = true;
+      user = "casenc";
+      dataDir = "/home/casenc/Documents"; # Should really be moved from here
+      configDir = "/home/casenc/.config/syncthing"; # Should really be moved from here
+    };
+
+    displayManager = {
+      # Friendship ended with plasma, now awesomewm is my (old and new) best friend
+      sddm.enable = true;
+      defaultSession = "none+awesome";
+    };
+
     printing.enable = true; # Enable CUPS to print documents.
     picom.enable = true;  # Compositor
 
@@ -64,8 +72,8 @@
         ];
       };
 
-      autoRepeatDelay = 300;
-      autoRepeatInterval = 50;
+      autoRepeatDelay = 70;
+      autoRepeatInterval = 200;
     };
   };
 

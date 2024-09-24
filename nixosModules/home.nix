@@ -273,8 +273,9 @@
       epkgs.undo-fu
       epkgs.uiua-ts-mode
       epkgs.forge # GitHub/GitLab integration with magit
-		];
-	};
+      epkgs.dap-mode
+    ];
+  };
 	xdg.configFile.emacs = {
   	source = ../dotfiles/emacs;
   	recursive = true;

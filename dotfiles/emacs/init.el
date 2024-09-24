@@ -1,6 +1,5 @@
 ;;;;; Startup optimizations
 
-
 ; (stolen from https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga)
 ;; From https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
 (setq gc-cons-threshold-original gc-cons-threshold)
@@ -43,6 +42,8 @@
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
 
+;;;;;;;;;; REMEMBER THAT C-c C-e evals the buffer, which includes the config without !nh !!
+
 ;; Don't pop up UI dialogs when prompting (for staying on the keyboard)
 (setq use-dialog-box nil)
 
@@ -55,25 +56,32 @@
 (setq auto-revert-use-notify nil)
 
 ;; Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/ (but updated)
-(setq modus-themes-mode-line '(accented borderless)
-      modus-themes-bold-constructs t
-      modus-themes-italic-constructs t
-      modus-themes-fringes 'subtle
-      modus-themes-tabs-accented t
-      modus-themes-paren-match '(bold intense)
-      modus-themes-prompts '(bold intense)
-      modus-themes-completions '((matches . (extrabold underline)) (selection . (semibold italic)))
-      modus-themes-org-blocks 'tinted-background
-      modus-themes-scale-headings t
-      modus-themes-region '(bg-only)
-      modus-themes-headings
-      '((1 . (rainbow overline background 1.4))
-        (2 . (rainbow background 1.3))
-        (3 . (rainbow bold 1.2))
-        (t . (semilight 1.1))))
-(load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
+
+
+
+
+; stylix makes this irrelevant
+;(setq modus-themes-mode-line '(accented borderless)
+;      modus-themes-bold-constructs t
+;      modus-themes-italic-constructs t
+;      modus-themes-fringes 'subtle
+;      modus-themes-tabs-accented t
+;      modus-themes-paren-match '(bold intense)
+;      modus-themes-prompts '(bold intense)
+;      modus-themes-completions '((matches . (extrabold underline)) (selection . (semibold italic)))
+;      modus-themes-org-blocks 'tinted-background
+;      modus-themes-scale-headings t
+;      modus-themes-region '(bg-only)
+;      modus-themes-headings
+;      '((1 . (rainbow overline background 1.4))
+;        (2 . (rainbow background 1.3))
+;        (3 . (rainbow bold 1.2))
+;        (t . (semilight 1.1))))
+;(load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
 (set-frame-font "FiraCode Nerd Font-10" nil t)
+
+;(global-hl-line-mode 1)   ; Highlight current line
 
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
@@ -84,6 +92,7 @@
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (global-set-key (kbd "C-c ç") 'shrink-window-horizontally)
 (global-set-key (kbd "C-c Ç") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-c s") 'scroll-lock-mode)
 
 (setq lsp-ui-sideline-show-hover t)
 (setq lsp-ui-sideline-show-code-actions t)
@@ -120,7 +129,7 @@
 (global-set-key (kbd "C-h x") #'helpful-command)
 ;;;;;;;;;
 
-(global-set-key (kbd "C-c C-r") 'avy-goto-char-2)
+(global-set-key (kbd "C-c r") 'avy-goto-char-2)
 
 ; (Ma)Git / Forge
 (global-set-key (kbd "C-c g") 'magit)
@@ -142,6 +151,7 @@
 ;;; Rust
 (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
 (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
+(setq dap-auto-configure-features '(sessions locals controls tooltip)) ; debugging (i hope)
 
 ;;; Haskell
 (add-hook 'haskell-mode-hook #'lsp)
@@ -193,10 +203,22 @@
    (haskell . t)
    (emacs-lisp . t)))
 
+; ORG MODE
+(setq org-todo-keywords
+  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+(setq org-default-notes-file (concat org-directory "/notes.org")) ; I found that user-emacs-directory exists (could be nicer)
+;; Org-habit
+(add-to-list 'org-modules 'org-habit t)
+
 
 ;; The selected line number doesn't scale when the font size changes (very noticeable in uiua)
 ;; This hacks around that (source: M-x customize-face)
 (custom-set-faces
  '(line-number-current-line ((t (:inherit 'default)))))
+(custom-set-faces
+ '(line-number ((t (:inherit 'default)))))
 
 
