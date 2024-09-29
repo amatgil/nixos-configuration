@@ -27,6 +27,7 @@
 
 
   services = {
+    gvfs.enable = true;
     syncthing = {
       enable = true;
       user = "casenc";
@@ -40,7 +41,7 @@
       defaultSession = "none+awesome";
     };
 
-    printing.enable = true; # Enable CUPS to print documents.
+    printing.enable = false; # TODO: reenable when CVE gets fixed # Enable CUPS to print documents.
     picom.enable = true;  # Compositor
 
     pipewire = {
@@ -72,8 +73,8 @@
         ];
       };
 
-      autoRepeatDelay = 70;
-      autoRepeatInterval = 200;
+      autoRepeatDelay = 400;
+      autoRepeatInterval = 400;
     };
   };
 
@@ -186,6 +187,9 @@
     fdupes
     networkmanagerapplet
     xsane
+    usbutils
+    rsync
+    glib # gio (gvfs)
     man-pages
     man-pages-posix
   ];
