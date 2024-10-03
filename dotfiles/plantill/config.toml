@@ -22,6 +22,10 @@ should_replace_name = true
 source = "copet-haskell"
 should_replace_name = true
 
+[copet-uiua]
+source = "copet-uiua"
+should_replace_name = true
+
 [copet-python]
 source = "copet-python"
 should_replace_name = true
