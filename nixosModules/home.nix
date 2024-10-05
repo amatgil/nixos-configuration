@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   home.username = "casenc";
   home.homeDirectory = "/home/casenc";
 
@@ -111,6 +111,15 @@
     enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+
+    # Plugins that aren't in programs.zsh
+    plugins = [
+      {
+        name = "zsh-vi-mode";
+        src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
+      }
+    ];
+    
     history = {
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -193,13 +202,14 @@
   programs.starship = {
     enable = true;
     settings = {
-      format = "[┌](bold #C74DED) [󰄛 ](bold #C74DED) '$directory' de $hostname ($all)[└>](bold #C74DED) $character\n";
+      format = "[┌](bold #C74DED) [󰄛 ](bold #C74DED) '$directory' de $hostname ($all)[└](bold #C74DED) $character\n";
       add_newline = false;
       buf = {symbol = " ";};
       c = {symbol = " ";};
       character = {
-        error_symbol = "[](red)";
-        success_symbol = "[](bold purple)";
+        success_symbol = "[⍜](bold purple)";
+        error_symbol = "[⍥](red)";
+        vimcmd_symbol = "[⍥](bold bright-yellow)";
       };
       cmd_duration = {
         disabled = false;
@@ -321,11 +331,12 @@
   programs.alacritty = {
   	enable = true;
   	settings = {
-  	  #font = {
-  	  #  size = 12;
-  	  #  normal.family = "iosevka";
-  	  #};
+  	  font = lib.mkForce {
+  	    #size = 12;
+  	    normal.family = "Uiua386";
+  	  };
   	  #window.opacity = 1;
+
   	  shell.program = "${pkgs.zsh}/bin/zsh";
       cursor = {
         style = {
