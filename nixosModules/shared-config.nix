@@ -44,6 +44,13 @@
     printing.enable = false; # TODO: reenable when CVE gets fixed # Enable CUPS to print documents.
     picom.enable = true;  # Compositor
 
+    tor = {
+      enable = true;
+      openFirewall = true;
+      torsocks.enable = true;
+      client.enable = true;
+    };
+
     pipewire = {
       enable = true;
       alsa.enable = true;
