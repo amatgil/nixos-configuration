@@ -6,8 +6,8 @@ should_replace_name = true
 source = "latex"
 should_replace_name = true
 
-[C]
-source = "C"
+[copet-c]
+source = "copet-c"
 should_replace_name = true
 
 [AdventOfCode]
