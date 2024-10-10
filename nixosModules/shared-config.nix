@@ -199,6 +199,7 @@
     glib # gio (gvfs)
     man-pages
     man-pages-posix
+    xdotool
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 

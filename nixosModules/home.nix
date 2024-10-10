@@ -135,7 +135,7 @@
       ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
       lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
       lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
-     
+      
       e="emacs . &";
 
       grep="grep -i --color=auto";
@@ -323,9 +323,13 @@
 			commit.gpgsign = true;
 			pull.rebaes = true;
 			credential.helper = "cache --timeout 7200";
-			safe.directory="*";
+      safe.directory="*";
       github.user = "amatgil";
 		};
+    aliases = {
+      s = "status";
+      c = "commit";
+    };
 	};
 
   programs.alacritty = {
