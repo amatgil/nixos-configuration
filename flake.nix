@@ -7,7 +7,7 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs"; # Keep HA and the system's nixpkgs version the same
     };
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/cf8b6e2d4e8aca8ef14b839a906ab5eb98b08561"; # Latest one doesn't work lmao
   };
 
   outputs ={ self, nixpkgs, home-manager, stylix, ... }@inputs: {

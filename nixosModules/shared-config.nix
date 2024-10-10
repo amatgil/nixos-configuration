@@ -109,6 +109,7 @@
     cursor.package = pkgs.qogir-icon-theme;
     cursor.name = "Qogir Cursors";
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     opacity = {
