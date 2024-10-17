@@ -152,7 +152,8 @@
 (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
 (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
 (setq dap-auto-configure-features '(sessions locals controls tooltip)) ; debugging (i hope)
-
+(add-hook 'rust-mode-hook 
+          (lambda () (add-hook 'before-save-hook 'lsp-format-buffer))) 
 ;;; Haskell
 (add-hook 'haskell-mode-hook #'lsp)
 (add-hook 'haskell-mode-hook #'interactive-haskell-mode)

@@ -8,6 +8,7 @@ let
     rustfmt
     clippy
     mold
+    rustup # mostly for rustup doc
 
     #wayland
     #xorg.libX11
