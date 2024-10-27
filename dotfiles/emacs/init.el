@@ -80,6 +80,7 @@
 ;(load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
 (set-frame-font "FiraCode Nerd Font-10" nil t)
+;(set-frame-font "Uiua386-14" nil t)
 
 ;(global-hl-line-mode 1)   ; Highlight current line
 
@@ -223,3 +224,18 @@
  '(line-number ((t (:inherit 'default)))))
 
 
+; I like seeing how much text has been highlighted
+(defun mode-line-region-chars ()
+  (if (use-region-p)
+      (let ((characters (abs (- (region-end) (region-beginning))))
+            (lines (abs (- (line-number-at-pos (region-end))
+                           (line-number-at-pos (region-beginning))))))
+        (format "<%d,%d>" lines characters))
+    "<_,_>"))
+
+(setq mode-line-misc-info
+      (list '(:eval (mode-line-region-chars))))
+
+(add-hook 'post-command-hook
+          (lambda ()
+            (force-mode-line-update)))
