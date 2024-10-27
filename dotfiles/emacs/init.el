@@ -227,11 +227,12 @@
 ; I like seeing how much text has been highlighted
 (defun mode-line-region-chars ()
   (if (use-region-p)
-      (let ((characters (abs (- (region-end) (region-beginning))))
-            (lines (abs (- (line-number-at-pos (region-end))
-                           (line-number-at-pos (region-beginning))))))
+      (let ((characters (+ 1 (abs (- (region-end) (region-beginning)))))
+            (lines (+ 1 (abs (- (line-number-at-pos (region-end))
+                                  (line-number-at-pos (region-beginning)))))))
         (format "<%d,%d>" lines characters))
     "<_,_>"))
+
 
 (setq mode-line-misc-info
       (list '(:eval (mode-line-region-chars))))
