@@ -9,8 +9,8 @@
 (tool-bar-mode -1)   ;; disable tool-bar
 (menu-bar-mode -1)   ;; disable menu-bar
 (scroll-bar-mode -1) ;; disable scroll bar
-(setq display-line-numbers 'relative) ;; make line numbers be relative
 (global-display-line-numbers-mode 1) ;; enable line numbers
+(setq display-line-numbers 'relative) ;; make line numbers be relative
 (setq column-number-mode t) ;; enable line columns
 (hl-line-mode 1) ;; Highlight current line
 (recentf-mode 1) ;; Remember recent files (enables M-x recentf-open-files)
@@ -130,7 +130,10 @@
 (global-set-key (kbd "C-h x") #'helpful-command)
 ;;;;;;;;;
 
-(global-set-key (kbd "C-c r") 'avy-goto-char-2)
+(define-key evil-motion-state-map (kbd "C-f") nil) (define-key evil-normal-state-map (kbd "C-f") nil)
+(define-key evil-insert-state-map (kbd "C-f") nil) (define-key evil-visual-state-map (kbd "C-f") nil)
+(global-unset-key (kbd "C-f"))
+(global-set-key (kbd "C-f C-f") 'avy-goto-char-2)
 
 ; (Ma)Git / Forge
 (global-set-key (kbd "C-c g") 'magit)
@@ -179,12 +182,11 @@
 
 (defun restore-text-scale ()
   "Restore text-scale."
-  (message "about to load text-scale-previous")
   (message "restoring prev text scale %d" text-scale-previous)
   (text-scale-set text-scale-previous))
 
-(add-hook 'before-revert-hook 'save-text-scale)
-(add-hook 'after-revert-hook 'restore-text-scale)
+(add-hook 'uiua-base-mode-hook (lambda () (add-hook 'before-revert-hook 'save-text-scale)))
+(add-hook 'uiua-base-made-hook (lambda () (add-hook 'after-revert-hook 'restore-text-scale)))
 
 ;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
 (add-hook 'uiua-base-mode-hook 

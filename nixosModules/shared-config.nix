@@ -67,9 +67,9 @@
     xserver = {
       enable = true;
       xkb = {
-        layout = "es";
+        layout = "es,apl";
         variant = "cat";
-        options = "caps:escape,compose:menu"; # TODO: disable normal escape
+        options = "caps:escape,compose:menu,grp:rctrl_switch"; 
       };
       #xkbOptions = "esc:swapcaps,compose:Menu";
       windowManager.awesome = {
