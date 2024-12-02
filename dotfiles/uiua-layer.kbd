@@ -1,0 +1,167 @@
+;; Good source: https://shom.dev/start/using-kanata-to-remap-any-keyboard/
+
+(defsrc
+  grv                   1    2    3    4    5    6    7    8    9    0    -    =
+  esc                   q    w    e    r    t    y    u    i    o    p    [    ] 
+  caps                  a    s    d    f    g    h    j    k    l    ;    '    \    
+  lshift  IntlBackslash z    x    c    v    b    n    m    ,    .    /
+                                                                        rctrl
+)
+
+(defalias
+  ;; tap for esc, hold for lctl
+  cap (tap-hold 200 200 esc lctl)
+
+  ua             (layer-while-held uiua-layer)
+  ua-shift       (layer-while-held uiua-layer-shifted)
+
+  g-not          (unicode ¬)
+  g-sign         (unicode ±)
+  g-under        (unicode ⍜)
+  g-windows      (unicode ◫)
+  g-each         (unicode ∵)
+  g-rows         (unicode ≡)
+  g-inv          (unicode ⍚)
+  g-take         (unicode ↙)
+  g-drop         (unicode ↘)
+  g-obverse      (unicode ⌅)
+  g-id           (unicode ∘)
+  g-on           (unicode X)
+  g-by           (unicode ⊸)
+  g-partition    (unicode ⊜)
+  g-lte          (unicode ≤)
+  g-gte          (unicode ≥)
+  g-round        (unicode ⁅)
+  g-ceil         (unicode ⌈)
+  g-floor        (unicode ⌊)
+  g-sort         (unicode ⍆)
+  g-rise         (unicode ⍏)
+  g-fall         (unicode ⍖)
+  g-pop          (unicode ⋅)
+  g-gap          (unicode ◌)
+  g-or           (unicode ∨)
+  g-table        (unicode ⊞)
+  g-integral     (unicode ∫)
+  g-parse        (unicode ⋕)
+)
+
+
+(deflayer qwerty
+  grv                   1    2    3    4    5    6    7    8    9    0    -    =
+  esc                   q    w    e    r    t    y    u    i    o    p    [    ] 
+  @cap                  a    s    d    f    g    h    j    k    l    ;    '    \    
+  lshift  IntlBackslash z    x    c    v    b    n    m    ,    .    /
+                                                                        @ua
+                                                                  
+)
+
+
+(deflayer uiua-layer
+  XX           ;; grv
+  XX           ;; 1
+  XX           ;; 2
+  XX           ;; 3
+  XX           ;; 4
+  XX           ;; 5
+  XX           ;; 6
+  XX           ;; 7
+  XX           ;; 8
+  XX           ;; 9
+  XX           ;; 0
+  XX           ;; -
+  XX           ;; =
+  XX           ;; esc
+  XX           ;; q
+  @g-windows   ;; w
+  @g-each      ;; e
+  XX           ;; r
+  XX           ;; t
+  @g-rise      ;; y
+  @g-under     ;; u
+  @g-id        ;; i
+  @g-on        ;; o
+  @g-partition ;; p
+  XX           ;; ` ([)
+  XX           ;; + (])
+  XX           ;; caps
+  XX           ;; a
+  XX           ;; s
+  XX           ;; d
+  XX           ;; f
+  @g-gap       ;; g
+  XX           ;; h
+  XX           ;; j
+  XX           ;; k
+  XX           ;; l
+  XX           ;; ñ (;)
+  XX           ;; '
+  XX           ;; ç (\)
+  @ua-shift    ;; l-shift
+  @g-lte       ;; <
+  @g-sort      ;; z
+  @g-rise      ;; x
+  @g-fall      ;; c
+  @g-or        ;; v
+  XX           ;; b
+  XX           ;; n
+  XX           ;; m
+  XX           ;; ,
+  XX           ;; .
+  XX           ;; - (/)
+  rctrl
+)
+
+(deflayer uiua-layer-shifted
+  XX           ;; grv
+  XX           ;; 1
+  XX           ;; 2
+  XX           ;; 3
+  XX           ;; 4
+  XX           ;; 5
+  XX           ;; 6
+  XX           ;; 7
+  XX           ;; 8
+  XX           ;; 9
+  XX           ;; 0
+  XX           ;; -
+  XX           ;; =
+  XX           ;; esc
+  XX           ;; q
+  XX           ;; w
+  @g-table     ;; e
+  @g-inv       ;; r
+  XX           ;; t
+  XX           ;; y
+  @g-obverse   ;; u
+  @g-integral  ;; i
+  @g-by        ;; o
+  @g-parse     ;; p
+  XX           ;; ` ([)
+  XX           ;; + (])
+  XX           ;; caps
+  XX           ;; a
+  XX           ;; s
+  XX           ;; d
+  XX           ;; f
+  @g-pop       ;; g
+  XX           ;; h
+  XX           ;; j
+  XX           ;; k
+  XX           ;; l
+  XX           ;; ñ (;)
+  XX           ;; '
+  XX           ;; ç (\)
+  XX           ;; lshift
+  @g-gte       ;; <
+  @g-round     ;; z
+  @g-ceil      ;; x
+  @g-floor     ;; c
+  XX           ;; v
+  XX           ;; b
+  XX           ;; n
+  XX           ;; m
+  XX           ;; ,
+  XX           ;; .
+  XX           ;; - (/)
+  rctrl
+)
