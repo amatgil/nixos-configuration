@@ -47,13 +47,14 @@
 ;; Don't pop up UI dialogs when prompting (for staying on the keyboard)
 (setq use-dialog-box nil)
 
-;; Automatic equivalent to vim :checktime
+;; Automatic equivalent to vim :checktime (in THEORY)
 (global-auto-revert-mode 1)
+(setq auto-revert-use-notify t)
+(setq auto-revert-verbose t)
 ;; Same as above for Dired and such
 (setq global-auto-revert-non-file-buffers t)
 
 (setq dired-dwim-target 'dired-dwim-target-recent)
-(setq auto-revert-use-notify nil)
 
 ;; Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/ (but updated)
 
@@ -100,6 +101,9 @@
 (global-set-key (kbd "C-c e s") 'flymake-show-buffer-diagnostics) ; Error (diagnostics) show (project is also an option, but we've got bacon for that in general)
 (global-set-key (kbd "C-c e n") 'flymake-goto-next-error) ; Error next
 (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error) ; Error previous
+
+(global-set-key (kbd "C-c C-r") 'revert-buffer)
+
 
 (setq-default indent-tabs-mode nil) ; Emacs mixes tabs and spaces (i didn't know there was an objectively bad option about the two)
 
@@ -165,40 +169,61 @@
 (setq haskell-interactive-popup-errors nil) ; Make C-c C-l errors usable
 
 ;;; C++
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
+(add-hook 'c-mode-hook 'lsp-deferred)
+(add-hook 'c++-mode-hook 'lsp-deferred)
 
 ;;; Uiua
 
-; reverting the buffer resets the font scale, so we save
-; and reapply (Source: https://gist.github.com/ustun/f5b5eb447c0e7a02ef67a90324bd8f28)
-
-
+(defvar saved-text-scale 0
+  "Saved text scale for the current buffer.")
 
 (defun save-text-scale ()
-  "Save text-scale."
-  (message "saving prev text scale")
-  (setq text-scale-previous (buffer-local-value 'text-scale-mode-amount (current-buffer))))
+  "Save the current text scale into `saved-text-scale`."
+  (setq saved-text-scale text-scale-mode-amount)
+  (message "Saved text scale: %d" saved-text-scale))
 
 (defun restore-text-scale ()
-  "Restore text-scale."
-  (message "restoring prev text scale %d" text-scale-previous)
-  (text-scale-set text-scale-previous))
+  "Restore the text scale from `saved-text-scale`."
+  (when saved-text-scale
+    (message "Restoring text scale: %d" saved-text-scale)
+    (text-scale-set saved-text-scale)))
 
-(add-hook 'uiua-base-mode-hook (lambda () (add-hook 'before-revert-hook 'save-text-scale)))
-(add-hook 'uiua-base-made-hook (lambda () (add-hook 'after-revert-hook 'restore-text-scale)))
+(defun setup-text-scale-hooks ()
+  "Set up hooks to save and restore text scale during buffer revert."
+  (add-hook 'before-revert-hook 'save-text-scale nil t)
+  (add-hook 'after-revert-hook 'restore-text-scale nil t))
+
+(add-hook 'uiua-base-mode-hook 'setup-text-scale-hooks)
 
 ;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
-(add-hook 'uiua-base-mode-hook 
-          (lambda () (uiua-format-on-save-mode -1))) 
-(add-hook 'uiua-base-mode-hook
-          (lambda () (add-hook 'after-save-hook
-                               (lambda () 
-				 (sleep-for 0.1) ; Give time for the formatter to run
-				 (revert-buffer t t)) 95 'make-it-local)))
+
+ (add-hook 'uiua-base-mode-hook 
+           (lambda () (uiua-format-on-save-mode -1))) 
+
+ ;; (add-hook 'uiua-base-mode-hook
+           (lambda () (add-hook 'after-save-hook
+                                (lambda () 
+ 				 (sleep-for 0.15) ; Give time for the formatter to run
+ 				 (revert-buffer t t)) 95 'make-it-local)))
 (add-hook 'uiua-base-mode-hook 
 	  (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
 
+;; (add-hook 'uiua-base-mode-hook
+;;           (lambda ()
+;;             (add-hook 'after-save-hook
+;;                       (lambda ()
+;;                         (let ((buf (current-buffer))) ; Capture the buffer
+;;                           (sleep-for 0.15) ; Wait for the formatter to finish
+;;                           (when (and (buffer-live-p buf)
+;;                                      (file-exists-p buffer-file-name))
+;;                             (let ((mod-time (nth 5 (file-attributes buffer-file-name))))
+;;                               (when (and mod-time
+;;                                          (or (not last-mod-time) ; First save
+;;                                              (time-less-p last-mod-time mod-time))) ; File updated
+;;                                         ;(setq last-mod-time mod-time) ; Update the timestamp
+;;                                 (with-current-buffer buf
+;;                                   (revert-buffer t t t))))))
+;;                         nil 'local))))
 
 ;; Org mode languages
 (org-babel-do-load-languages
