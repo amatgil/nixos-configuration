@@ -158,6 +158,7 @@ local cpu_widget     = require("widgets.cpu-widget.cpu-widget")
 local battery_widget = require("widgets.batteryarc-widget.batteryarc")
 
 local volume_widget = wibox.widget { markup = "", align = 'center', valign = 'center', widget = wibox.widget.textbox }
+local clicker_widget = wibox.widget { markup = "", align = 'center', valign = 'center', widget = wibox.widget.textbox }
 local brightness_widget = wibox.widget { markup = "", align = 'center', valign = 'center', widget = wibox.widget.textbox }
 
 local ram_widget = awful.widget.watch('/etc/nixos/scripts/display_ram', 10, function (widget, stdout)
@@ -240,6 +241,8 @@ awful.screen.connect_for_each_screen(function(s)
 	    widget_separator,
             brightness_widget,
 	    widget_separator,
+            clicker_widget,
+	    widget_separator,
             volume_widget,
 	    widget_separator,
 	    cpu_widget({
@@ -298,6 +301,20 @@ brightness_dec = function ()
 end
 -- }}}
 
+-- {{{ Clicker
+update_clicker_widget = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/clicker show", function(stdout) clicker_widget.markup = stdout end)
+end
+
+clicker_inc = function () 
+   awful.spawn.easy_async("/etc/nixos/scripts/clicker inc", function() update_clicker_widget() end)
+end
+
+clicker_reset = function ()
+   awful.spawn.easy_async("/etc/nixos/scripts/clicker reset", function() update_clicker_widget() end)
+end
+-- }}}
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -338,6 +355,12 @@ globalkeys = gears.table.join(
        {description = 'Thinkpad wild card', group = 'client'}),
 
 
+    -- CLICKER STUFFS
+    awful.key({ modkey,           }, "c",      function () clicker_inc()  end,
+       {description = "increase clicker by 1", group = "client"}),
+    awful.key({ modkey, "Shift"   }, "c",      function ()  clicker_reset() end,
+       {description = "reset clicker", group = "client"}),
+    -- END OF CLICKER STUFFS
 
     -- BRIGHTNESS STUFFS
     awful.key({ modkey,           }, "b",      function () brightness_inc()  end,
@@ -644,4 +667,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 update_volume_widget() -- Open up displaying the current volume
+update_clicker_widget() -- Open up displaying the clicker 
 update_brightness_widget() -- Open up displaying the current brightness

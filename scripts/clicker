@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+FILE="$HOME/.cache/clicker_amount"
+touch -a $FILE
+
+X=$(< $FILE)
+
+case "$1" in
+    "inc")   echo $(($X + 1)) > $FILE ;;
+    "reset") echo 0 > $FILE ;;
+    "show")  echo "C: <b>$X</b>" ;;
+    "") ;;
+esac
