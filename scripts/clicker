@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Inspired by `https://www.youtube.com/watch?v=q4aQ6BjH174`
+
 FILE="$HOME/.cache/clicker_amount"
 touch -a $FILE
 
@@ -9,5 +11,5 @@ case "$1" in
     "inc")   echo $(($X + 1)) > $FILE ;;
     "reset") echo 0 > $FILE ;;
     "show")  echo "C: <b>$X</b>" ;;
-    "") ;;
+    *) ;;
 esac
