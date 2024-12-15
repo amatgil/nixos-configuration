@@ -71,6 +71,7 @@
         variant = "cat";
         options = "caps:escape,compose:menu,grp:rctrl_switch"; 
       };
+
       #xkbOptions = "esc:swapcaps,compose:Menu";
       windowManager.awesome = {
         enable = true;
@@ -83,6 +84,8 @@
       autoRepeatDelay = 400;
       autoRepeatInterval = 400;
     };
+
+    #foldingathome.enable = true;
   };
 
 
@@ -97,8 +100,8 @@
   programs.nh = {
     enable = true;
     clean.enable = true;
-    # It's an OR: if it's older than 4d OR it's not the last three gens, it's byebye'd
-    clean.extraArgs = "--keep-since 4d --keep 3";
+    # It's an OR: if it's older than 20d OR it's not the last four gens, it's byebye'd
+    clean.extraArgs = "--keep-since 20d --keep 4";
     flake = "/etc/nixos";
   };
 
