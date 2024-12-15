@@ -136,8 +136,10 @@
 
 (define-key evil-motion-state-map (kbd "C-f") nil) (define-key evil-normal-state-map (kbd "C-f") nil)
 (define-key evil-insert-state-map (kbd "C-f") nil) (define-key evil-visual-state-map (kbd "C-f") nil)
+
 (global-unset-key (kbd "C-f"))
 (global-set-key (kbd "C-f C-f") 'avy-goto-char-2)
+(define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
 
 ; (Ma)Git / Forge
 (global-set-key (kbd "C-c g") 'magit)
@@ -172,6 +174,12 @@
 (add-hook 'c-mode-hook 'lsp-deferred)
 (add-hook 'c++-mode-hook 'lsp-deferred)
 
+(global-set-key (kbd "C-c C-c") 'compile)
+(with-eval-after-load 'cc-mode
+  (define-key c-mode-base-map (kbd "C-c C-c") nil) 
+  (define-key c-mode-base-map (kbd "C-c C-c") 'compile))
+
+
 ;;; Uiua
 
 (defvar saved-text-scale 0
@@ -200,11 +208,11 @@
  (add-hook 'uiua-base-mode-hook 
            (lambda () (uiua-format-on-save-mode -1))) 
 
- ;; (add-hook 'uiua-base-mode-hook
-           (lambda () (add-hook 'after-save-hook
-                                (lambda () 
- 				 (sleep-for 0.15) ; Give time for the formatter to run
- 				 (revert-buffer t t)) 95 'make-it-local)))
+;; (add-hook 'uiua-base-mode-hook
+;;           (lambda () (add-hook 'after-save-hook
+;;                                (lambda () 
+;; 				 (sleep-for 0.15) ; Give time for the formatter to run
+;; 				 (revert-buffer t t)) 95 'make-it-local)))
 (add-hook 'uiua-base-mode-hook 
 	  (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
 
