@@ -1,6 +1,6 @@
 {
   pkgs ? import <nixpkgs> { },
-  lib,
+  lib ? pkgs.lib,
 }:
 let
   packages = with pkgs; [
