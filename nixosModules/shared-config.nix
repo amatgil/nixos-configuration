@@ -40,6 +40,12 @@
       sddm.enable = true;
       defaultSession = "none+awesome";
     };
+      
+    kanata = {
+      enable = true;
+      keyboards.default.devices = [];
+      keyboards.default.configFile = ../dotfiles/uiua-layer.kbd; # bad name, also changes caps->shift/ctrl
+    };
 
     printing.enable = false; # TODO: reenable when CVE gets fixed # Enable CUPS to print documents.
     picom.enable = true;  # Compositor
@@ -67,9 +73,10 @@
     xserver = {
       enable = true;
       xkb = {
-        layout = "es,apl";
+        layout = "es";
         variant = "cat";
-        options = "caps:escape,compose:menu,grp:rctrl_switch"; 
+        #layout = "es,apl";
+        #options = "caps:escape,compose:menu,grp:rctrl_switch"; 
       };
 
       #xkbOptions = "esc:swapcaps,compose:Menu";
@@ -170,7 +177,7 @@
   users.users.casenc = {
     isNormalUser = true;
     description = "casenc";
-    extraGroups = [ "networkmanager" "wheel" "video" "scanner" "lp"];
+    extraGroups = [ "networkmanager" "wheel" "video" "scanner" "lp" "uinput"]; # uinput = kanata
     packages = []; # They're all in home-manager
   };
 
