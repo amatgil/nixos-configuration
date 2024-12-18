@@ -285,6 +285,8 @@
       epkgs.forge # GitHub/GitLab integration with magit
       epkgs.dap-mode
       epkgs.ess
+      epkgs.elm-mode
+      epkgs.just-mode
     ];
   };
 	xdg.configFile.emacs = {

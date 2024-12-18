@@ -179,6 +179,8 @@
   (define-key c-mode-base-map (kbd "C-c C-c") nil) 
   (define-key c-mode-base-map (kbd "C-c C-c") 'compile))
 
+;;; Elm
+(add-hook 'elm-mode-hook 'lsp-deferred)
 
 ;;; Uiua
 
