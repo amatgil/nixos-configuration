@@ -33,3 +33,7 @@ should_replace_name = true
 [copet-cpp]
 source = "copet-cpp"
 should_replace_name = true
+
+[copet-elm]
+source = "copet-elm"
+should_replace_name = true
