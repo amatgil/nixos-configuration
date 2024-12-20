@@ -107,8 +107,8 @@
   programs.nh = {
     enable = true;
     clean.enable = true;
-    # It's an OR: if it's older than 20d OR it's not the last four gens, it's byebye'd
-    clean.extraArgs = "--keep-since 20d --keep 4";
+    # OUTDATED: It's an OR: if it's older than 20d OR it's not the last four gens, it's byebye'd
+    clean.extraArgs = "--keep-since 40d";
     flake = "/etc/nixos";
   };
 
@@ -160,7 +160,7 @@
 
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  #sound.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.sane = {
     enable = true; # enables support for SANE scanners
