@@ -21,7 +21,7 @@
       rev = "master";
       sha256 = "sha256-bLYLZ6SLRKYOQcOkc3pB4jK7APjCSdaA5uZR0T+lq5U=";
     }) {})
-    cinnamon.nemo
+    nemo
     imagemagick
     keepassxc
     zathura
