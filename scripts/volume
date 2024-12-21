@@ -37,7 +37,6 @@ function dec_vol ()
 end
 
 function toggle_mute () 
-   --local h = io.popen("amixer set Master 1+ toggle")
    local cmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
    run_cmd(cmd)
 end
