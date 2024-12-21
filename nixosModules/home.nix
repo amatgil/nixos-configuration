@@ -253,6 +253,46 @@
   services.dunst = {
     enable = true;
   };
+
+  # BEGIN AUTORANDR AREA
+
+  # interesting: https://bacardi55.io/2023/07/10/new-laptop-part-6-managing-multi-screens-with-i3wm-and-autorandr/ 
+  programs.autorandr = {
+    enable = true;
+    profiles = {
+      dreanix-default = {
+        # xrandr --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal
+        fingerprint = {
+          "HDMI-1" = "00ffffffffffff0010ac9ca04d414b340c1a0103a0351e78eaa0a5a656529d270f5054a54b00714f8180010101010101010101010101023a801871382d40582c45000f292100001e000000ff004b4b4d4d57363348344b414d0a000000fc0044454c4c205032343134480a20000000fd00384c1e5311000a20202020202001ab02031bc1230904038301000067030c002000802d43908402e2000f8c0ad08a20e02d10103e9600a05a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d0";
+          "HDMI-2" = "00ffffffffffff001e6d555be37a0b00081e010380301b78ea3135a5554ea1260c5054a54b00714f81809500b300a9c0810081c09040023a801871382d40582c4500e00e1100001e000000fd00384b1e5512000a202020202020000000fc004c472046554c4c2048440a2020000000ff003030384e544d584e343335350a017402031bf14890040301121f1013230907078301000065030c001000023a801871382d40582c4500e00e1100001e2a4480a07038274030203500e00e1100001e011d007251d01e206e285500e00e1100001e8c0ad08a20e02d10103e9600e00e11000018000000000000000000000000000000000000000000000000000000004b";
+        };
+        config = {
+          "HDMI-2" = {
+            enable = true;
+            primary = true;
+            crtc = 0;
+            mode = "1920x1080";
+            position = "0x0";
+            rate = "60.00";
+          };
+          "HDMI-1" = {
+            enable = true;
+            crtc = 0;
+            mode = "1920x1080";
+            position = "1920x0";
+            rate = "60.00";
+          };
+        };
+      };
+    };
+  };
+
+  services.autorandr = {
+    enable = true;
+  };
+
+  # END AUTORANDR AREA
+
   xdg.configFile.plantill.source = ../dotfiles/plantill;
 	xdg.configFile.awesome.source = ../dotfiles/awesome;
 
