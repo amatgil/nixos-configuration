@@ -271,19 +271,19 @@ root.buttons(gears.table.join(
 
 -- {{{ Volume stuffs
 update_volume_widget = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 0", function(stdout) volume_widget.markup = stdout end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume curr", function(stdout) volume_widget.markup = stdout end)
 end
 
 volume_inc = function () 
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 1", function() update_volume_widget() end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume inc", function() update_volume_widget() end)
 end
 
 volume_dec = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 2", function() update_volume_widget() end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume dec", function() update_volume_widget() end)
 end
 
 volume_toggle = function ()
-   awful.spawn.easy_async("/etc/nixos/scripts/volume 3", function() update_volume_widget() end)
+   awful.spawn.easy_async("/etc/nixos/scripts/volume togglemute", function() update_volume_widget() end)
 end
 -- }}}
 

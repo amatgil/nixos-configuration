@@ -1,18 +1,24 @@
 #!/usr/bin/env lua
 
-function current_vol () 
-   local cmd = "amixer get Master | tail -1 | awk '{print $5}' | sed 's/[^0-9]*//g'"
-   local vol_handle = io.popen(cmd)
-   local vol = vol_handle:read("*a")
-   vol_handle:close()
+function run_cmd(cmd)
+   local handle = io.popen(cmd)
+   local x = handle:read("*a");
+   handle:close()
+   return x
+end
 
+function current_vol () 
+   local cmd = "bc <<< \"100*$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')\""
+   local vol = run_cmd(cmd)
+
+   local standard = string.sub(string.gsub(vol, "\n", ""), 1, -4)
    local formatted
    if is_muted() then
        formatted = "Vol: <b>" .. "MM" .. "%</b>"
    elseif tonumber(vol) <= 4 then
        formatted = "Vol: <b>" .. "--" .. "%</b>"
    else 
-       formatted = "Vol: <b>" .. string.gsub(vol, "\n", "") .. "%</b>"
+      formatted = "Vol: <b>" .. standard .. "%</b>"
    end
 
    print(formatted)
@@ -21,31 +27,25 @@ end
 			
 
 function inc_vol () 
-   local curr_vol = current_vol()
-   if tonumber(curr_vol) <= 95 then
-      local h = io.popen("amixer set Master 5%+ > /dev/null")
-      h:close()
-   end
+   local cmd = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"
+   if tonumber(current_vol()) <= 95 then run_cmd(cmd); end
 end
 
 function dec_vol () 
-   local curr_vol = current_vol()
-   if tonumber(curr_vol) >= 5 then
-      local h = io.popen("amixer set Master 5%- > /dev/null")
-      h:close()
-   end
+   local cmd = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"
+   if tonumber(current_vol()) >= 5 then run_cmd(cmd); end
 end
 
 function toggle_mute () 
-   local h = io.popen("amixer set Master 1+ toggle")
-   h:close()
+   --local h = io.popen("amixer set Master 1+ toggle")
+   local cmd = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+   run_cmd(cmd)
 end
 
 function is_muted()
-   local cmd = "amixer get Master | tail -1 | awk '{print $6}' | sed 's/[^a-z]*//g'"
-   local h = io.popen(cmd)
-   local raw_output = h:read("*a")
-   return string.match(raw_output, "off")
+   local cmd = "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $3}'"
+   local r = run_cmd(cmd)
+   return string.match(r, "MUTED")
 end
 
 function arg_error() 
@@ -56,10 +56,10 @@ end
 local n = arg[1]
 
 local calling_table = {
-   ["0"] = current_vol,
-   ["1"] = inc_vol,
-   ["2"] = dec_vol,
-   ["3"] = toggle_mute
+   ["curr"] = current_vol,
+   ["inc"] = inc_vol,
+   ["dec"] = dec_vol,
+   ["togglemute"] = toggle_mute
 }
 
 (calling_table[n] or arg_error)()

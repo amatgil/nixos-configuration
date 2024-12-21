@@ -211,6 +211,7 @@
     man-pages
     man-pages-posix
     xdotool
+    bc
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
