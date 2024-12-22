@@ -302,6 +302,7 @@
       epkgs.nix-mode
       epkgs.evil
       epkgs.evil-collection
+      epkgs.evil-owl
       epkgs.magit
       epkgs.rust-mode
       epkgs.lua-mode

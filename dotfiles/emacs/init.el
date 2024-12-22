@@ -29,6 +29,10 @@
 (setq evil-undo-system 'undo-fu)
 (evil-mode 1) ;; Vim keybinds pretty please
 (evil-collection-init) ;; Vim keybinds in buffers like magit too
+(evil-owl-mode)
+(setq evil-owl-display-method 'window)
+(setq evil-owl-idle-delay 0)
+
 (global-set-key (kbd "<escape>") 'keyboard-quit) ;; Make <ESC> do what C-g does as well
 
 ;; Move autosaves away from the directory
