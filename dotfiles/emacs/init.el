@@ -138,11 +138,7 @@
 (global-set-key (kbd "C-h x") #'helpful-command)
 ;;;;;;;;;
 
-(define-key evil-motion-state-map (kbd "C-f") nil) (define-key evil-normal-state-map (kbd "C-f") nil)
-(define-key evil-insert-state-map (kbd "C-f") nil) (define-key evil-visual-state-map (kbd "C-f") nil)
-
-(global-unset-key (kbd "C-f"))
-(global-set-key (kbd "C-f C-f") 'avy-goto-char-2)
+(define-key evil-normal-state-map (kbd "s") 'avy-goto-char-2)
 (define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
 
 ; (Ma)Git / Forge
