@@ -8,6 +8,7 @@ let
     ghc
     ghcid # Bacon for haskell
     cabal-install
+    haskellPackages.hindent
   ];
 in
 pkgs.mkShell {

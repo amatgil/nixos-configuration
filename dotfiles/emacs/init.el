@@ -165,10 +165,13 @@
 (add-hook 'rust-mode-hook 
           (lambda () (add-hook 'before-save-hook 'lsp-format-buffer))) 
 ;;; Haskell
-(add-hook 'haskell-mode-hook #'lsp)
-(add-hook 'haskell-mode-hook #'interactive-haskell-mode)
-(add-hook 'haskell-literate-mode-hook #'lsp)
-(setq haskell-interactive-popup-errors nil) ; Make C-c C-l errors usable
+; > haskell-mode is stable and usable, whereas lsp-haskell is newer but under development and not ready for general use. 
+;(add-hook 'haskell-mode-hook #'lsp-deferred)
+;(add-hook 'haskell-mode-hook #'interactive-haskell-mode)
+;(add-hook 'haskell-literate-mode-hook #'lsp-deferred)
+;(setq haskell-interactive-popup-errors nil) ; Make C-c C-l errors usable
+(add-hook 'haskell-mode-hook #'hindent-mode)
+
 
 ;;; C++
 (add-hook 'c-mode-hook 'lsp-deferred)
