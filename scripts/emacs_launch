@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-emacs
+#emacs
+emacsclient -c

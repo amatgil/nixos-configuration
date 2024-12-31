@@ -84,8 +84,9 @@
 ;        (t . (semilight 1.1))))
 ;(load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
-(set-frame-font "FiraCode Nerd Font-10" nil t)
+;(set-frame-font "FiraCode Nerd Font-10" nil t) ; breaks with emacsclient
 ;(set-frame-font "Uiua386-14" nil t)
+(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-10"))
 
 ;(global-hl-line-mode 1)   ; Highlight current line
 

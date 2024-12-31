@@ -330,6 +330,13 @@
       epkgs.just-mode
     ];
   };
+
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    startWithUserSession = "graphical";
+  };
+
 	xdg.configFile.emacs = {
   	source = ../dotfiles/emacs;
   	recursive = true;
@@ -459,9 +466,6 @@
   	};
   };
 
-  home.sessionVariables = {
-  	EDITOR = "emacs";
-  };
   home.file.".cargo/config.toml".text = ''
     [target.x86_64-unknown-linux-gnu]
     linker = "${pkgs.llvmPackages.clangUseLLVM}/bin/clang"
