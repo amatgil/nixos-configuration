@@ -12,13 +12,6 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.kernel.sysctl."kernel.sysrq" = 1; # all functions
-    # h: Print help to the system log.
-    # f: Trigger the kernel oom killer.
-    # s: Sync data to disk before triggering the reset options below.
-    # e: SIGTERM all processes except PID 0.
-    # i: SIGKILL all processes except PID 0.
-    # b: Reboot the system.
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/2208bed2-d3ad-4726-899a-b66cf64295c7";
