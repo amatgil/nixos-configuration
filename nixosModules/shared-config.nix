@@ -6,7 +6,9 @@
 {
   # Flakes enable
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true; # mostly nvidia :(
+  nixpkgs.config.nvidia.acceptLicense = true; # this is specifically nvidia lmao
+
   nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
