@@ -99,7 +99,6 @@
     inkscape
     fontforge-gtk
     ascii
-    
     kicad-small
   ];
 
