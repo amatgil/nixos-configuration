@@ -200,13 +200,27 @@
 
 ; ORG MODE
 (setq org-todo-keywords
-  '((sequence "TODO" "IN-PROGRESS" "WAITING" "DONE")))
+  '((sequence "TODO" "WAITING" "DONE")))
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 (setq org-default-notes-file (concat org-directory "/notes.org")) ; I found that user-emacs-directory exists (could be nicer)
 ;; Org-habit
 (add-to-list 'org-modules 'org-habit t)
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/RoamNotes")
+  (org-roam-completion-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)) ; for autocompleting names of note[[id:5330c9c0-6613-485e-8581-ff9e8e4d7a2d][Haskell]]s
+  :config
+  (org-roam-setup))
 
 
 ;; The selected line number doesn't scale when the font size changes (very noticeable in uiua)
