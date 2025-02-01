@@ -100,7 +100,7 @@
     fontforge-gtk
     ascii
     
-    #iosevka # Untested
+    kicad-small
   ];
 
   programs.rofi = {
@@ -327,6 +327,8 @@
       epkgs.ess
       epkgs.elm-mode
       epkgs.just-mode
+      epkgs.visual-fill-column
+      epkgs.org-roam
     ];
   };
 

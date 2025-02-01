@@ -33,7 +33,15 @@
 (setq evil-owl-display-method 'window)
 (setq evil-owl-idle-delay 0)
 
-(global-set-key (kbd "<escape>") 'keyboard-quit) ;; Make <ESC> do what C-g does as well
+; visual line stuff: https://github.com/joostkremers/visual-fill-column (good README)
+; whole thing is 'visual-fill-column-mode'!
+(setq visual-line-fringe-indicators '(nil nil)) ; i don't think this does anything
+;(global-visual-fill-column-mode 1) ; visual-line mode in my veins
+(setq visual-fill-column-enable-sensible-window-split 1)
+;(advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
+(setq visual-fill-column-width 80) ; default is whatever fill-column is
+(add-hook 'visual-fill-column-mode #'visual-line-mode)
+;(setq-default visual-fill-column-center-text t) ; center text in the middle of the screen, better to do per-buffer
 
 ;; Move autosaves away from the directory
 (setq backup-directory-alist `(("." . "~/.config/emacs/autosaves")))
@@ -60,29 +68,8 @@
 
 (setq dired-dwim-target 'dired-dwim-target-recent)
 
-;; Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/ (but updated)
+;; OUTDATED: Config mostly from https://systemcrafters.net/emacs-from-scratch/the-modus-themes/ (but updated)
 
-
-
-
-; stylix makes this irrelevant
-;(setq modus-themes-mode-line '(accented borderless)
-;      modus-themes-bold-constructs t
-;      modus-themes-italic-constructs t
-;      modus-themes-fringes 'subtle
-;      modus-themes-tabs-accented t
-;      modus-themes-paren-match '(bold intense)
-;      modus-themes-prompts '(bold intense)
-;      modus-themes-completions '((matches . (extrabold underline)) (selection . (semibold italic)))
-;      modus-themes-org-blocks 'tinted-background
-;      modus-themes-scale-headings t
-;      modus-themes-region '(bg-only)
-;      modus-themes-headings
-;      '((1 . (rainbow overline background 1.4))
-;        (2 . (rainbow background 1.3))
-;        (3 . (rainbow bold 1.2))
-;        (t . (semilight 1.1))))
-;(load-theme 'modus-vivendi t) ;; load theme (configured above (the order is important))
 
 ;(set-frame-font "FiraCode Nerd Font-10" nil t) ; breaks with emacsclient
 ;(set-frame-font "Uiua386-14" nil t)
@@ -107,7 +94,8 @@
 (global-set-key (kbd "C-c e n") 'flymake-goto-next-error) ; Error next
 (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error) ; Error previous
 
-(global-set-key (kbd "C-c C-r") 'revert-buffer)
+(global-set-key (kbd "C-c C-r") '(revert-buffer t t t))
+(setq read-process-output-max (* 1024 1024)) ;; 1mb (for lsp)
 
 
 (setq-default indent-tabs-mode nil) ; Emacs mixes tabs and spaces (i didn't know there was an objectively bad option about the two)
@@ -167,9 +155,9 @@
           (lambda () (add-hook 'before-save-hook 'lsp-format-buffer))) 
 ;;; Haskell
 ; > haskell-mode is stable and usable, whereas lsp-haskell is newer but under development and not ready for general use. 
-;(add-hook 'haskell-mode-hook #'lsp-deferred)
+(add-hook 'haskell-mode-hook #'lsp-deferred)
 ;(add-hook 'haskell-mode-hook #'interactive-haskell-mode)
-;(add-hook 'haskell-literate-mode-hook #'lsp-deferred)
+(add-hook 'haskell-literate-mode-hook #'lsp-deferred)
 ;(setq haskell-interactive-popup-errors nil) ; Make C-c C-l errors usable
 (add-hook 'haskell-mode-hook #'hindent-mode)
 
@@ -187,63 +175,27 @@
 (add-hook 'elm-mode-hook 'lsp-deferred)
 
 ;;; Uiua
+;(add-to-list 0lsp-language-id-configuration '(uiuacas-mode . "uiua")) ; buffer in uiuacas-mode correspond to the language "uiua"
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-language-id-configuration '(".*\\.ua" . "uiua")) ; buffer in uiuacas-mode correspond to the language "uiua"
 
-(defvar saved-text-scale 0
-  "Saved text scale for the current buffer.")
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection '("uiua" "lsp"))
+                        :activation-fn (lsp-activate-on "uiua")
+                        :server-id 'uiua)))
 
-(defun save-text-scale ()
-  "Save the current text scale into `saved-text-scale`."
-  (setq saved-text-scale text-scale-mode-amount)
-  (message "Saved text scale: %d" saved-text-scale))
-
-(defun restore-text-scale ()
-  "Restore the text scale from `saved-text-scale`."
-  (when saved-text-scale
-    (message "Restoring text scale: %d" saved-text-scale)
-    (text-scale-set saved-text-scale)))
-
-(defun setup-text-scale-hooks ()
-  "Set up hooks to save and restore text scale during buffer revert."
-  (add-hook 'before-revert-hook 'save-text-scale nil t)
-  (add-hook 'after-revert-hook 'restore-text-scale nil t))
-
-(add-hook 'uiua-base-mode-hook 'setup-text-scale-hooks)
-
-;; format-on-save deletes the file instead of formatting, so  we'll let the uiua binary do it
-
- (add-hook 'uiua-base-mode-hook 
-           (lambda () (uiua-format-on-save-mode -1))) 
-
-;; (add-hook 'uiua-base-mode-hook
-;;           (lambda () (add-hook 'after-save-hook
-;;                                (lambda () 
-;; 				 (sleep-for 0.15) ; Give time for the formatter to run
-;; 				 (revert-buffer t t)) 95 'make-it-local)))
 (add-hook 'uiua-base-mode-hook 
 	  (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
-
-;; (add-hook 'uiua-base-mode-hook
-;;           (lambda ()
-;;             (add-hook 'after-save-hook
-;;                       (lambda ()
-;;                         (let ((buf (current-buffer))) ; Capture the buffer
-;;                           (sleep-for 0.15) ; Wait for the formatter to finish
-;;                           (when (and (buffer-live-p buf)
-;;                                      (file-exists-p buffer-file-name))
-;;                             (let ((mod-time (nth 5 (file-attributes buffer-file-name))))
-;;                               (when (and mod-time
-;;                                          (or (not last-mod-time) ; First save
-;;                                              (time-less-p last-mod-time mod-time))) ; File updated
-;;                                         ;(setq last-mod-time mod-time) ; Update the timestamp
-;;                                 (with-current-buffer buf
-;;                                   (revert-buffer t t t))))))
-;;                         nil 'local))))
 
 ;; Org mode languages
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)
    (haskell . t)
+   ; (rust . t) i need to add 'ob-rust' or whatever, i don't want to deal with it rn
+   ; (sh . t) ; TODO: all of these or whatever
+   ; (sed . t)
+   ; (awk . t)
    (emacs-lisp . t)))
 
 ; ORG MODE
@@ -281,3 +233,11 @@
 (add-hook 'post-command-hook
           (lambda ()
             (force-mode-line-update)))
+
+(defun sudo ()
+  "Use TRAMP to `sudo` the current buffer"
+  (interactive)
+  (when buffer-file-name
+    (find-alternate-file
+     (concat "/sudo:root@localhost:"
+             buffer-file-name))))
