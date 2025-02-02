@@ -90,8 +90,8 @@
         ];
       };
 
-      autoRepeatDelay = 400;
-      autoRepeatInterval = 400;
+      autoRepeatDelay = 250;
+      autoRepeatInterval = 25;
     };
 
     #foldingathome.enable = true;
