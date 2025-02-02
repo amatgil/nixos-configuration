@@ -329,6 +329,8 @@
       epkgs.just-mode
       epkgs.visual-fill-column
       epkgs.org-roam
+      epkgs.helm
+      # epkgs.ivy <-- this sucks
     ];
   };
 
@@ -409,7 +411,6 @@
   	enable = true;
   	settings = {
   	  args = null;
-  	  backend = "neofetch";
   	  color_align = {
   	    custom_colors."1" = 3;
   	    custom_colors."2" = 2;

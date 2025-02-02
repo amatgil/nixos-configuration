@@ -24,11 +24,21 @@
 
 (overwrite-mode -1) ;; Disble overwrite mode so that text editing actually works
 (global-origami-mode 1) ;; Enable folding
-(fido-mode 1) ;; Enable minibuffer neat completion (comes from icomplete-mode)
-(setq evil-want-keybinding nil) ;; evil-collection tells me to use this if I'm using evil, so here it is
-(setq evil-undo-system 'undo-fu)
-(evil-mode 1) ;; Vim keybinds pretty please
-(evil-collection-init) ;; Vim keybinds in buffers like magit too
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
+  (setq evil-want-keybinding nil) ;; evil-collection tells me to use this if I'm using evil, so here it is
+  (setq evil-undo-system 'undo-fu)
+  :config
+  (evil-mode 1))
+
+(use-package evil-collection
+  :custom (evil-collection-setup-minibuffer t)
+  :init (evil-collection-init))
+
 (evil-owl-mode)
 (setq evil-owl-display-method 'window)
 (setq evil-owl-idle-delay 0)
@@ -75,17 +85,11 @@
 ;(set-frame-font "Uiua386-14" nil t)
 (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-10"))
 
-;(global-hl-line-mode 1)   ; Highlight current line
+(global-hl-line-mode 1)   ; Highlight current line
 
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(setq ido-file-extensions-order '(".rs" ".ua" ".org" ".txt" ".emacs"))
-(ido-mode 1) ; Fancy, way cooler buffer/file switching
-(global-set-key (kbd "M-x") 'smex) ; smex is ido for M-x
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(global-set-key (kbd "C-c ç") 'shrink-window-horizontally)
-(global-set-key (kbd "C-c Ç") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-c C-ç") 'shrink-window-horizontally)
+(global-set-key (kbd "C-c C-Ç") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-c s") 'scroll-lock-mode)
 
 (setq lsp-ui-sideline-show-hover t)
@@ -253,5 +257,22 @@
   (interactive)
   (when buffer-file-name
     (find-alternate-file
-     (concat "/sudo:root@localhost:"
+     (concat "/sudo::"
              buffer-file-name))))
+
+
+(global-set-key (kbd "M-c") 'calc)
+
+(setq helm-move-to-line-cycle-in-source t)
+(helm-mode 1)
+(global-set-key (kbd "C-x b") 'helm-buffers-list)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+; (evil-define-key 'emacs helm-map "C-k" 'helm-previous-line)
+; (evil-define-key 'emacs helm-map "C-j" 'helm-next-line)
+; (evil-define-key 'emacs helm-map "C-l" 'helm-execute-persistent-action)
+; (evil-define-key 'emacs helm-map "C-h" 'helm-find-files-up-one-level)
+
+
