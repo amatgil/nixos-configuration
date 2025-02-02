@@ -1,1 +1,2 @@
 secrets/
+/dotfiles/emacs/*.elc
