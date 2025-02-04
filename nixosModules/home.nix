@@ -330,6 +330,7 @@
       epkgs.visual-fill-column
       epkgs.org-roam
       epkgs.helm
+      epkgs.elfeed
       # epkgs.ivy <-- this sucks
     ];
   };

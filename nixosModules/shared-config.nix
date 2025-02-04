@@ -214,6 +214,7 @@
     man-pages-posix
     xdotool
     bc
+    radeontop
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 

@@ -191,6 +191,52 @@
 (add-hook 'uiua-base-mode-hook 
 	  (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
 
+
+(use-package org
+  :config
+  (setq org-ellipsis " ▾"))
+
+(custom-set-variables
+ '(org-directory "~/org")
+ '(org-agenda-files (list org-directory)))
+
+(setq org-default-notes-file (concat org-directory "/notes.org")) ; I found that user-emacs-directory exists (could be nicer)
+
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/org")
+  (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?" :target
+     (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+     :unnarrowed t)))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)) ; for autocompleting names of notes
+  :config
+  (org-roam-setup))
+
+(setq org-todo-keywords '((sequence "TODO" "WAITING" "DONE")))
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
+
+
+; TODO: bind this to C-c n I
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
+
+
 ;; Org mode languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -201,30 +247,6 @@
    ; (sed . t)
    ; (awk . t)
    (emacs-lisp . t)))
-
-; ORG MODE
-(setq org-todo-keywords
-  '((sequence "TODO" "WAITING" "DONE")))
-(global-set-key (kbd "C-c l") #'org-store-link)
-(global-set-key (kbd "C-c a") #'org-agenda)
-(global-set-key (kbd "C-c c") #'org-capture)
-(setq org-default-notes-file (concat org-directory "/notes.org")) ; I found that user-emacs-directory exists (could be nicer)
-;; Org-habit
-(add-to-list 'org-modules 'org-habit t)
-(use-package org-roam
-  :ensure t
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory "~/RoamNotes")
-  (org-roam-completion-everywhere t)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
-         :map org-mode-map
-         ("C-M-i" . completion-at-point)) ; for autocompleting names of note[[id:5330c9c0-6613-485e-8581-ff9e8e4d7a2d][Haskell]]s
-  :config
-  (org-roam-setup))
 
 
 ;; The selected line number doesn't scale when the font size changes (very noticeable in uiua)
@@ -262,6 +284,7 @@
 
 
 (global-set-key (kbd "M-c") 'calc)
+(global-set-key (kbd "M-C") 'calendar)
 
 (setq helm-move-to-line-cycle-in-source t)
 (helm-mode 1)
@@ -270,9 +293,26 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
-; (evil-define-key 'emacs helm-map "C-k" 'helm-previous-line)
-; (evil-define-key 'emacs helm-map "C-j" 'helm-next-line)
-; (evil-define-key 'emacs helm-map "C-l" 'helm-execute-persistent-action)
-; (evil-define-key 'emacs helm-map "C-h" 'helm-find-files-up-one-level)
+(setq helm-completion-style 'emacs)
+(setq completion-styles '(flex))
+
+
+(global-set-key (kbd "C-x w") 'elfeed)
+(setq elfeed-feeds
+      '("https://xkcd.com/rss.xml"
+        "https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA"))
+
+(defun cas-open-ytvideo-in-mpv (link)
+  "Open provided youtube link with mpv" ; assumes mpv is in $PATH
+  (interactive
+   (let ((string (read-string "Foo: " nil 'my-history)))
+     (list (region-beginning) (region-end) string))))
+
+(keymap-set elfeed-show-mode-map "C-c c-o" 'cas-open-ytvideo-in-mpv)
+
+                                        ; (evil-define-key 'emacs helm-map "C-k" 'helm-previous-line)
+                                        ; (evil-define-key 'emacs helm-map "C-j" 'helm-next-line)
+                                        ; (evil-define-key 'emacs helm-map "C-l" 'helm-execute-persistent-action)
+                                        ; (evil-define-key 'emacs helm-map "C-h" 'helm-find-files-up-one-level)
 
 
