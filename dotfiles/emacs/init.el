@@ -88,8 +88,8 @@
 (global-hl-line-mode 1)   ; Highlight current line
 
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(global-set-key (kbd "C-c C-ç") 'shrink-window-horizontally)
-(global-set-key (kbd "C-c C-Ç") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-c C-Ç") 'shrink-window-horizontally)
+(global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-c s") 'scroll-lock-mode)
 
 (setq lsp-ui-sideline-show-hover t)
@@ -285,6 +285,7 @@
 
 (global-set-key (kbd "M-c") 'calc)
 (global-set-key (kbd "M-C") 'calendar)
+(setq calendar-week-start-day 1)
 
 (setq helm-move-to-line-cycle-in-source t)
 (helm-mode 1)
