@@ -307,17 +307,14 @@
       '("https://xkcd.com/rss.xml"
         "https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA"))
 
-;; (defun cas-open-ytvideo-in-mpv (link)
-;;   "Open provided youtube link with mpv" ; assumes mpv is in $PATH
-;;   (interactive
-;;    (let ((string (read-string "Foo: " nil 'my-history)))
-;;     (list (region-beginning) (region-end) string))))
-
-;; (keymap-set elfeed-show-mode-map "C-c c-o" 'cas-open-ytvideo-in-mpv)
-
-                                        ; (evil-define-key 'emacs helm-map "C-k" 'helm-previous-line)
-                                        ; (evil-define-key 'emacs helm-map "C-j" 'helm-next-line)
-                                        ; (evil-define-key 'emacs helm-map "C-l" 'helm-execute-persistent-action)
-                                        ; (evil-define-key 'emacs helm-map "C-h" 'helm-find-files-up-one-level)
-
-
+; Baby's first hacking on emacs :3
+(defun cas-open-video-in-mpv ()
+  "Open provided youtube link with mpv, assuming mpv is in $PATH"
+  (interactive)
+  (let ((link (thing-at-point-url-at-point)))
+    (message (format "Opening '%s' with mpv, hold tight..." link))
+    (start-process "emacs-mpv-video-watch" "*mpv-video-watch*" "mpv" link)))
+  
+(use-package elfeed
+  :config
+  (keymap-set elfeed-show-mode-map "C-c C-o" 'cas-open-video-in-mpv))
