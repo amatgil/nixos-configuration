@@ -215,6 +215,7 @@
     xdotool
     bc
     radeontop
+    xorg.xev
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 

@@ -6,18 +6,21 @@
 (setq gc-cons-threshold (* 1024 1024 100))
 ;;; Most of these are stolen from https://systemcrafters.net/emacs-from-scratch/the-best-default-settings/
 (setq visible-bell t) ;; Make the flashing visible, like when scrolling up when at the top
-(tool-bar-mode -1)   ;; disable tool-bar
-(menu-bar-mode -1)   ;; disable menu-bar
-(scroll-bar-mode -1) ;; disable scroll bar
+
+(defun casencs-after-init-fn (frame)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
+(add-hook 'after-make-frame-functions #'casencs-after-init-fn)
+
+;(hl-line-mode 1) ;; Highlight current line
 (global-display-line-numbers-mode 1) ;; enable line numbers
 (setq display-line-numbers 'relative) ;; make line numbers be relative
 (setq column-number-mode t) ;; enable line columns
-(hl-line-mode 1) ;; Highlight current line
 (recentf-mode 1) ;; Remember recent files (enables M-x recentf-open-files)
 (setq recentf-max-menu-items 25)
 
 (setq inhibit-startup-screen t)
-(setq history-length 25) ;; Only remember the last 25 files opened (for startup performance)
+(setq history-length 15) ;; Only remember the last 25 files opened (for startup performance)
 (savehist-mode 1) ;; Remember what is typed into minibuffer. enables M-n (next-history-element) and M-p (previous-history-element)
 (save-place-mode 1) ;; Don't forget place when file is closed
 (rainbow-mode 1) ;; Enable showing colors for hexcolors like (#ed8796)
@@ -43,15 +46,15 @@
 (setq evil-owl-display-method 'window)
 (setq evil-owl-idle-delay 0)
 
-; visual line stuff: https://github.com/joostkremers/visual-fill-column (good README)
-; whole thing is 'visual-fill-column-mode'!
-(setq visual-line-fringe-indicators '(nil nil)) ; i don't think this does anything
-;(global-visual-fill-column-mode 1) ; visual-line mode in my veins
-(setq visual-fill-column-enable-sensible-window-split 1)
-;(advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-(setq visual-fill-column-width 80) ; default is whatever fill-column is
-(add-hook 'visual-fill-column-mode #'visual-line-mode)
-;(setq-default visual-fill-column-center-text t) ; center text in the middle of the screen, better to do per-buffer
+;; visual line stuff: https://github.com/joostkremers/visual-fill-column (good README)
+;; whole thing is 'visual-fill-column-mode'!
+;(setq visual-line-fringe-indicators '(nil nil)) ; i don't think this does anything
+;;(global-visual-fill-column-mode 1) ; visual-line mode in my veins
+;(setq visual-fill-column-enable-sensible-window-split 1)
+;;(advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
+;(setq visual-fill-column-width 80) ; default is whatever fill-column is
+;(add-hook 'visual-fill-column-mode #'visual-line-mode)
+;;(setq-default visual-fill-column-center-text t) ; center text in the middle of the screen, better to do per-buffer
 
 ;; Move autosaves away from the directory
 (setq backup-directory-alist `(("." . "~/.config/emacs/autosaves")))
