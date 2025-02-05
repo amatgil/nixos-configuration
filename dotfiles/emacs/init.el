@@ -306,13 +306,13 @@
       '("https://xkcd.com/rss.xml"
         "https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA"))
 
-(defun cas-open-ytvideo-in-mpv (link)
-  "Open provided youtube link with mpv" ; assumes mpv is in $PATH
-  (interactive
-   (let ((string (read-string "Foo: " nil 'my-history)))
-     (list (region-beginning) (region-end) string))))
+;; (defun cas-open-ytvideo-in-mpv (link)
+;;   "Open provided youtube link with mpv" ; assumes mpv is in $PATH
+;;   (interactive
+;;    (let ((string (read-string "Foo: " nil 'my-history)))
+;;     (list (region-beginning) (region-end) string))))
 
-(keymap-set elfeed-show-mode-map "C-c c-o" 'cas-open-ytvideo-in-mpv)
+;; (keymap-set elfeed-show-mode-map "C-c c-o" 'cas-open-ytvideo-in-mpv)
 
                                         ; (evil-define-key 'emacs helm-map "C-k" 'helm-previous-line)
                                         ; (evil-define-key 'emacs helm-map "C-j" 'helm-next-line)
