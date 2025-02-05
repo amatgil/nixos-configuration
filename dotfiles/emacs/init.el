@@ -312,8 +312,11 @@
   "Open provided youtube link with mpv, assuming mpv is in $PATH"
   (interactive)
   (let ((link (thing-at-point-url-at-point)))
-    (message (format "Opening '%s' with mpv, hold tight..." link))
-    (start-process "emacs-mpv-video-watch" "*mpv-video-watch*" "mpv" link)))
+    (if link
+        (progn
+          (message (format "Opening '%s' with mpv, hold tight..." link))
+          (start-process "emacs-mpv-video-watch" "*mpv-video-watch*" "mpv" link))
+      (message "No link found under point, could not open :c"))))
   
 (use-package elfeed
   :config
