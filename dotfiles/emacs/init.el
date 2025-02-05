@@ -317,7 +317,7 @@
           (message (format "Opening '%s' with mpv, hold tight..." link))
           (start-process "emacs-mpv-video-watch" "*mpv-video-watch*" "mpv" link))
       (message "No link found under point, could not open :c"))))
-  
+
 (use-package elfeed
   :config
   (keymap-set elfeed-show-mode-map "C-c C-o" 'cas-open-video-in-mpv))
