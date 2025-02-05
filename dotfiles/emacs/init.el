@@ -1,18 +1,22 @@
 ;;;;; Startup optimizations
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (REMEMBER THAT C-c C-e evals the buffer, which includes the config without !nh !!)  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ; (stolen from https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga)
 ;; From https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
 (setq gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold (* 1024 1024 100))
 ;;; Most of these are stolen from https://systemcrafters.net/emacs-from-scratch/the-best-default-settings/
-(setq visible-bell t) ;; Make the flashing visible, like when scrolling up when at the top
+;(setq visible-bell t) ;; Make the flashing visible, like when scrolling up when at the top
 
-(defun casencs-after-init-fn (frame)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1))
-(add-hook 'after-make-frame-functions #'casencs-after-init-fn)
+(tool-bar-mode -1)   
+(menu-bar-mode -1)   
+(scroll-bar-mode -1) 
+(hl-line-mode 1) ;; Highlight current line
 
-;(hl-line-mode 1) ;; Highlight current line
 (global-display-line-numbers-mode 1) ;; enable line numbers
 (setq display-line-numbers 'relative) ;; make line numbers be relative
 (setq column-number-mode t) ;; enable line columns
@@ -32,7 +36,6 @@
   :ensure t
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
   (setq evil-want-keybinding nil) ;; evil-collection tells me to use this if I'm using evil, so here it is
   (setq evil-undo-system 'undo-fu)
   :config
@@ -42,19 +45,18 @@
   :custom (evil-collection-setup-minibuffer t)
   :init (evil-collection-init))
 
-(evil-owl-mode)
+(evil-owl-mode) ; Preview registers before seeing them
 (setq evil-owl-display-method 'window)
 (setq evil-owl-idle-delay 0)
 
-;; visual line stuff: https://github.com/joostkremers/visual-fill-column (good README)
-;; whole thing is 'visual-fill-column-mode'!
-;(setq visual-line-fringe-indicators '(nil nil)) ; i don't think this does anything
-;;(global-visual-fill-column-mode 1) ; visual-line mode in my veins
-;(setq visual-fill-column-enable-sensible-window-split 1)
-;;(advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-;(setq visual-fill-column-width 80) ; default is whatever fill-column is
-;(add-hook 'visual-fill-column-mode #'visual-line-mode)
-;;(setq-default visual-fill-column-center-text t) ; center text in the middle of the screen, better to do per-buffer
+; visual line stuff: https://github.com/joostkremers/visual-fill-column (good README)
+; whole thing is 'visual-fill-column-mode'!
+(setq visual-line-fringe-indicators '(nil nil)) ; i don't think this does anything
+(setq visual-fill-column-enable-sensible-window-split 1)
+;(advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
+(setq visual-fill-column-width 80) ; default is whatever fill-column is
+(add-hook 'visual-fill-column-mode #'visual-line-mode)
+;(setq-default visual-fill-column-center-text t) ; center text in the middle of the screen, better to do per-buffer
 
 ;; Move autosaves away from the directory
 (setq backup-directory-alist `(("." . "~/.config/emacs/autosaves")))
@@ -67,7 +69,6 @@
 (setq custom-file (locate-user-emacs-file "custom-vars.el"))
 (load custom-file 'noerror 'nomessage)
 
-;;;;;;;;;; REMEMBER THAT C-c C-e evals the buffer, which includes the config without !nh !!
 
 ;; Don't pop up UI dialogs when prompting (for staying on the keyboard)
 (setq use-dialog-box nil)
@@ -90,7 +91,7 @@
 
 (global-hl-line-mode 1)   ; Highlight current line
 
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ; i don't remember what this is, frankly
 (global-set-key (kbd "C-c C-Ç") 'shrink-window-horizontally)
 (global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-c s") 'scroll-lock-mode)
@@ -101,9 +102,8 @@
 (global-set-key (kbd "C-c e n") 'flymake-goto-next-error) ; Error next
 (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error) ; Error previous
 
-(global-set-key (kbd "C-c C-r") '(revert-buffer t t t))
+;(global-set-key (kbd "C-c C-r") '(revert-buffer t t t))
 (setq read-process-output-max (* 1024 1024)) ;; 1mb (for lsp)
-
 
 (setq-default indent-tabs-mode nil) ; Emacs mixes tabs and spaces (i didn't know there was an objectively bad option about the two)
 
@@ -297,6 +297,7 @@
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
+; Set helm completion to be useful lmao
 (setq helm-completion-style 'emacs)
 (setq completion-styles '(flex))
 
