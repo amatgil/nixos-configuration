@@ -15,7 +15,7 @@
 (tool-bar-mode -1)   
 (menu-bar-mode -1)   
 (scroll-bar-mode -1) 
-(hl-line-mode 1) ;; Highlight current line
+;(global-hl-line-mode 1) ;; Highlight current line
 
 (global-display-line-numbers-mode 1) ;; enable line numbers
 (setq display-line-numbers 'relative) ;; make line numbers be relative
@@ -89,12 +89,17 @@
 ;(set-frame-font "Uiua386-14" nil t)
 (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-10"))
 
-(global-hl-line-mode 1)   ; Highlight current line
-
 ;(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ; i don't remember what this is, frankly
 (global-set-key (kbd "C-c C-Ç") 'shrink-window-horizontally)
 (global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-c s") 'scroll-lock-mode)
+
+
+(global-set-key (kbd "C-w") 'nil)
+(global-set-key (kbd "C-w h") 'evil-window-left)
+(global-set-key (kbd "C-w l") 'evil-window-right)
+(global-set-key (kbd "C-w k") 'evil-window-up)
+(global-set-key (kbd "C-w j") 'evil-window-down)
 
 (setq lsp-ui-sideline-show-hover t)
 (setq lsp-ui-sideline-show-code-actions t)
@@ -229,9 +234,11 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
+(setq org-agenda-span 'month)
+(setq org-hide-leading-stars t)
 
 
-; TODO: bind this to C-c n I
+                                        ; TODO: bind this to C-c n I
 (defun org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
   (let ((args (cons arg args))
@@ -265,7 +272,7 @@
   (if (use-region-p)
       (let ((characters (+ 1 (abs (- (region-end) (region-beginning)))))
             (lines (+ 1 (abs (- (line-number-at-pos (region-end))
-                                  (line-number-at-pos (region-beginning)))))))
+                                (line-number-at-pos (region-beginning)))))))
         (format "<%d,%d>" lines characters))
     "<_,_>"))
 
@@ -287,8 +294,10 @@
 
 
 (global-set-key (kbd "M-c") 'calc)
-(global-set-key (kbd "M-C") 'calendar)
 (setq calendar-week-start-day 1)
+(setq diary-file (concat org-directory "/diary.org"))
+(setq calendar-date-style 'european)
+(setq diary-date-forms diary-european-date-forms)
 
 (setq helm-move-to-line-cycle-in-source t)
 (helm-mode 1)
@@ -305,7 +314,26 @@
 (global-set-key (kbd "C-x w") 'elfeed)
 (setq elfeed-feeds
       '("https://xkcd.com/rss.xml"
-        "https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA"))
+        ("https://planet.emacslife.com/atom.xml"                                        emacs programming)
+        ("https://3blue1brown.substack.com/feed"                                        yt math)           ; 3b1b
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA" yt programming)    ; fasterthanlime
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC62oK4gTQtOE4DvAFbFlt9Q" yt games)          ; Shortcat
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxq5GS5pcR0SNazjC3qYQSQ" yt games)          ; Marblr
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCU9pX8hKcrx06XfOB-VQLdw" yt games)          ; xisumavoid
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCOmCxjmeQrkB5GmCEssbvxg" yt linux)          ; RobertElder
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGaVdbSav8xWuFWTadK6loA" yt)                ; vlogbrothers
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" yt)                ; Angela Collier
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCNSMdQtn1SuFzCZjfK2C7dQ" yt)                ; Fortnine
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcXhhVwCT6_WqjkEniejRJQ" yt)               ; Wintergatan
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCm_dHxrHKK_fmoUgj9YnYqw" yt programming)    ; Truttle1
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w" yt)               ; Louis rossman
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2C_jShtL725hvbm1arSV9w" yt)               ; CGP Grey
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCnHX5FjwtQpxkCGziuh4NJA" yt programming)    ; Logan Smith
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmMubqzMeJDrW7u6d4SJh-Q" yt queer)          ; a_lilian
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UChLACeik8p6fqzpk9uLjdbw" yt)  ; owiebrainhurts
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJLZe_NoiG0hT7QCX_9vmqw" yt)  ; I did a thing
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgqt1RE0k0MIr0LoyJRy2lg" yt)  ; Rational Animations
+        ))
 
 ; Baby's first hacking on emacs :3
 (defun cas-open-video-in-mpv ()
@@ -321,3 +349,30 @@
 (use-package elfeed
   :config
   (keymap-set elfeed-show-mode-map "C-c C-o" 'cas-open-video-in-mpv))
+
+(require 'calfw)
+(require 'calfw-org)
+(setq cfw:display-calendar-holidays 'nil)
+(global-set-key (kbd "M-C") 'cfw:open-org-calendar)
+
+(custom-set-faces
+ '(cfw:face-title ((t (:foreground "#f0dfaf" :weight bold :height 2.0 :inherit variable-pitch))))
+ '(cfw:face-header ((t (:foreground "#d0bf8f" :weight bold))))
+ '(cfw:face-sunday ((t :foreground "#cc9393" :background "grey10" :weight bold)))
+ '(cfw:face-saturday ((t :foreground "#8cd0d3" :background "grey10" :weight bold)))
+ '(cfw:face-holiday ((t :background "grey10" :foreground "#8c5353" :weight bold)))
+ '(cfw:face-grid ((t :foreground "DarkGrey")))
+ ;'(cfw:face-default-content ((t :foreground "#bfebbf")))
+ '(cfw:face-default-content ((t :foreground "green")))
+ '(cfw:face-periods ((t :foreground "cyan")))
+ '(cfw:face-day-title ((t :background "black")))
+ '(cfw:face-default-day ((t :weight bold :inherit cfw:face-day-title)))
+ '(cfw:face-annotation ((t :foreground "RosyBrown" :inherit cfw:face-day-title)))
+ '(cfw:face-disable ((t :foreground "DarkGray" :inherit cfw:face-day-title)))
+ '(cfw:face-today-title ((t :background "dark orange" :weight bold)))
+ '(cfw:face-today ((t :background: "orange red" :weight bold)))
+ '(cfw:face-select ((t :background "dark magenta")))
+ '(cfw:face-toolbar ((t :foreground "Steelblue4" :background "Steelblue4")))
+ '(cfw:face-toolbar-button-off ((t :foreground "light salmon" :weight bold)))
+ '(cfw:face-toolbar-button-on ((t :foreground "Gray50" :weight bold))))
+

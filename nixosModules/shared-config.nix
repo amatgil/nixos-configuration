@@ -216,6 +216,7 @@
     bc
     radeontop
     xorg.xev
+    gnuplot
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 

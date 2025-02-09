@@ -333,6 +333,8 @@
       epkgs.org-roam
       epkgs.helm
       epkgs.elfeed
+      epkgs.calfw
+      epkgs.calfw-org
       # epkgs.ivy <-- this sucks
     ];
   };
