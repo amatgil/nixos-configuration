@@ -1,11 +1,13 @@
+#+property: header-args :tangle "init.el"
+
+* Understanding this file
+This configuration is a _literate_ org-mode file which gets tangled (=C-c C-v t=) to =init.el=.
+
+For quick evaluations (without running =nh os switch=), navigate to the previously tangled =init.el= and evaluate it in-situ (C-c C-e).
+
+#+begin_src emacs-lisp
 ;;;;; Startup optimizations
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (REMEMBER THAT C-c C-e evals the buffer, which includes the config without !nh !!)  ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-                                        ; (stolen from https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga)
+; (stolen from https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga)
 ;; From https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
 (setq gc-cons-threshold-original gc-cons-threshold)
 (setq gc-cons-threshold (* 1024 1024 100))
@@ -378,3 +380,4 @@
 
 
 (setq shell-file-name "/etc/profiles/per-user/casenc/bin/zsh")
+#+end_src
