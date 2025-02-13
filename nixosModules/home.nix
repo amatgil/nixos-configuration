@@ -346,7 +346,19 @@
   };
 
 	xdg.configFile.emacs = {
-  	source = ../dotfiles/emacs;
+    source = let
+      configPath = builtins.readFile ../dotfiles/emacs/literate-init.org;
+    in
+      pkgs.runCommand "emacs-tangle-init" {} ''
+        COMMAND="(org-babel-tangle-file \"${configPath}\" \"$out/init.el\")"
+        mkdir $out
+
+        echo "About to run: " $COMMAND
+
+        ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "$COMMAND"
+    '';
+
+  	#source = ../dotfiles/emacs;
   	recursive = true;
 	};
 
@@ -479,11 +491,6 @@
     rustflags = ["-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"]
   '';
 
-  home.activation = {
-    tangleEmacsConfig = lib.hm.dag.entryBefore ["??????????????"] ''
-emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "/etc/nixos/dotfiles/emacs/literate-init.org")'
-    '';
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
