@@ -376,3 +376,5 @@
  '(cfw:face-toolbar-button-off ((t :foreground "light salmon" :weight bold)))
  '(cfw:face-toolbar-button-on ((t :foreground "Gray50" :weight bold))))
 
+
+(setq shell-file-name "/etc/profiles/per-user/casenc/bin/zsh")
