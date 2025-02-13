@@ -346,20 +346,20 @@
   };
 
 	xdg.configFile.emacs = {
-    source = let
-      configPath = builtins.readFile ../dotfiles/emacs/literate-init.org;
-    in
-      pkgs.runCommand "emacs-tangle-init" {
-        nativeBuildInputs = [ pkgs.sudo ];
-      } ''
-        mkdir $out
-        COMMAND="(org-babel-tangle-file \"${configPath}\" \"$out/init.el\")"
+    source = pkgs.stdenv.mkDerivation  {
+        name = "emacs-tangle-init";
+        src = ../dotfiles/emacs;
+        buildPhase = ''
+            mkdir -p $out
+            COMMAND="(org-babel-tangle-file \"literate-init.org\")"
+            echo "Executing:" $COMMAND
+            ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "$COMMAND"
+        '';
+        installPhase = ''
+            mv init.el $out
+        '';
+      };
 
-        echo "About to run: " "$COMMAND" > $out/result
-    '';
-
-        #${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "$COMMAND"
-  	#source = ../dotfiles/emacs;
   	recursive = true;
 	};
 
