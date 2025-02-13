@@ -479,6 +479,12 @@
     rustflags = ["-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"]
   '';
 
+  home.activation = {
+    tangleEmacsConfig = lib.hm.dag.entryBefore ["??????????????"] ''
+emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "/etc/nixos/dotfiles/emacs/literate-init.org")'
+    '';
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
