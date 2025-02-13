@@ -443,29 +443,6 @@
   	};
   };
 
-  #programs.miniflux = {
-  #  enable = true;
-  #  adminCredentialsFile =
-  #    let
-  #      user = (import ../crypt/postgresql.users.nix).miniflux;
-  #    in
-  #      pkgs.writeTextFile {
-  #        name = "miniflux-psql-admin";
-  #        text = ''
-  #          ADMIN_USERNAME=${user.username}
-  #          ADMIN_PASSWORD=${user.password}
-  #        '';
-  #      };
-  #  config = {
-  #    FETCH_YOUTUBE_WATCH_TIME = "1";
-  #    POLLING_FREQUENCY = "60";
-  #    LISTEN_ADDR = "0.0.0.0:8055";
-  #    BASE_URL = "https://rss.tobot.dev/";
-  #    CLEANUP_ARCHIVE_UNREAD_DAYS = "-1";
-  #    CLEANUP_ARCHIVE_READ_DAYS = "-1";
-  #    INVIDIOUS_INSTANCE = "yewtu.be";
-  #  };
-  #};
   programs.mpv = {
   	enable = true;
   	bindings = {
