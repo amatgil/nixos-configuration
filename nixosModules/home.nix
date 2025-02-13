@@ -351,9 +351,7 @@
         src = ../dotfiles/emacs;
         buildPhase = ''
             mkdir -p $out
-            COMMAND="(org-babel-tangle-file \"literate-init.org\")"
-            echo "Executing:" $COMMAND
-            ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "$COMMAND"
+            ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "(org-babel-tangle-file \"literate-init.org\")"
         '';
         installPhase = ''
             mv init.el $out

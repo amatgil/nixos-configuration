@@ -8,7 +8,6 @@ For quick evaluation (without running =nh os switch=), tangle it, navigate to =i
 * Pre-config
 Startup optimizations, mostly stolen from [[https://emacs.stackexchange.com/questions/34342/is-there-any-downside-to-setting-gc-cons-threshold-very-high-and-collecting-ga][this stackexchange question]]
 #+begin_src emacs-lisp
-  ;; From https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start/
   (setq gc-cons-threshold-original gc-cons-threshold)
   (setq gc-cons-threshold (* 1024 1024 100))
 #+end_src
