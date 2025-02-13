@@ -349,15 +349,16 @@
     source = let
       configPath = builtins.readFile ../dotfiles/emacs/literate-init.org;
     in
-      pkgs.runCommand "emacs-tangle-init" {} ''
-        COMMAND="(org-babel-tangle-file \"${configPath}\" \"$out/init.el\")"
+      pkgs.runCommand "emacs-tangle-init" {
+        nativeBuildInputs = [ pkgs.sudo ];
+      } ''
         mkdir $out
+        COMMAND="(org-babel-tangle-file \"${configPath}\" \"$out/init.el\")"
 
-        echo "About to run: " $COMMAND
-
-        ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "$COMMAND"
+        echo "About to run: " "$COMMAND" > $out/result
     '';
 
+        #${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "$COMMAND"
   	#source = ../dotfiles/emacs;
   	recursive = true;
 	};
