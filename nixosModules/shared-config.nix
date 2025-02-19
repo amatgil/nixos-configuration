@@ -217,6 +217,7 @@
     radeontop
     xorg.xev
     gnuplot
+    slock
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
