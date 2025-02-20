@@ -436,6 +436,7 @@ I'm a big fan of knowing the dimensions of my highlight region, this displays it
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UChLACeik8p6fqzpk9uLjdbw" yt)                ; owiebrainhurts
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJLZe_NoiG0hT7QCX_9vmqw" yt)                ; I did a thing
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgqt1RE0k0MIr0LoyJRy2lg" yt)                ; Rational Animations
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCwbRile4jo-LcW_PQwmMdBw" yt)                ; Captain KRB
           )) ; These parens are here because I keep adding feeds
 #+end_src
 
