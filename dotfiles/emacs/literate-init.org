@@ -102,7 +102,8 @@ This hacks around that (source: =M-x customize-face=)
 #+end_src
 
 *** Evil mode
-#+begin_src emacs-lisp
+This is disabled as of now, as I would like to try to fully immerse myself in the emacs way
+#+begin_src emacs-lisp :tangle no
   (use-package evil
     :ensure t
     :init
@@ -119,6 +120,16 @@ This hacks around that (source: =M-x customize-face=)
   (evil-owl-mode) ; Preview registers before seeing them
   (setq evil-owl-display-method 'window)
   (setq evil-owl-idle-delay 0)
+
+  
+  (global-set-key (kbd "C-w") 'nil)
+  (global-set-key (kbd "C-w h") 'evil-window-left)
+  (global-set-key (kbd "C-w l") 'evil-window-right)
+  (global-set-key (kbd "C-w k") 'evil-window-up)
+  (global-set-key (kbd "C-w j") 'evil-window-down)
+
+  (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-2)
+  (define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
 #+end_src
 
 *** Visual line set-up
@@ -145,13 +156,6 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (global-set-key (kbd "C-c C-Ç") 'shrink-window-horizontally)
   (global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
   (global-set-key (kbd "C-c s") 'scroll-lock-mode)
-
-
-  (global-set-key (kbd "C-w") 'nil)
-  (global-set-key (kbd "C-w h") 'evil-window-left)
-  (global-set-key (kbd "C-w l") 'evil-window-right)
-  (global-set-key (kbd "C-w k") 'evil-window-up)
-  (global-set-key (kbd "C-w j") 'evil-window-down)
 #+end_src
 
 *** Programming
@@ -181,9 +185,6 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-
-  (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-2)
-  (define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
 
   (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
   (setopt display-fill-column-indicator-column 80)
