@@ -75,8 +75,10 @@ These options, I'm torn on; for now, they are off.
   ;; Same as above for Dired and such
   (setq global-auto-revert-non-file-buffers t)
 
+  (eval-after-load "dired"
+    '(progn
   (setq dired-dwim-target 'dired-dwim-target-recent)
-
+  (define-key dired-mode-map (kbd "-") 'dired-up-directory)))
 
   (global-set-key (kbd "M-c") 'calc)
 
@@ -86,6 +88,10 @@ These options, I'm torn on; for now, they are off.
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+  ;; Scrolling in general
+  (setq scroll-preserve-screen-position 't)
+  (setq next-screen-context-lines 15)
 
   ;; Set {term, ansi-term}'s default shell to be correct
   (ignore-errors
@@ -104,7 +110,7 @@ This hacks around that (source: =M-x customize-face=)
 *** Evil mode
 This is disabled as of now, as I would like to try to fully immerse myself in the emacs way
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package evil
     :ensure t
     :init
@@ -146,7 +152,6 @@ Remember that =(setq-default visual-fill-column-center-text t)= exists! It works
 #+end_src
 
 *** Aesthetics
-
 Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with =emacsclient=.
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-10"))
@@ -156,7 +161,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-Ç") 'shrink-window-horizontally)
   (global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
-  (global-set-key (kbd "C-c s") 'scroll-lock-mode)
+  (global-set-key (kbd "C-c s") 'scroll-lock-mode) 
 #+end_src
 
 *** Programming
