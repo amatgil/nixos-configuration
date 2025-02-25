@@ -103,6 +103,7 @@ This hacks around that (source: =M-x customize-face=)
 
 *** Evil mode
 This is disabled as of now, as I would like to try to fully immerse myself in the emacs way
+
 #+begin_src emacs-lisp :tangle no
   (use-package evil
     :ensure t

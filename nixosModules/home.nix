@@ -350,11 +350,13 @@
         name = "emacs-tangle-init";
         src = ../dotfiles/emacs;
         buildPhase = ''
+            ${pkgs.figlet}/bin/figlet "Tangling Emacs..."
             mkdir -p $out
             ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "(org-babel-tangle-file \"literate-init.org\")"
         '';
         installPhase = ''
             mv init.el $out
+            ${pkgs.figlet}/bin/figlet "Installed init.el"
         '';
       };
 
