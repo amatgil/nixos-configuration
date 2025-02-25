@@ -425,28 +425,30 @@ I'm a big fan of knowing the dimensions of my highlight region, this displays it
 #+end_src
 
 #+begin_src emacs-lisp
-  (setq elfeed-feeds
-        '("https://xkcd.com/rss.xml"
-          ("https://planet.emacslife.com/atom.xml"                                        emacs programming)
-          ("https://3blue1brown.substack.com/feed"                                        yt math)           ; 3b1b
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA" yt programming)    ; fasterthanlime
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC62oK4gTQtOE4DvAFbFlt9Q" yt games)          ; Shortcat
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxq5GS5pcR0SNazjC3qYQSQ" yt games)          ; Marblr
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCU9pX8hKcrx06XfOB-VQLdw" yt games)          ; xisumavoid
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCOmCxjmeQrkB5GmCEssbvxg" yt linux)          ; RobertElder
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGaVdbSav8xWuFWTadK6loA" yt)                ; vlogbrothers
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" yt)                ; Angela Collier
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCNSMdQtn1SuFzCZjfK2C7dQ" yt)                ; Fortnine
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcXhhVwCT6_WqjkEniejRJQ" yt)                ; Wintergatan
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCm_dHxrHKK_fmoUgj9YnYqw" yt programming)    ; Truttle1
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w" yt)                ; Louis rossman
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2C_jShtL725hvbm1arSV9w" yt)                ; CGP Grey
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCnHX5FjwtQpxkCGziuh4NJA" yt programming)    ; Logan Smith
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmMubqzMeJDrW7u6d4SJh-Q" yt queer)          ; a_lilian
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UChLACeik8p6fqzpk9uLjdbw" yt)                ; owiebrainhurts
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJLZe_NoiG0hT7QCX_9vmqw" yt)                ; I did a thing
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgqt1RE0k0MIr0LoyJRy2lg" yt)                ; Rational Animations
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCwbRile4jo-LcW_PQwmMdBw" yt)                ; Captain KRB
-          )) ; These parens are here because I keep adding feeds
+    (setq elfeed-feeds
+          '("https://xkcd.com/rss.xml"
+            ("https://planet.emacslife.com/atom.xml"                                        emacs programming)
+            ("https://3blue1brown.substack.com/feed"                                        yt math)           ; 3b1b
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCs4fQRyl1TJvoeOdekW6lYA" yt programming)    ; fasterthanlime
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UC62oK4gTQtOE4DvAFbFlt9Q" yt games)          ; Shortcat
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxq5GS5pcR0SNazjC3qYQSQ" yt games)          ; Marblr
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCU9pX8hKcrx06XfOB-VQLdw" yt games)          ; xisumavoid
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCOmCxjmeQrkB5GmCEssbvxg" yt linux)          ; RobertElder
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGaVdbSav8xWuFWTadK6loA" yt)                ; vlogbrothers
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" yt)                ; Angela Collier
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCNSMdQtn1SuFzCZjfK2C7dQ" yt)                ; Fortnine
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCcXhhVwCT6_WqjkEniejRJQ" yt)                ; Wintergatan
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCm_dHxrHKK_fmoUgj9YnYqw" yt programming)    ; Truttle1
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w" yt)                ; Louis rossman
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2C_jShtL725hvbm1arSV9w" yt)                ; CGP Grey
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCnHX5FjwtQpxkCGziuh4NJA" yt programming)    ; Logan Smith
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmMubqzMeJDrW7u6d4SJh-Q" yt queer)          ; a_lilian
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UChLACeik8p6fqzpk9uLjdbw" yt)                ; owiebrainhurts
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJLZe_NoiG0hT7QCX_9vmqw" yt)                ; I did a thing
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgqt1RE0k0MIr0LoyJRy2lg" yt)                ; Rational Animations
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCwbRile4jo-LcW_PQwmMdBw" yt)                ; Captain KRB
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaay7_gi9Fq6WwWopuYHpug" yt)                ; All Things Physics
+            ("https://www.youtube.com/feeds/videos.xml?channel_id=UCOGeU-1Fig3rrDjhm9Zs_wg" yt)                ; Vihart
+            )) ; These parens are here because I keep adding feeds
 #+end_src
 
