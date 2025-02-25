@@ -22,6 +22,14 @@ These options, I'm torn on; for now, they are off.
   (global-hl-line-mode 1) ; Highlight current line
 #+end_src
 
+(This bit is untested)
+#+begin_src emacs-lisp :tangle no
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (member lang '("emacs-lisp"))))
+
+  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+#+end_src
+
 ** Enabled
 *** Basics constants and modes
 #+begin_src emacs-lisp
