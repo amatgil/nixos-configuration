@@ -6,13 +6,8 @@ let
   packages = with pkgs; [
     rust-analyzer
     rustfmt
-    clippy
     mold
-    rustup # mostly for rustup doc
-
-    #wayland
-    #xorg.libX11
-    #xorg.libXcursor
+    rust-bin.stable.latest.default
   ];
 in
 pkgs.mkShell {

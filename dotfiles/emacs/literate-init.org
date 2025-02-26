@@ -108,7 +108,7 @@ This hacks around that (source: =M-x customize-face=)
 #+end_src
 
 *** Evil mode
-This is disabled as of now, as I would like to try to fully immerse myself in the emacs way
+I've tried to stick with the true emacs binds, but my left wrist could not take the struggle.
 
 #+begin_src emacs-lisp
   (use-package evil
@@ -128,7 +128,7 @@ This is disabled as of now, as I would like to try to fully immerse myself in th
   (setq evil-owl-display-method 'window)
   (setq evil-owl-idle-delay 0)
 
-  
+
   (global-set-key (kbd "C-w") 'nil)
   (global-set-key (kbd "C-w h") 'evil-window-left)
   (global-set-key (kbd "C-w l") 'evil-window-right)
@@ -162,6 +162,8 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (global-set-key (kbd "C-c C-Ç") 'shrink-window-horizontally)
   (global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
   (global-set-key (kbd "C-c s") 'scroll-lock-mode) 
+  (global-set-key (kbd "M-t") 'ansi-term) 
+
 #+end_src
 
 *** Programming
@@ -212,6 +214,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
   (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
   (setq dap-auto-configure-features '(sessions locals controls tooltip)) ; debugging (i hope)
+  (setq lsp-rust-analyzer-proc-macro-enable nil) ; proc-macro errors are annoying, especially in sqlx and such
   (add-hook 'rust-mode-hook 
             (lambda () (add-hook 'before-save-hook 'lsp-format-buffer))) 
   ;;; Haskell
