@@ -335,6 +335,8 @@
       epkgs.elfeed
       epkgs.calfw
       epkgs.calfw-org
+      epkgs.literate-calc-mode # http://web.archive.org/web/20240530101029/https://hungyi.net/posts/solve-system-of-equations-literate-calc-mode/
+      epkgs.org-appear
       # epkgs.ivy <-- this sucks
     ];
   };

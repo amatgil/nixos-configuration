@@ -218,6 +218,7 @@
     xorg.xev
     gnuplot
     slock
+    fzf
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
