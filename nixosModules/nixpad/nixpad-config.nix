@@ -9,11 +9,13 @@
 
   services.libinput = {
     enable = true;
-    touchpad.scrollButton = 3;
+    mouse = {
+      scrollButton = 2;
+      scrollMethod = "button";
+      middleEmulation = false;
+    };
   };
 
-
-    
   boot.kernel.sysctl."kernel.sysrq" = 1; # all functions
     # h: Print help to the system log.
     # f: Trigger the kernel oom killer.
