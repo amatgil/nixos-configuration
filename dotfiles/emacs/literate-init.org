@@ -81,6 +81,7 @@ These options, I'm torn on; for now, they are off.
        (define-key dired-mode-map (kbd "-") 'dired-up-directory)))
 
   (define-key lisp-interaction-mode-map (kbd "C-x e") 'eval-print-last-sexp)
+  (define-key emacs-lisp-mode-map (kbd "C-x e") 'eval-print-last-sexp)
 
   (global-set-key (kbd "M-c") 'calc)
 

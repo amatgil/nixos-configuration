@@ -7,6 +7,13 @@
     useOSProber = true;
   };
 
+  services.libinput = {
+    enable = true;
+    touchpad.scrollButton = 3;
+  };
+
+
+    
   boot.kernel.sysctl."kernel.sysrq" = 1; # all functions
     # h: Print help to the system log.
     # f: Trigger the kernel oom killer.
