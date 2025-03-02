@@ -100,6 +100,8 @@
     fontforge-gtk
     ascii
     kicad-small
+
+    ungoogled-chromium
   ];
 
   programs.rofi = {
