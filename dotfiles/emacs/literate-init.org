@@ -52,6 +52,8 @@ These options, I'm torn on; for now, they are off.
   (overwrite-mode -1)      ; Disble overwrite mode so that text editing actually works
   (global-origami-mode 1)  ; Enable folding
 
+  (global-prettify-symbols-mode 1)
+
   ;; Move autosaves away from the directory
   (setq backup-directory-alist `(("." . "~/.config/emacs/autosaves")))
   (setq delete-old-versions t
@@ -259,6 +261,14 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
                           :server-id 'uiua)))
 
   (add-hook 'uiua-base-mode-hook (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
+#+end_src
+***** Common Lisp
+#+begin_src emacs-lisp
+   ;; (defun hyperspec-lookup--hyperspec-lookup-w3m (orig-fun &rest args)
+   ;;   (let ((browse-url-browser-function 'w3m-browse-url))
+   ;;     (apply orig-fun args)))
+   ;; (advice-add 'hyperspec-lookup :around #'hyperspec-lookup--hyperspec-lookup-w3m)
+  (define-key sly-mode-map (kbd "C-c C-d C-h") #'sly-documentation)
 #+end_src
 
 *** Self-Documentation
