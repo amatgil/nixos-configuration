@@ -268,7 +268,9 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
    ;;   (let ((browse-url-browser-function 'w3m-browse-url))
    ;;     (apply orig-fun args)))
    ;; (advice-add 'hyperspec-lookup :around #'hyperspec-lookup--hyperspec-lookup-w3m)
-  (define-key sly-mode-map (kbd "C-c C-d C-h") #'sly-documentation)
+  (use-package sly
+    :config
+    (define-key sly-mode-map (kbd "C-c C-d C-h") #'sly-documentation))
 #+end_src
 
 *** Self-Documentation
