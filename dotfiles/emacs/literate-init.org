@@ -50,7 +50,7 @@ These options, I'm torn on; for now, they are off.
   (rainbow-mode 1)         ; Enable showing colors for hexcolors like (#ed8796)
 
   (overwrite-mode -1)      ; Disble overwrite mode so that text editing actually works
-  ;(global-origami-mode 1)  ; Enable folding (BREAKS BECAUSE OF FONT???)
+  ;(global-origami-mode 1)  ; Enable folding (BREAKS EMACSCLIENT BECAUSE OF [FONT]??? AAAAAAAAAAA)
 
   (global-prettify-symbols-mode 1)
 
