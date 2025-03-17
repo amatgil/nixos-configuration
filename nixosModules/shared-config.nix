@@ -49,7 +49,7 @@
       keyboards.default.configFile = ../dotfiles/uiua-layer.kbd; # bad name, also changes caps->shift/ctrl
     };
 
-    printing.enable = false; # TODO: reenable when CVE gets fixed # Enable CUPS to print documents.
+    printing.enable = true; # TODO: Doesn't work?
     picom.enable = true;  # Compositor
 
     tor = {
