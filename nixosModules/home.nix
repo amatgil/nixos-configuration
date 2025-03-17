@@ -113,8 +113,8 @@
     # For shell scripting
     nushell = {
       enable = true;
-      plugins = with pkgs.nushellPlugins; [query];
-    };  
+      #plugins = with pkgs.nushellPlugins; [query];
+    };
 
     zsh = {
       enable = true;
