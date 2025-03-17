@@ -50,7 +50,7 @@ These options, I'm torn on; for now, they are off.
   (rainbow-mode 1)         ; Enable showing colors for hexcolors like (#ed8796)
 
   (overwrite-mode -1)      ; Disble overwrite mode so that text editing actually works
-  (global-origami-mode 1)  ; Enable folding
+  ;(global-origami-mode 1)  ; Enable folding (BREAKS BECAUSE OF FONT???)
 
   (global-prettify-symbols-mode 1)
 
@@ -106,7 +106,9 @@ These options, I'm torn on; for now, they are off.
 
 The selected line number doesn't scale when the font size changes (especially noticeable in e.g. uiua)
 This hacks around that (source: =M-x customize-face=)
-#+begin_src emacs-lisp
+
+This may be unupdated so it does NOT get tangled in.
+#+begin_src emacs-lisp :tangle no
   (custom-set-faces
    '(line-number-current-line ((t (:inherit 'default)))))
   (custom-set-faces
