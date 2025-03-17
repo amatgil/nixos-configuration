@@ -93,6 +93,7 @@ These options, I'm torn on; for now, they are off.
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  ;(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings) ;temporarily off
 
   ;; Scrolling in general
   (setq scroll-preserve-screen-position 't)
