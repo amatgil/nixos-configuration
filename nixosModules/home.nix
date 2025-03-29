@@ -298,6 +298,7 @@
       epkgs.uiua-ts-mode
       epkgs.nix-mode
       epkgs.elm-mode
+      epkgs.typescript-mode
       epkgs.just-mode
       epkgs.direnv
       epkgs.rainbow-delimiters

@@ -203,6 +203,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
 
   (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
   (setopt display-fill-column-indicator-column 80)
 
                                           ; (Ma)Git / Forge
@@ -222,7 +223,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
   (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
   (setq dap-auto-configure-features '(sessions locals controls tooltip)) ; debugging (i hope)
-  (setq lsp-rust-analyzer-proc-macro-enable nil) ; proc-macro errors are annoying, especially in sqlx and such
+  ;(setq lsp-rust-analyzer-proc-macro-enable nil) ; proc-macro errors are annoying, especially in sqlx and such
   (add-hook 'rust-mode-hook 
             (lambda () (add-hook 'before-save-hook 'lsp-format-buffer))) 
 #+end_src
