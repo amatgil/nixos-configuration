@@ -46,7 +46,7 @@
     kanata = {
       enable = true;
       keyboards.default.devices = [];
-      keyboards.default.configFile = ../dotfiles/uiua-layer.kbd; # bad name, also changes caps->shift/ctrl
+      keyboards.default.configFile = ../dotfiles/kanata/apl-layer.kbd; # bad name, also changes caps->shift/ctrl
     };
 
     printing.enable = false; # TODO: reenable when CVE gets fixed # Enable CUPS to print documents.

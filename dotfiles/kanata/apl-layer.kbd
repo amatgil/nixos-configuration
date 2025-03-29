@@ -1,0 +1,115 @@
+;; Good source: https://shom.dev/start/using-kanata-to-remap-any-keyboard/
+
+(defsrc
+  grv                   1    2    3    4    5    6    7    8    9    0    -    =
+  esc                   q    w    e    r    t    y    u    i    o    p    [    ] 
+  caps                  a    s    d    f    g    h    j    k    l    ;    '    \    
+  lshift  IntlBackslash z    x    c    v    b    n    m    ,    .    /
+                                                                        rctrl
+)
+
+(defalias
+  ;; tap for esc, hold for lctl
+  cap (tap-hold 200 200 esc lctl)
+
+  apl-base        (layer-while-held apl-layer)
+  apl-shift       (layer-while-held apl-layer-shifted)
+)
+
+
+(deflayermap (base-layer)
+   rctrl        @apl-base
+   caps          @cap
+)
+
+(deflayermap (apl-layer)
+  lshift        @apl-shift
+  rshift        @apl-shift
+  caps          @cap
+  grv           (unicode ⋄)
+  1             (unicode ¨)
+  2             (unicode ¯)
+  3             (unicode <)
+  4             (unicode ≤)
+  5             (unicode =)
+  6             (unicode ≥)
+  7             (unicode >)
+  8             (unicode ≠)
+  9             (unicode ∨)
+  0             (unicode ∧)
+  -             (unicode ×)
+  =             (unicode ÷)
+  q             (unicode ?)
+  w             (unicode ⍵)
+  e             (unicode ∊)
+  r             (unicode ⍴)
+  t             (unicode ~)
+  y             (unicode ↑)
+  u             (unicode ↓)
+  i             (unicode ⍳)
+  o             (unicode ○)
+  p             (unicode *)
+  [             (unicode ←)
+  ]             (unicode →)
+  a             (unicode ⍺)
+  s             (unicode ⌈)
+  d             (unicode ⌊)
+  f             (unicode _)
+  g             (unicode ∇)
+  h             (unicode ∆)
+  j             (unicode ∘)
+  k             (unicode ')
+  l             (unicode ⎕)
+  ;             (unicode ⍎)
+  '             (unicode ⍕)
+  IntlBackslash (unicode ⊢)
+  z             (unicode ⊂)
+  x             (unicode ⊃)
+  c             (unicode ∩)
+  v             (unicode ∪)
+  b             (unicode ⊥)
+  n             (unicode ⊤)
+  m             (unicode |)
+  ,             (unicode ⍝)
+  .             (unicode ⍀)
+  /             (unicode ⌿)
+)
+
+(deflayermap (apl-layer-shifted)
+  caps          @cap
+  grv           (unicode ⌺)
+  1             (unicode ⌶)
+  2             (unicode ⍫)
+  3             (unicode ⍒)
+  4             (unicode ⍋)
+  5             (unicode ⌽)
+  6             (unicode ⍉)
+  7             (unicode ⊖)
+  8             (unicode ⍟)
+  9             (unicode ⍱)
+  0             (unicode ⍲)
+  -             (unicode !)
+  =             (unicode ⌹)
+  e             (unicode ⍷)
+  t             (unicode ⍨)
+  i             (unicode ⍸)
+  o             (unicode ⍥)
+  p             (unicode ⍣)
+  [             (unicode ⍞)
+  ]             (unicode ⍬)
+  f             (unicode ⍛)
+  g             (unicode ⍢)
+  j             (unicode ⍤)
+  k             (unicode ⌸)
+  l             (unicode ⌷)
+  ;             (unicode ≡)
+  '             (unicode ≢)
+  IntlBackslash (unicode ⊣)
+  z             (unicode ⊆)
+  x             (unicode ⊇)
+  n             (unicode ¤)
+  m             (unicode ∥)
+  ,             (unicode ⍪)
+  .             (unicode ⍙)
+  /             (unicode ⍠)
+)
