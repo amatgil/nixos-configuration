@@ -329,6 +329,7 @@
       epkgs.org-appear
       epkgs.yasnippet
       epkgs.sly
+      epkgs.dyalog-mode
     ];
   };
 

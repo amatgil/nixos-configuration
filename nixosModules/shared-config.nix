@@ -43,11 +43,12 @@
       defaultSession = "none+awesome";
     };
       
-    kanata = {
-      enable = true;
-      keyboards.default.devices = [];
-      keyboards.default.configFile = ../dotfiles/kanata/apl-layer.kbd; # bad name, also changes caps->shift/ctrl
-    };
+    # Superceded by the superior setxkbmap
+    #kanata = {
+    #  enable = true;
+    #  keyboards.default.devices = [];
+    #  keyboards.default.configFile = ../dotfiles/kanata/apl-layer.kbd; # bad name, also changes caps->shift/ctrl
+    #};
 
     printing.enable = true; # TODO: Doesn't work?
     picom.enable = true;  # Compositor
@@ -75,10 +76,10 @@
     xserver = {
       enable = true;
       xkb = {
-        layout = "es";
-        variant = "cat";
-        #layout = "es,apl";
-        #options = "caps:escape,compose:menu,grp:rctrl_switch"; 
+        layout = "es,apl";
+        variant = "cat,dyalog";
+        options = "grp:rctrl_switch,ctrl:nocaps,compose:menu"
+        # This is completed by the `xcape` service
       };
 
       #xkbOptions = "esc:swapcaps,compose:Menu";
@@ -97,8 +98,18 @@
     #foldingathome.enable = true;
   };
 
-
-
+  systemd.user.services.cas-xcape = {
+    restartIfChanged = true;
+    description = "Set ctrl (caps lock) to escape when tapped";
+    wantedBy = ["graphical-session.target"];
+    partOf = ["graphical-session.target"];
+    serviceConfig = {
+      Type = "forking";
+      Restart = "always";
+      ExecStart = ''${pkgs.xcape}/bin/xcape -e "Control_L=Escape"'';
+    };
+  };
+  
   programs.gnupg.agent = {
 	  enable = true;
 	  #pinentryFlavor = "curses";
