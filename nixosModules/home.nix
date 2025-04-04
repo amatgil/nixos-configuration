@@ -336,6 +336,7 @@
       epkgs.sly
       epkgs.dyalog-mode
       epkgs.proof-general
+      epkgs.gnuplot
     ];
   };
 
