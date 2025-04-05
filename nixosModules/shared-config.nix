@@ -42,13 +42,6 @@
       sddm.enable = true;
       defaultSession = "none+awesome";
     };
-      
-    # Superceded by the superior setxkbmap
-    #kanata = {
-    #  enable = true;
-    #  keyboards.default.devices = [];
-    #  keyboards.default.configFile = ../dotfiles/kanata/apl-layer.kbd; # bad name, also changes caps->shift/ctrl
-    #};
 
     printing.enable = true; # TODO: Doesn't work?
     picom.enable = true;  # Compositor
@@ -78,11 +71,10 @@
       xkb = {
         layout = "es,apl";
         variant = "cat,dyalog";
-        options = "grp:rctrl_switch,ctrl:nocaps,compose:menu"
-        # This is completed by the `xcape` service
+        options = "grp:rctrl_switch";
+        # This is completed by the `keyd` service
       };
 
-      #xkbOptions = "esc:swapcaps,compose:Menu";
       windowManager.awesome = {
         enable = true;
         luaModules = with pkgs.luaPackages; [
@@ -95,21 +87,14 @@
       autoRepeatInterval = 25;
     };
 
+    keyd.enable = true; # Config file under /etc/keyd/capslock-rebind.conf
+
     #foldingathome.enable = true;
   };
 
-  systemd.user.services.cas-xcape = {
-    restartIfChanged = true;
-    description = "Set ctrl (caps lock) to escape when tapped";
-    wantedBy = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
-    serviceConfig = {
-      Type = "forking";
-      Restart = "always";
-      ExecStart = ''${pkgs.xcape}/bin/xcape -e "Control_L=Escape"'';
-    };
-  };
-  
+  # see services.keyd
+  environment.etc."keyd/capslock-rebind.conf".source = ../dotfiles/capslock-rebind.conf;
+
   programs.gnupg.agent = {
 	  enable = true;
 	  #pinentryFlavor = "curses";
