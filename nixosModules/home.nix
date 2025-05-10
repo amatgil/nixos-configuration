@@ -21,6 +21,12 @@
       rev = "master";
       sha256 = "sha256-bLYLZ6SLRKYOQcOkc3pB4jK7APjCSdaA5uZR0T+lq5U=";
     }) {})
+    (callPackage (fetchFromGitHub {
+      owner = "amatgil";
+      repo = "hamster";
+      rev = "master";
+      sha256 = "sha256-cWJri2+poREJwmczUXrq1if4dAUwfa2XnvCcfwvo0l0=";
+    }) {})
     nemo
     imagemagick
     keepassxc
@@ -42,7 +48,6 @@
     du-dust
     hexyl
     gitui
-    gitoxide
     zellij
     vscodium-fhs
     alejandra
@@ -330,6 +335,7 @@
       epkgs.yasnippet
       epkgs.sly
       epkgs.dyalog-mode
+      epkgs.proof-general
     ];
   };
 
