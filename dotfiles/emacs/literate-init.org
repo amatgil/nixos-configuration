@@ -162,7 +162,7 @@ Remember that =(setq-default visual-fill-column-center-text t)= exists! It works
 *** Aesthetics
 Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with =emacsclient=.
 #+begin_src emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font-10"))
+  (add-to-list 'default-frame-alist '(font . "Uiua386-12"))
 #+end_src
 
 *** Keybinds
