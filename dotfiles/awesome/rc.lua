@@ -334,6 +334,25 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, ".",      function () awful.screen.focus_relative(-1)  end,
               {description = "move focus to screen (other dir)", group = "client"}),
 
+    -- Hamster stuffs
+    awful.key({ modkey,           }, "p",      function ()  awful.spawn.easy_async("hamster click 1", function() end) end,
+              {description = "click mouse", group = "client"}),
+    awful.key({ modkey, "Mod1"    }, "p",      function ()  awful.spawn.easy_async("hamster click 2", function() end) end,
+              {description = "click mouse", group = "client"}),
+    awful.key({ modkey, "Shift"   }, "p",      function ()  awful.spawn.easy_async("hamster click 3", function() end) end,
+              {description = "click mouse", group = "client"}),
+    awful.key({ modkey,           }, "o",      function ()  awful.spawn.easy_async("hamster overlay", function() end) end,
+              {description = "open up hamster overlay", group = "client"}),
+    awful.key({ modkey,           }, "i",      function ()  awful.spawn.easy_async("hamster scrollup", function() end) end,
+              {description = "scroll up", group = "client"}),
+    awful.key({ modkey,           }, "u",      function ()  awful.spawn.easy_async("hamster scrolldown", function() end) end,
+              {description = "scroll down", group = "client"}),
+    --     scrolling again but more universal
+    awful.key({                   }, "Next",      function ()  awful.spawn.easy_async("hamster scrolldown", function() end) end,
+              {description = "scroll down", group = "client"}),
+    awful.key({                   }, "Prior",      function ()  awful.spawn.easy_async("hamster scrollup", function() end) end,
+              {description = "scroll up", group = "client"}),
+
     -- VOLUME STUFFS
     awful.key({ modkey,           }, "m", function() volume_inc() end,
        {description = "increase volume", group = 'client'}),
@@ -388,8 +407,8 @@ globalkeys = gears.table.join(
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
               {description = "swap with previous client by index", group = "client"}),
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
-              {description = "jump to urgent client", group = "client"}),
+    -- awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
+    --           {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()

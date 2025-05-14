@@ -25,7 +25,7 @@
       owner = "amatgil";
       repo = "hamster";
       rev = "master";
-      sha256 = "sha256-375cYlcno8tfY+1meTUL1pwJbVTpms8FG8Q8u0aCsaM=";
+      sha256 = "sha256-H8i2LXFOnAkDaXh/MOdSkIX/fsfYQG5gfogOj0NdgTg=";
     }) {})
     nemo
     imagemagick
@@ -336,6 +336,7 @@
       epkgs.sly
       epkgs.dyalog-mode
       epkgs.proof-general
+      epkgs.obsidian
     ];
   };
 
