@@ -135,7 +135,7 @@
         ignoreDups = true;
         ignoreSpace = true;
       };
-      initExtra = "export GPG_TTY=$(tty)";
+      initContent = "export GPG_TTY=$(tty)";
       shellAliases = {
         l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
