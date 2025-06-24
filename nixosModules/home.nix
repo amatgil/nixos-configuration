@@ -107,6 +107,8 @@
     kicad-small
 
     ungoogled-chromium
+    strawberry
+    gforth
   ];
 
   programs = {
@@ -296,6 +298,7 @@
       epkgs.evil-owl
       epkgs.magit
 
+      epkgs.forth-mode
       epkgs.rust-mode
       epkgs.lua-mode
       epkgs.haskell-mode

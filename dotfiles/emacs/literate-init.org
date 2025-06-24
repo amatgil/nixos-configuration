@@ -102,6 +102,10 @@ These options, I'm torn on; for now, they are off.
   ;; Set {term, ansi-term}'s default shell to be correct
   (ignore-errors
     (setq shell-file-name (car (process-lines "which" "zsh"))))
+
+  ;; Set sane defaults for re-builders (emacs has a built-in regex builder it's so cool)
+  (require 're-builder)
+  (setq reb-re-syntax 'string)
 #+end_src
 
 The selected line number doesn't scale when the font size changes (especially noticeable in e.g. uiua)
@@ -178,6 +182,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
 #+begin_src emacs-lisp
   (setq lsp-ui-sideline-show-hover t)
   (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-enable nil)                                 ; These suck so much omg
   (global-set-key (kbd "C-c e s") 'flymake-show-buffer-diagnostics) ; Error (diagnostics) show (project is also an option)
   (global-set-key (kbd "C-c e n") 'flymake-goto-next-error)         ; Error next
   (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error)         ; Error previous
