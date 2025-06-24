@@ -303,7 +303,7 @@
       epkgs.lua-mode
       epkgs.haskell-mode
       epkgs.hindent
-      epkgs.uiua-ts-mode
+      #epkgs.uiua-ts-mode
       epkgs.nix-mode
       epkgs.elm-mode
       epkgs.typescript-mode
@@ -340,6 +340,7 @@
       epkgs.dyalog-mode
       epkgs.proof-general
       epkgs.gnuplot
+      epkgs.tree-sitter
     ];
   };
 
@@ -349,20 +350,34 @@
     startWithUserSession = "graphical";
   };
 
-	xdg.configFile.emacs = {
-    source = pkgs.stdenv.mkDerivation  {
-        name = "emacs-tangle-init";
-        src = ../dotfiles/emacs;
-        buildPhase = ''
+  xdg.configFile.emacs = {
+    source =
+      let
+        casuiua-src = pkgs.fetchFromGitHub {
+          owner = "amatgil";
+          repo = "casuiua-mode";
+          rev = "master";
+          sha256 = "sha256-+LH6QLEC5Xy1+9nXQKifQtyCXVFBbhd9zwKSjNQF6ak=";
+        };
+      in
+        pkgs.stdenv.mkDerivation rec {
+          name = "emacs-tangle-init";
+          src = ../dotfiles/emacs;
+          unpackPhase = ''
+            cp -r ${src}/* .
+            cp -r ${casuiua-src}/casuiua-mode.el .
+          '';
+          buildPhase = ''
             ${pkgs.figlet}/bin/figlet "Tangling Emacs..."
             mkdir -p $out
             ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "(org-babel-tangle-file \"literate-init.org\")"
-        '';
-        installPhase = ''
+          '';
+          installPhase = ''
             mv init.el $out
+            mv casuiua-mode.el $out
             ${pkgs.figlet}/bin/figlet "Installed init.el"
-        '';
-      };
+          '';
+        };
 
   	recursive = true;
 	};

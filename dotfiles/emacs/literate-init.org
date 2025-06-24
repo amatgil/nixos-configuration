@@ -215,6 +215,10 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (global-set-key (kbd "C-c g") 'magit)
   (with-eval-after-load 'magit
     (require 'forge))
+  ;; Fixes bug with pressing RET inside C-:
+  (with-eval-after-load 'paredit-mode
+    (define-key paredit-mode-map (kbd "RET") nil))
+
 #+end_src
 
 =~/.authinfo.gpg= must be encrypted with my public key and contain what is said [[https://magit.vc/manual/forge/Setup-for-Githubcom.html][here]].
@@ -261,14 +265,11 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
 
 ***** Uiua
 #+begin_src emacs-lisp
-  (with-eval-after-load 'lsp-mode
-    (add-to-list 'lsp-language-id-configuration '(".*\\.ua" . "uiua"))
-
-    (lsp-register-client (make-lsp-client
-                          :new-connection (lsp-stdio-connection '("uiua" "lsp"))
-                          :activation-fn (lsp-activate-on "uiua")
-                          :server-id 'uiua)))
-
+  (load
+    (file-name-concat
+     (file-name-directory user-init-file)
+     "casuiua-mode.el"))
+  ; TODO: uiua-base-mode hook doesn't exist, it should be casuiua-mode
   (add-hook 'uiua-base-mode-hook (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
 #+end_src
 ***** Common Lisp
