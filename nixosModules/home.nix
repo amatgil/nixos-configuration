@@ -19,13 +19,13 @@
       owner = "amatgil";
       repo = "plantill";
       rev = "master";
-      sha256 = "sha256-bLYLZ6SLRKYOQcOkc3pB4jK7APjCSdaA5uZR0T+lq5U=";
+      sha256 = "sha256-y3vvw4NlgTLnqNqecwDpQknTvKqIvNA0whHgRW/bHoE=";
     }) {})
     (callPackage (fetchFromGitHub {
       owner = "amatgil";
       repo = "hamster";
       rev = "master";
-      sha256 = "sha256-yvoOCJiwWp+kTa42fqpQYb32nMce1/3kHs4WwDcVShc=";
+      sha256 = "sha256-H8i2LXFOnAkDaXh/MOdSkIX/fsfYQG5gfogOj0NdgTg=";
     }) {})
     nemo
     imagemagick
@@ -339,6 +339,7 @@
       epkgs.sly
       epkgs.dyalog-mode
       epkgs.proof-general
+      epkgs.gnuplot
     ];
   };
 
