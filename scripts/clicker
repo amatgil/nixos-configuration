@@ -2,6 +2,11 @@
 
 # Inspired by `https://www.youtube.com/watch?v=q4aQ6BjH174`
 
+# Shows a number on the taskbar that can get increased or reset. That's it
+# 
+# The idea is to click it when you realize you've gotten distracted, so you
+# can see how many times you've regained focused by the end of a session
+
 FILE="$HOME/.cache/clicker_amount"
 touch -a $FILE
 

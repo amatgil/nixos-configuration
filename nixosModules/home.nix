@@ -25,7 +25,7 @@
       owner = "amatgil";
       repo = "hamster";
       rev = "master";
-      sha256 = "sha256-H8i2LXFOnAkDaXh/MOdSkIX/fsfYQG5gfogOj0NdgTg=";
+      sha256 = "sha256-pE2gmFcS+RQqr1OZo4MMjaHrRkCa/F/tpQbS6S+0LrI=";
     }) {})
     nemo
     imagemagick
@@ -357,7 +357,7 @@
           owner = "amatgil";
           repo = "casuiua-mode";
           rev = "master";
-          sha256 = "sha256-+LH6QLEC5Xy1+9nXQKifQtyCXVFBbhd9zwKSjNQF6ak=";
+          sha256 = "sha256-+MZRpREQJsBD7LeLhP/z86O/3b04lJJsZgjwLVLmzzM=";
         };
       in
         pkgs.stdenv.mkDerivation rec {
