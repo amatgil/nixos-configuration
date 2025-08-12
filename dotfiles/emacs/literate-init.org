@@ -106,6 +106,9 @@ These options, I'm torn on; for now, they are off.
   ;; Set sane defaults for re-builders (emacs has a built-in regex builder it's so cool)
   (require 're-builder)
   (setq reb-re-syntax 'string)
+
+  ;; Otherwise, the minibuffer breaks :/
+  (add-hook 'minibuffer-setup-hook (lambda () (paredit-mode 0))) 
 #+end_src
 
 The selected line number doesn't scale when the font size changes (especially noticeable in e.g. uiua)
