@@ -273,8 +273,18 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
      (file-name-directory user-init-file)
      "casuiua-mode.el"))
   ; TODO: uiua-base-mode hook doesn't exist, it should be casuiua-mode
-  (add-hook 'uiua-base-mode-hook (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
+  ;;(add-hook 'uiua-base-mode-hook (lambda () (setq buffer-face-mode-face '(:family "Uiua386")) (buffer-face-mode)))
 #+end_src
+
+***** BQN
+#+begin_src emacs-lisp
+  (defun cas/set-font-to-uiua ()
+    (setq buffer-face-mode-face '(:family "Uiua386"))
+    (buffer-face-mode))
+  (add-hook 'bqn-mode-hook 'cas/set-font-to-uiua)
+  (add-hook 'bqn-comint-mode-hook 'cas/set-font-to-uiua)
+#+end_src
+
 ***** Common Lisp
 #+begin_src emacs-lisp
    ;; (defun hyperspec-lookup--hyperspec-lookup-w3m (orig-fun &rest args)
@@ -471,6 +481,21 @@ I'm a big fan of knowing the dimensions of my highlight region, this displays it
                                           ; Set helm completion to be useful lmao
   (setq helm-completion-style 'emacs)
   (setq completion-styles '(flex))
+#+end_src
+
+#+begin_src emacs-lisp
+  ;; For use in my todo, literally just inserts the date
+  (defun cas/insert-date-header ()
+    (interactive)
+    (save-excursion (insert (format-time-string "# %Y-%m-%d (%A)" nil 'wall))))
+
+  ;; The actual todo, for immediate access (and, through normal find-file, the rest)
+  (defun cas/open-todo ()
+    (interactive)
+    (find-file "~/Nusos/Todo.md"))
+
+  (global-set-key (kbd "C-c C-t") 'cas/open-todo)                        ; t for todo
+  (define-key markdown-mode-map (kbd "C-c C-n") 'cas/insert-date-header) ; n for new (d and s were taken)
 #+end_src
 
 *** Elfeed

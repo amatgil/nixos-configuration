@@ -341,6 +341,7 @@
       epkgs.proof-general
       epkgs.gnuplot
       epkgs.tree-sitter
+      epkgs.bqn-mode
     ];
   };
 
