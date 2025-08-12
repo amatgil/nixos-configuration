@@ -282,6 +282,17 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
     :config
     (define-key sly-mode-map (kbd "C-c C-d C-h") #'sly-documentation))
 #+end_src
+***** Lean4
+#+begin_src emacs-lisp
+  (add-to-list 'load-path
+               (file-name-concat
+                (file-name-directory user-init-file)
+                "lean4-mode"))
+  (load
+   (file-name-concat
+    (file-name-directory user-init-file)
+    "lean4-mode/lean4-mode.el"))
+#+end_src
 
 *** Self-Documentation
 Emacs really is self-documenting (and is the main reason I'm using it over *vim), this brings it closer to perfection by replacing emacs' help pages by using =helpful='s.

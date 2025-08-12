@@ -357,7 +357,13 @@
           owner = "amatgil";
           repo = "casuiua-mode";
           rev = "master";
-          sha256 = "sha256-+MZRpREQJsBD7LeLhP/z86O/3b04lJJsZgjwLVLmzzM=";
+          sha256 = "sha256-1zLvMeHgewzs5Y3B3zG6nB30SfV7J8yofUV95+JWWGo=";
+        };
+        lean4-src = pkgs.fetchFromGitHub {
+          owner = "leanprover-community";
+          repo = "lean4-mode";
+          rev = "master";
+          sha256 = "sha256-6XFcyqSTx1CwNWqQvIc25cuQMwh3YXnbgr5cDiOCxBk=";
         };
       in
         pkgs.stdenv.mkDerivation rec {
@@ -366,6 +372,7 @@
           unpackPhase = ''
             cp -r ${src}/* .
             cp -r ${casuiua-src}/casuiua-mode.el .
+            cp -r ${lean4-src} ./lean4-mode
           '';
           buildPhase = ''
             ${pkgs.figlet}/bin/figlet "Tangling Emacs..."
@@ -373,8 +380,9 @@
             ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "(org-babel-tangle-file \"literate-init.org\")"
           '';
           installPhase = ''
-            mv init.el $out
-            mv casuiua-mode.el $out
+            cp    init.el         $out
+            cp    casuiua-mode.el $out
+            cp -r lean4-mode      $out
             ${pkgs.figlet}/bin/figlet "Installed init.el"
           '';
         };
