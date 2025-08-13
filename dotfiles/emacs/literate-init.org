@@ -109,6 +109,10 @@ These options, I'm torn on; for now, they are off.
 
   ;; Otherwise, the minibuffer breaks :/
   (add-hook 'minibuffer-setup-hook (lambda () (paredit-mode 0))) 
+
+  ;; Otherwise, TRAMP doesn't use pinentry. This breaks the minibuffer because it asks for
+  ;; both the password and the path at the same time lmao
+  (setq epg-pinentry-mode 'ask)
 #+end_src
 
 The selected line number doesn't scale when the font size changes (especially noticeable in e.g. uiua)
