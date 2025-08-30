@@ -287,6 +287,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
     (buffer-face-mode))
   (add-hook 'bqn-mode-hook 'cas/set-font-to-uiua)
   (add-hook 'bqn-comint-mode-hook 'cas/set-font-to-uiua)
+  (setq bqn-glyph-prefix 186)
 #+end_src
 
 ***** Common Lisp

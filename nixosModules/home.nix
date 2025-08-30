@@ -397,6 +397,7 @@
 		userName = "amatgil";
 		userEmail = "amatgilvinyes@gmail.com";
 		extraConfig = {
+      rerere.enabled = 1;
 			user.signingkey = "D34BAAD5029249C9";
 			init.defaultBranch = "master";
 			core = {
