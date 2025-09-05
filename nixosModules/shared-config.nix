@@ -116,6 +116,7 @@
     polarity = "dark";
     cursor.package = pkgs.qogir-icon-theme;
     cursor.name = "Qogir Cursors";
+    cursor.size = 32;
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
 
     base16Scheme = ../dotfiles/catppuccin-mocha.yaml;
@@ -220,7 +221,8 @@
 
   fonts.packages = with pkgs; [
     iosevka
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
     jetbrains-mono
     noto-fonts
     noto-fonts-emoji
