@@ -9,7 +9,7 @@
   nixpkgs.config.allowUnfree = true; # mostly nvidia :(
   nixpkgs.config.nvidia.acceptLicense = true; # this is specifically nvidia lmao
 
-  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
+  #nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
@@ -118,7 +118,7 @@
     cursor.name = "Qogir Cursors";
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = ../dotfiles/catppuccin-mocha.yaml;
 
     opacity = {
       applications = 1.0;
