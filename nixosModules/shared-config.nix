@@ -69,9 +69,9 @@
     xserver = {
       enable = true;
       xkb = {
-        layout = "es,apl";
-        variant = "cat,dyalog";
-        options = "grp:rctrl_switch";
+        layout = "es";
+        variant = "nodeadkeys"; # "cat"
+        options = "compose:menu";
         # This is completed by the `keyd` service
       };
 
@@ -88,6 +88,9 @@
     };
 
     keyd.enable = true; # Config file under /etc/keyd/capslock-rebind.conf
+                        # see the `environment.etc."keyd/capslock-rebind.conf".source`
+                        # line below
+    
 
     #foldingathome.enable = true;
   };
@@ -106,7 +109,7 @@
     enable = true;
     clean.enable = true;
     # OUTDATED: It's an OR: if it's older than 20d OR it's not the last four gens, it's byebye'd
-    clean.extraArgs = "--keep-since 40d";
+    clean.extraArgs = "--keep-since 100d";
     flake = "/etc/nixos";
   };
 
@@ -175,7 +178,11 @@
   users.users.casenc = {
     isNormalUser = true;
     description = "casenc";
-    extraGroups = [ "networkmanager" "wheel" "video" "scanner" "lp" "uinput"]; # uinput = kanata
+    extraGroups = [ "networkmanager" "wheel" "video" "scanner"
+                    "lp"
+                    "uinput" # kanata (deprecated?)
+                    "kvm"
+                  ];
     packages = []; # They're all in home-manager
   };
 

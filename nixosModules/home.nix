@@ -109,6 +109,9 @@
     ungoogled-chromium
     strawberry
     gforth
+    gimp
+
+    obs-studio
   ];
 
   programs = {
