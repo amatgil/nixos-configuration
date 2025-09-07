@@ -497,7 +497,7 @@ I'm a big fan of knowing the dimensions of my highlight region, this displays it
   ;; The actual todo, for immediate access (and, through normal find-file, the rest)
   (defun cas/open-todo ()
     (interactive)
-    (find-file "~/Nusos/Todo.md"))
+    (find-file "~/Nusos/Core/Todo.md"))
 
   (global-set-key (kbd "C-c C-t") 'cas/open-todo)                        ; t for todo
   (define-key markdown-mode-map (kbd "C-c C-n") 'cas/insert-date-header) ; n for new (d and s were taken)
