@@ -9,7 +9,7 @@
   nixpkgs.config.allowUnfree = true; # mostly nvidia :(
   nixpkgs.config.nvidia.acceptLicense = true; # this is specifically nvidia lmao
 
-  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
+  #nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" ]; # For obsidian
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
@@ -119,9 +119,10 @@
     polarity = "dark";
     cursor.package = pkgs.qogir-icon-theme;
     cursor.name = "Qogir Cursors";
+    cursor.size = 32;
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    base16Scheme = ../dotfiles/catppuccin-mocha.yaml;
 
     opacity = {
       applications = 1.0;
@@ -227,7 +228,8 @@
 
   fonts.packages = with pkgs; [
     iosevka
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
     jetbrains-mono
     noto-fonts
     noto-fonts-emoji
