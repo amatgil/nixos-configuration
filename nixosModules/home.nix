@@ -178,6 +178,8 @@
         whatismyip="curl https://am.i.mullvad.net/ip";
         mida="du -h . --max-depth=1";
         sbcl="rlwrap sbcl";
+
+        dc="echo 'Did you mean cd lmao'";
       };
     };
 
