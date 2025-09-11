@@ -346,6 +346,7 @@
       epkgs.gnuplot
       epkgs.tree-sitter
       epkgs.bqn-mode
+      epkgs.ement
     ];
   };
 
