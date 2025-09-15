@@ -296,58 +296,6 @@
   # TODO: Extract this out into its own file
 	programs.emacs = {
 		enable = true;
-		extraPackages = epkgs: [
-      epkgs.evil
-      epkgs.evil-collection
-      epkgs.evil-owl
-      epkgs.magit
-
-      epkgs.forth-mode
-      epkgs.rust-mode
-      epkgs.lua-mode
-      epkgs.haskell-mode
-      epkgs.hindent
-      #epkgs.uiua-ts-mode
-      epkgs.nix-mode
-      epkgs.elm-mode
-      epkgs.typescript-mode
-      epkgs.just-mode
-      epkgs.direnv
-      epkgs.rainbow-delimiters
-      epkgs.paredit
-
-      epkgs.lsp-ui
-      epkgs.lsp-mode
-      epkgs.lsp-haskell
-      epkgs.rainbow-mode
-
-      epkgs.pinentry
-      epkgs.helpful
-      epkgs.origami
-      epkgs.company
-      epkgs.smex
-      epkgs.avy
-      epkgs.undo-fu
-      epkgs.forge # GitHub/GitLab integration with magit
-      epkgs.dap-mode
-      epkgs.ess
-      epkgs.visual-fill-column
-      epkgs.org-roam
-      epkgs.helm
-      epkgs.elfeed
-      epkgs.calfw
-      epkgs.calfw-org
-      epkgs.literate-calc-mode # http://web.archive.org/web/20240530101029/https://hungyi.net/posts/solve-system-of-equations-literate-calc-mode/
-      epkgs.org-appear
-      epkgs.yasnippet
-      epkgs.sly
-      epkgs.dyalog-mode
-      epkgs.proof-general
-      epkgs.gnuplot
-      epkgs.tree-sitter
-      epkgs.bqn-mode
-      epkgs.ement
-    ];
   };
 
   services.emacs = {
