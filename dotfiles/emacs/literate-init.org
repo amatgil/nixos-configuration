@@ -159,11 +159,16 @@ The structure of an entry in =display-buffer-alist= is: =(BUFFER-MATCHER LIST-OF
 #+begin_src emacs-lisp
   (setq display-buffer-alist `(((or . ((derived-mode . occur-mode)
                                        (derived-mode . grep-mode)))
-                                (display-buffer-reuse-mode-window ; Reuse if exists
-                                 display-buffer-below-selected)  ; Below the currently selected window
+                                (display-buffer-reuse-mode-window display-buffer-below-selected)
                                 (window-height . fit-window-to-buffer)
-                                (dedicated . t) ; Do not allow switching another buffer in it
-                                (window-parameters . ((mode-line-format . none))))))
+                                (dedicated . t)
+                                (window-parameters . ((mode-line-format . none))))
+
+                               ((derived-mode . compilation-mode)
+                                (display-buffer-reuse-mode-window display-buffer-in-direction)
+                                (dedicated . t)
+                                ()
+                                )))
 #+end_src
 *** Evil mode
 I've tried to stick with the true emacs binds, but my left wrist could not take the struggle.
