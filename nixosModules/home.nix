@@ -111,6 +111,9 @@
     gimp
 
     obs-studio
+
+    rustc cargo
+    ghc
   ];
 
   programs = {
