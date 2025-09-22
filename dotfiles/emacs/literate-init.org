@@ -153,7 +153,18 @@ This may be unupdated so it does NOT get tangled in.
   (custom-set-faces
    '(line-number ((t (:inherit 'default)))))
 #+end_src
+*** Buffer management
+The structure of an entry in =display-buffer-alist= is: =(BUFFER-MATCHER LIST-OF-DISPLAY-FUNCTIONS &optional PARAMS)=. The matcher can be a regex or a =(derived-mode . some-mode)= pattern; the display functions are tried in order.
 
+#+begin_src emacs-lisp
+  (setq display-buffer-alist `(((or . ((derived-mode . occur-mode)
+                                       (derived-mode . grep-mode)))
+                                (display-buffer-reuse-mode-window ; Reuse if exists
+                                 display-buffer-below-selected)  ; Below the currently selected window
+                                (window-height . fit-window-to-buffer)
+                                (dedicated . t) ; Do not allow switching another buffer in it
+                                (window-parameters . ((mode-line-format . none))))))
+#+end_src
 *** Evil mode
 I've tried to stick with the true emacs binds, but my left wrist could not take the struggle.
 
@@ -214,6 +225,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (global-set-key (kbd "C-c C-ç") 'enlarge-window-horizontally)
   (global-set-key (kbd "C-c s") 'scroll-lock-mode) 
   (global-set-key (kbd "M-t") 'ansi-term) 
+  (global-set-key (kbd "M-s o") 'occur) 
 
 #+end_src
 
