@@ -364,7 +364,7 @@ globalkeys = gears.table.join(
     awful.key({}, "XF86AudioLowerVolume", function() volume_dec() end,
        {description = 'decrease volume', group = 'client'}),
 
-    awful.key({ modkey, "Control" }, "m", function () volume_toggle() end,
+    awful.key({ modkey, "Mod1" }, "m", function () volume_toggle() end,
        {description = 'toggle (mute) volume', group = 'client'}),
     awful.key({}, "XF86AudioMute", function() volume_toggle() end,
        {description = 'toggle (mute) volume', group = 'client'}),
