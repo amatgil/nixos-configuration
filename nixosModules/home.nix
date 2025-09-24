@@ -114,6 +114,7 @@
 
     rustc cargo
     ghc
+    uiua-unstable
   ];
 
   programs = {
