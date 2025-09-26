@@ -372,6 +372,8 @@ globalkeys = gears.table.join(
 
     awful.key({}, "XF86Launch1", function() awful.spawn.easy_async("/etc/nixos/scripts/thinkpadbutton", function() end) end,
        {description = 'Thinkpad wild card', group = 'client'}),
+    awful.key({ modkey,           }, "n", function() naughty.destroy_all_notifications(nil, "Received shortcut") end,
+       {description = "Remove all on-screen notifications", group = 'client'}),
 
 
     -- CLICKER STUFFS
