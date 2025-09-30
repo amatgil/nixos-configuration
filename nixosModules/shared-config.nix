@@ -235,6 +235,8 @@
     gnuplot
     slock
     fzf
+    traceroute
+    dig
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
