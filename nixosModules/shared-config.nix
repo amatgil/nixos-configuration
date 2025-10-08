@@ -70,7 +70,7 @@
       enable = true;
       xkb = {
         layout = "es";
-        variant = "nodeadkeys"; # "cat"
+        #variant = "nodeadkeys"; # "cat" (compose key does this)
         options = "compose:menu";
         # This is completed by the `keyd` service
       };
@@ -237,6 +237,8 @@
     fzf
     traceroute
     dig
+    gnumake
+    dos2unix # includes unix2dos
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
