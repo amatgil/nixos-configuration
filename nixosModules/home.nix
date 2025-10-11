@@ -294,7 +294,7 @@
   # END AUTORANDR AREA
 
   xdg.configFile.plantill.source = ../dotfiles/plantill;
-	xdg.configFile.awesome.source = ../dotfiles/awesome;
+  xdg.configFile.awesome.source = ../dotfiles/awesome;
 
   # Emacs gets its own area
   # TODO: Extract this out into its own file
