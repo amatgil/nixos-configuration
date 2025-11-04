@@ -115,6 +115,11 @@
     rustc cargo
     ghc
     uiua-unstable
+    jdk21_headless # might as well have it :/
+    
+    (rWrapper.override { packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
+    (rstudioWrapper.override{ packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
+
   ];
 
   programs = {

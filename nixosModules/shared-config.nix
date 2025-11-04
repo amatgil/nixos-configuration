@@ -124,6 +124,7 @@
     ];
   };
   services.envfs.enable = true;
+  services.davfs2.enable = true;
 
   stylix = {
     enable = true;
