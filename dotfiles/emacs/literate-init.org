@@ -57,7 +57,9 @@ These options, I'm torn on; for now, they are off.
   (unless (package-installed-p 'rainbow-delimiters) (package-install 'rainbow-delimiters))
   (unless (package-installed-p 'paredit)            (package-install 'paredit))
   (unless (package-installed-p 'yasnippet)          (package-install 'yasnippet))
-  (unless (package-installed-p 'direnv)          (package-install 'direnv))
+  (unless (package-installed-p 'direnv)             (package-install 'direnv))
+  (unless (package-installed-p 'company)            (package-install 'company))
+  (unless (package-installed-p 'embark)             (package-install 'embark))
 #+end_src
 *** Basics constants and modes
 #+begin_src emacs-lisp
@@ -202,7 +204,7 @@ I've tried to stick with the true emacs binds, but my left wrist could not take 
   (global-set-key (kbd "C-w k") 'evil-window-up)
   (global-set-key (kbd "C-w j") 'evil-window-down)
 
-  (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-2)
+  (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-timer)
   (define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
 #+end_src
 
@@ -231,6 +233,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (global-set-key (kbd "C-c s") 'scroll-lock-mode) 
   (global-set-key (kbd "M-t") 'ansi-term) 
   (global-set-key (kbd "M-s o") 'occur) 
+  (global-set-key (kbd "M-e") 'embark-act)  ; Both the "Right Click Menu" and the "I've changed my mind" keybind
 
 #+end_src
 
