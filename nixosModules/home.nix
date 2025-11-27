@@ -120,6 +120,14 @@
     (rWrapper.override { packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
     (rstudioWrapper.override{ packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
 
+
+    janet
+    (pkgs.jpm.overrideAttrs (old: {
+      buildInputs = old.buildInputs ++ [ pkgs.makeWrapper ];
+      postInstall = "wrapProgram $out/bin/jpm --add-flags '--libpath=${pkgs.janet}/lib --ldflags=-L${pkgs.glibc}/lib --local'";
+    }))
+
+    gdb
   ];
 
   programs = {

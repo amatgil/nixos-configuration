@@ -204,8 +204,9 @@ I've tried to stick with the true emacs binds, but my left wrist could not take 
   (global-set-key (kbd "C-w k") 'evil-window-up)
   (global-set-key (kbd "C-w j") 'evil-window-down)
 
-  (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-timer)
   (define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
+  (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-timer)
+  (setq avy-timeout-seconds 0.2)
 #+end_src
 
 *** Visual line set-up
@@ -304,7 +305,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (add-hook 'rust-mode-hook 'lsp-deferred) ; Enable lsp-mode when in rust buffers
   (setq lsp-keymap-prefix "C-c C-r") ; I checked, it was unbound (C-c ones are reserved for the user, apparently)
   (setq dap-auto-configure-features '(sessions locals controls tooltip)) ; debugging (i hope)
-  ;(setq lsp-rust-analyzer-proc-macro-enable nil) ; proc-macro errors are annoying, especially in sqlx and such
+                                          ;(setq lsp-rust-analyzer-proc-macro-enable nil) ; proc-macro errors are annoying, especially in sqlx and such
   (add-hook 'rust-mode-hook 
             (lambda () (add-hook 'before-save-hook 'lsp-format-buffer))) 
 #+end_src
@@ -380,6 +381,55 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
    (file-name-concat
     (file-name-directory user-init-file)
     "lean4-mode/lean4-mode.el"))
+#+end_src
+***** Janet
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'janet-mode) (package-install 'janet-mode))
+
+  (defvar cas-janet-output-buffer-name "*janet-output*")
+  (defvar cas-janet-memory-file-name "/tmp/janet-memory")
+  (defvar cas-janet-temp-eval-file-name "/tmp/janet-execute")
+
+  (defun cas-remember-janet-sexp ()
+    "Push sexp under point (and behind) to \"memory\"."
+    (interactive)
+    (let ((start (scan-sexps (1+ (point)) -1))
+          (end (1+ (point))))
+      (append-to-file start end cas-janet-memory-file-name)))
+
+  (defun cas-eval-janet-sexp ()
+    "Evaluate sexp under point within the context of current memory (see `cas-remember-janet-sexp`)"
+    (interactive)
+    (let* ((start (scan-sexps (1+ (point)) -1))
+           (end (1+ (point)))
+           (out-buf (get-buffer-create cas-janet-output-buffer-name))
+           (text-to-eval (buffer-substring start end)))
+      (with-temp-file cas-janet-temp-eval-file-name
+        (erase-buffer)
+        (insert-file-contents cas-janet-memory-file-name) (end-of-buffer)
+        (insert "\n")                                     (end-of-buffer)
+        (insert "(print ")                                (end-of-buffer)
+        (insert text-to-eval)                             (end-of-buffer)
+        (insert ")")                                      (end-of-buffer)
+        (with-current-buffer out-buf 
+          (erase-buffer)
+          (async-shell-command (concat "janet " cas-janet-temp-eval-file-name)
+                               out-buf)))))
+
+  (defun cas-hide-janet-output-window ()
+    "Equivalent to C-x 0 when the buffer is current"
+    (interactive)
+    (delete-window (get-buffer-window cas-janet-output-buffer-name)))
+
+  (defun cas-clear-janet-memory ()
+    (with-temp-file cas-janet-memory-file-name
+      (erase-buffer)))
+
+
+  (define-key janet-mode-map (kbd "C-c C-r") #'cas-remember-janet-sexp)
+  (define-key janet-mode-map (kbd "C-c C-c") #'cas-eval-janet-sexp)
+  (define-key janet-mode-map (kbd "C-c C-k C-r") #'cas-clear-janet-memory)
+  (define-key janet-mode-map (kbd "C-c C-q") #'cas-hide-janet-output-window)
 #+end_src
 ***** General modes
 #+begin_src emacs-lisp

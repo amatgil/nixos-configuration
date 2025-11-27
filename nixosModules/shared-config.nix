@@ -240,6 +240,9 @@
     dig
     gnumake
     dos2unix # includes unix2dos
+
+    # 32bit && 64bit
+    wineWowPackages.stable winetricks
   ];
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
