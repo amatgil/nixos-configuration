@@ -253,6 +253,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (global-set-key (kbd "C-c e s") 'flymake-show-buffer-diagnostics) ; Error (diagnostics) show (project is also an option)
   (global-set-key (kbd "C-c e n") 'flymake-goto-next-error)         ; Error next
   (global-set-key (kbd "C-c e p") 'flymake-goto-prev-error)         ; Error previous
+  (define-key evil-motion-state-map (kbd "g d") 'lsp-find-definition)
 
   (setq read-process-output-max (* 1024 1024)) 
 
@@ -426,10 +427,11 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
       (erase-buffer)))
 
 
-  (define-key janet-mode-map (kbd "C-c C-r") #'cas-remember-janet-sexp)
-  (define-key janet-mode-map (kbd "C-c C-c") #'cas-eval-janet-sexp)
-  (define-key janet-mode-map (kbd "C-c C-k C-r") #'cas-clear-janet-memory)
-  (define-key janet-mode-map (kbd "C-c C-q") #'cas-hide-janet-output-window)
+  ;; These fail because 'janet-mode-map' doesn't exist? Very confusing
+  ;; (define-key janet-mode-map (kbd "C-c C-r") #'cas-remember-janet-sexp)
+  ;; (define-key janet-mode-map (kbd "C-c C-c") #'cas-eval-janet-sexp)
+  ;; (define-key janet-mode-map (kbd "C-c C-k C-r") #'cas-clear-janet-memory)
+  ;; (define-key janet-mode-map (kbd "C-c C-q") #'cas-hide-janet-output-window)
 #+end_src
 ***** General modes
 #+begin_src emacs-lisp
