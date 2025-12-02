@@ -252,7 +252,7 @@
     nerd-fonts.droid-sans-mono
     jetbrains-mono
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
     liberation_ttf
     fira-code
     fira-code-symbols

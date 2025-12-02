@@ -45,7 +45,6 @@
     bottom
     cargo-sweep
     eza
-    du-dust
     hexyl
     gitui
     zellij
@@ -60,7 +59,7 @@
     ripgrep
     wget
     yt-dlp
-    du-dust
+    dust # du-dust
     qbittorrent
     mullvad-vpn
     alacritty
@@ -112,7 +111,7 @@
 
     obs-studio
 
-    rustc cargo
+    rustup
     ghc
     uiua-unstable
     jdk21_headless # might as well have it :/
