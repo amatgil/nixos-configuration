@@ -204,6 +204,20 @@ I've tried to stick with the true emacs binds, but my left wrist could not take 
   (global-set-key (kbd "C-w k") 'evil-window-up)
   (global-set-key (kbd "C-w j") 'evil-window-down)
 
+  (defun cas-split-window-below ()
+    "Like split-window-below (default C-x 2), but moves point to the new one"
+    (interactive)
+    (split-window-below)
+    (evil-window-down 1))
+  (defun cas-split-window-right ()
+    "Like split-window-right (default C-x 3), but moves point to the new one"
+    (interactive)
+    (split-window-right)
+    (evil-window-right 1))
+
+  (global-set-key (kbd "C-x 2") 'cas-split-window-below)
+  (global-set-key (kbd "C-x 3") 'cas-split-window-right)
+
   (define-key evil-normal-state-map (kbd "C-s") 'evil-scroll-up)
   (define-key evil-normal-state-map (kbd "s") 'avy-goto-char-timer)
   (setq avy-timeout-seconds 0.2)
@@ -444,11 +458,23 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (unless (package-installed-p 'bqn-mode)        (package-install 'bqn-mode))
 #+end_src
 *** Self-Documentation
-Emacs really is self-documenting (and is the main reason I'm using it over *vim), this brings it closer to perfection by replacing emacs' help pages by using =helpful='s.
+Emacs really is self-documenting (and is the main reason I'm using it
+over *vim), this brings it closer to perfection by replacing emacs'
+help pages by using =helpful='s.
 
-Note that the built-in `describe-function' includes both functions and macros. `helpful-function' is functions only, so this uses `helpful-callable' as a drop-in replacement.
+Note that the built-in =describe-function= includes both functions and
+macros. =helpful-function= is functions only, so this uses
+=helpful-callable= as a drop-in replacement.
+
+Note also that =f= is used with =describe-function=, as usual, and
+=helpful-callable= goes on =F=. This is because the one-sentence summary
+is invaluable for exploration. Helpful's shown information is much
+better, however, so i'm keeping both.
+
+Note also also that =C-h a= (=apropos=) can be very useful, too!
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h f") #'describe-function)
+  (global-set-key (kbd "C-h F") #'helpful-callable)
 
   (global-set-key (kbd "C-h v") #'helpful-variable)
   (global-set-key (kbd "C-h k") #'helpful-key)
@@ -636,6 +662,19 @@ I'm a big fan of knowing the dimensions of my highlight region, this displays it
 
   (global-set-key (kbd "C-c C-t") 'cas/open-todo)                        ; t for todo
   (define-key markdown-mode-map (kbd "C-c C-n") 'cas/insert-date-header) ; n for new (d and s were taken)
+#+end_src
+
+*** Info
+My own config, over evil-collection's (=g j= and =g k= are mildly depressing; and =^= is a deadkey for me).
+
+#+begin_src emacs-lisp
+(use-package Info
+  :ensure nil
+  :bind (:map Info-mode-map
+              ("C-n" . Info-next)
+              ("C-p" . Info-prev)
+              ("<backspace>" . Info-history-back)
+              ("u" . Info-up)))
 #+end_src
 
 *** Elfeed
