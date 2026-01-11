@@ -97,7 +97,14 @@
     imagemagick
     yt-dlp
 
-    kdePackages.korganizer
+    kdePackages.korganizer # i don't remember if i ever used this
+    kdePackages.kruler  # neat :D
+    kdePackages.ktimer  # self-explanatory
+                kronometer  # self-explanatory
+    kdePackages.kmines  # game
+    kdePackages.knights # game
+    kdePackages.minuet  # music practice
+    kdePackages.kalzium # periodic table
     libreoffice
     inkscape
     fontforge-gtk
@@ -127,6 +134,24 @@
     }))
 
     gdb
+
+    virt-viewer openfortivpn # uni
+
+    mold
+
+    cmake
+
+
+    # X11 dependencies (for raylib)
+    libGL xorg.libX11 xorg.libX11.dev xorg.libXcursor xorg.libXi xorg.libXinerama xorg.libXrandr
+    #emscripten
+    pkg-config
+
+    evince
+
+    elmPackages.elm elmPackages.elm-language-server uglify-js
+
+    llvmPackages_20.clang-tools # clangd
   ];
 
   programs = {
@@ -182,7 +207,7 @@
         v="nvim"; top="btm"; sys="systemctl";
         ifconfig="ip --brief --color address";
         cmatrix="cmatrix -C blue -b";
-        sping="ping -c20 archlinux.org";
+        sping="ping -c20 gnu.org";
         cmd="command"; # For things like 'command top'
         cd="z"; # zoxide
         zrem="zoxide remove $(pwd)";
@@ -371,7 +396,7 @@
 			init.defaultBranch = "master";
 			core = {
 				pager = "delta";
-				editor = "emacs";
+				editor = "emacsclient";
         fileMode = false;
 			};
       merge.tool = "emacs";
