@@ -8,12 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs"; # Keep HA and the system's nixpkgs version the same
     };
     stylix.url = "github:danth/stylix"; # Latest one doesn't work lmao
-    #stylix.url = "github:danth/stylix/cf8b6e2d4e8aca8ef14b839a906ab5eb98b08561"; # Latest one doesn't work lmao
-
-    #BAD gnome stylix.url = "github:danth/stylix/b001c0b513e323cc4265e1ca96b7463bb93285b7"; # Latest one doesn't work AGAIN :sob:
-    #BAD cursor stylix.url = "github:danth/stylix/8762da957b8b04b8b73248144f1c0ff7a88924b5"; # Latest one doesn't work AGAIN :sob:
-    #stylix.url = "github:danth/stylix/8762da957b8b04b8b73248144f1c0ff7a88924b5"; # Latest one doesn't work AGAIN :sob:
-
   };
 
   outputs ={ self, nixpkgs, home-manager, stylix, ... }@inputs: {
