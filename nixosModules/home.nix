@@ -64,7 +64,7 @@
     mullvad-vpn
     alacritty
     pinentry-emacs
-    delta
+    delta difftastic
     meld
     pandoc
     texlive.combined.scheme-full 
@@ -118,7 +118,7 @@
 
     obs-studio
 
-    rustup
+    rustup trunk
     ghc
     uiua-unstable
     jdk21_headless # might as well have it :/
@@ -152,6 +152,10 @@
     elmPackages.elm elmPackages.elm-language-server uglify-js
 
     llvmPackages_20.clang-tools # clangd
+
+    python315
+
+    haskellPackages.cabal-install
   ];
 
   programs = {
@@ -180,7 +184,10 @@
         ignoreDups = true;
         ignoreSpace = true;
       };
-      initContent = "export GPG_TTY=$(tty)";
+      initContent = ''
+                    export GPG_TTY=$(tty)
+                    bindkey '^ ' autosuggest-accept
+                    '';
       shellAliases = {
         l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
@@ -395,23 +402,22 @@
 			user.signingkey = "D34BAAD5029249C9";
 			init.defaultBranch = "master";
 			core = {
-				pager = "delta";
+				# pager = "delta";
 				editor = "emacsclient";
         fileMode = false;
 			};
       merge.tool = "emacs";
-			interactive.diffFilter = "delta --color-only";
+			# interactive.diffFilter = "${pkgs.difftastic}";
       alias = {
         add = "add -p";
-        wdiff = "diff --word-diff";
       };
-			delta = {
-        enable = true;
-				navigate = true; # change sections with n/N
-				light = false;   # for terminals with white bg
-			};
+			# delta = {
+      #   enable = true;
+			# 	navigate = true; # change sections with n/N
+			# 	light = false;   # for terminals with white bg
+			# };
 			diff = {
-				tool = "meld";
+				external = "${pkgs.difftastic}/bin/difft";
 				colorMoved = "default";
 			};
 			difftool.prompt = false;
