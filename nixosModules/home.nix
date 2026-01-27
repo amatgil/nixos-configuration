@@ -156,6 +156,12 @@
     python315
 
     haskellPackages.cabal-install
+
+    kdePackages.okular
+
+    zed-editor
+
+    jq exiftool
   ];
 
   programs = {
@@ -167,29 +173,10 @@
     # For shell scripting
     nushell = {
       enable = true;
-      #plugins = with pkgs.nushellPlugins; [query];
-    };
-
-    zsh = {
-      enable = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-      plugins = [{
-        name = "zsh-vi-mode";
-        src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
-      }];
-      history = {
-        size = 10000;
-        path = "${config.xdg.dataHome}/zsh/history";
-        ignoreDups = true;
-        ignoreSpace = true;
-      };
-      initContent = ''
-                    export GPG_TTY=$(tty)
-                    bindkey '^ ' autosuggest-accept
-                    '';
       shellAliases = {
-        l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
+        l="ls"; # table is important in nu!
+        eza="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
+        le="eza -l --color=always --icons=always --no-user --no-time --git"; # Redundancy
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
         la="eza -al --color=always --icons=always --group-directories-first";  # Tot
         ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
@@ -204,7 +191,62 @@
         cat="bat --paging=never";
 
         doas="doas "; sudo="sudo ";
-        fucking="sudo"; please="sudo $(fc -ln -1)"; # Apparently works with both bash and zsh, `fc` is a shell builtin
+
+        glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
+
+        img="devour sxiv"; pdf="devour zathura";
+        cal="cal -m";
+
+        v="nvim"; top="btm"; sys="systemctl";
+        ifconfig="ip --brief --color address";
+        cmatrix="cmatrix -C blue -b";
+        sping="ping -c20 gnu.org";
+        cmd="command"; # For things like 'command top'
+        cd="z"; # zoxide
+        #zrem="zoxide remove $(pwd)";
+        make_auth="/usr/bin/polkit-dumb-agent";
+        record="ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0 -f pulse -ac 2 -i default /tmp/screen_recording.mp4";
+        gpu-top="sudo intel_gpu_top";
+        whatismyip="curl https://am.i.mullvad.net/ip";
+        mida="du -h . --max-depth=1";
+        sbcl="rlwrap sbcl";
+
+        dc="echo 'Did you mean cd lmao'";
+      };
+      extraConfig = ''
+        $env.config = {
+         show_banner: false
+         edit_mode:  'vi'
+        }
+        $env.config.buffer_editor = ["emacsclient", "-s", "light", "-t"]
+      '';
+      #plugins = with pkgs.nushellPlugins; [query];
+    };
+
+    zsh = {
+      enable = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+      plugins = [{
+        name = "zsh-vi-mode";
+        src = "${pkgs.zsh-vi-mode}/share/zsh-vi-mode";
+      }];
+      shellAliases = {
+        l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
+        lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
+        la="eza -al --color=always --icons=always --group-directories-first";  # Tot
+        ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
+        ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
+        lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
+        lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
+        
+        e="job spawn { emacsclient --create-frame . }";
+
+        grep="grep -i --color=auto"; egrep="egrep --color=auto"; fgrep="fgrep --color=auto";
+        cp="cp -iv"; rm="echo 'Dont rm, mv to /tmp instead'"; mv="mv -iv";
+        cat="bat --paging=never";
+
+        doas="doas "; sudo="sudo ";
 
         glg="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
 
@@ -218,17 +260,25 @@
         cmd="command"; # For things like 'command top'
         cd="z"; # zoxide
         zrem="zoxide remove $(pwd)";
-        dunstoff="dunstctl set-paused true";
-        dunston="dunstctl set-paused false";
         make_auth="/usr/bin/polkit-dumb-agent";
         record="ffmpeg -video_size 1920x1080 -framerate 25 -f x11grab -i :0.0 -f pulse -ac 2 -i default /tmp/screen_recording.mp4";
         gpu-top="sudo intel_gpu_top";
         whatismyip="curl https://am.i.mullvad.net/ip";
-        mida="du -h . --max-depth=1";
+        mida="du . --max-depth=1";
         sbcl="rlwrap sbcl";
 
         dc="echo 'Did you mean cd lmao'";
       };
+  history = {
+        size = 10000;
+        path = "${config.xdg.dataHome}/zsh/history";
+        ignoreDups = true;
+        ignoreSpace = true;
+      };
+      initContent = ''
+                    export GPG_TTY=$(tty)
+                    bindkey '^ ' autosuggest-accept
+                    '';
     };
 
     direnv = {
@@ -443,7 +493,7 @@
   	  };
   	  #window.opacity = 1;
 
-  	  terminal.shell.program = "${pkgs.zsh}/bin/zsh";
+  	  terminal.shell.program = "${pkgs.nushell}/bin/nu";
       cursor = {
         style = {
           shape = "Beam";

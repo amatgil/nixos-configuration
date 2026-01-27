@@ -502,7 +502,7 @@ Package loading:
     (setq org-ellipsis " ▾"))
 
   (custom-set-variables
-   '(org-directory "~/org")
+   '(org-directory "~/Nusos/org")
    '(org-agenda-files (list org-directory)))
 
   (setq org-default-notes-file (concat org-directory "/notes.org")) ; I found that user-emacs-directory exists (could be nicer)
@@ -512,7 +512,7 @@ Package loading:
     :init
     (setq org-roam-v2-ack t)
     :custom
-    (org-roam-directory "~/org")
+    (org-roam-directory org-directory)
     (org-roam-completion-everywhere t)
     (org-roam-capture-templates
      '(("d" "default" plain "%?" :target

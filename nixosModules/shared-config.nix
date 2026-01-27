@@ -133,8 +133,6 @@
     cursor.package = pkgs.qogir-icon-theme;
     cursor.name = "Qogir Cursors";
     cursor.size = 32;
-    #base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-
     base16Scheme = ../dotfiles/catppuccin-mocha.yaml;
 
     opacity = {
@@ -243,7 +241,25 @@
 
     # 32bit && 64bit
     wineWowPackages.stable winetricks
+
+    pkg-config
   ];
+
+  environment.sessionVariables = {
+    PKG_CONFIG_PATH = with pkgs;
+      lib.strings.concatStringsSep ":" (map (path: "${path.dev}/lib/pkgconfig") [
+        libGL
+        xorg.libXrandr
+        xorg.libXinerama
+        xorg.libXcursor
+        xorg.libXi
+        xorg.libX11
+      ]);
+    # TODO uncomment (it should probably preserve the existing value?) and it
+    # should fix the fact that the xorg libraries can't exist outside devshells
+    # LD_LIBRARY_PATH = "${pkgs.libX11}/lib:$LD_LIBRARY_PATH";
+  };
+
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
 
   fonts.packages = with pkgs; [
