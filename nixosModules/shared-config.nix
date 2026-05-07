@@ -126,47 +126,6 @@
   services.envfs.enable = true;
   services.davfs2.enable = true;
 
-  stylix = {
-    enable = true;
-    image = ../dotfiles/awesome/wallpaper.jpg;
-    polarity = "dark";
-    cursor.package = pkgs.qogir-icon-theme;
-    cursor.name = "Qogir Cursors";
-    cursor.size = 32;
-    base16Scheme = ../dotfiles/catppuccin-mocha.yaml;
-
-    opacity = {
-      applications = 1.0;
-      terminal = 0.9;
-      desktop = 1.0;
-      popups = 1.0;
-    };
-    fonts = {
-      sizes = {
-        applications = 12;
-        terminal = 10;
-        desktop = 10;
-        popups = 13;
-      };
-      serif = {
-        package = pkgs.iosevka;
-        name = "Iosevka";
-      };
-      sansSerif = {
-        package = pkgs.iosevka;
-        name = "Iosevka";
-      };
-      monospace = {
-        package = pkgs.iosevka;
-        name = "Iosevka";
-      };
-      emoji = {
-        package = pkgs.uiua386;
-        name = "Uiua386";
-      };
-    };
-  };
-
   programs.steam.enable = true;
 
   console.keyMap = "es";
@@ -240,7 +199,7 @@
     dos2unix # includes unix2dos
 
     # 32bit && 64bit
-    wineWowPackages.stable winetricks
+    #wineWowPackages.stable winetricks
 
     pkg-config
   ];
@@ -264,6 +223,7 @@
 
   fonts.packages = with pkgs; [
     iosevka
+    uiua386
     nerd-fonts.fira-code
     nerd-fonts.droid-sans-mono
     jetbrains-mono

@@ -155,6 +155,15 @@ This may be unupdated so it does NOT get tangled in.
   (custom-set-faces
    '(line-number ((t (:inherit 'default)))))
 #+end_src
+*** Theme-ing
+I used to use stylix, but it was so bloated and it caused me so much
+trouble, I ended up having to nuke it. Honestly, configuring themes per-program/package is so much nicer
+
+This needs a lot more work, but I've been using Zed for code regardless and this strong black/white is honestly not even that bad.
+#+begin_src emacs-lisp
+  (load-theme 'modus-vivendi t)
+#+end_src
+
 *** Buffer management
 The structure of an entry in =display-buffer-alist= is: =(BUFFER-MATCHER LIST-OF-DISPLAY-FUNCTIONS &optional PARAMS)=. The matcher can be a regex or a =(derived-mode . some-mode)= pattern; the display functions are tried in order.
 

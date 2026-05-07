@@ -7,15 +7,13 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs"; # Keep HA and the system's nixpkgs version the same
     };
-    stylix.url = "github:danth/stylix/master";
   };
 
-  outputs ={ self, nixpkgs, home-manager, stylix, ... }@inputs: {
+  outputs ={ self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       dreanix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          stylix.nixosModules.stylix
           ./nixosModules/shared-config.nix
           ./nixosModules/dreanix/hardware-config.nix
           ./nixosModules/dreanix/dreanix-config.nix
@@ -29,7 +27,6 @@
       nixpad = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          stylix.nixosModules.stylix
           ./nixosModules/shared-config.nix
           ./nixosModules/nixpad/hardware-config.nix
           ./nixosModules/nixpad/nixpad-config.nix
