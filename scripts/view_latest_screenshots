@@ -3,4 +3,4 @@
 AMOUNT=25
 SCREENSHOTSPATH="$HOME/screenshots" 
 
-find "$SCREENSHOTSPATH" -maxdepth 1 -type f | sort | tail -n "$AMOUNT" | tac | sxiv -
+find "$SCREENSHOTSPATH" -maxdepth 1 -type f | sort --date | tail -n "$AMOUNT" | tac | sxiv -
