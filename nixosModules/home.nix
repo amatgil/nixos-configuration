@@ -33,7 +33,6 @@
     zathura
     sxiv
     neovim
-    neovide
     arandr
     bacon
     bat
@@ -43,7 +42,7 @@
     tealdeer
     silicon
     bottom
-    cargo-sweep
+    #cargo-sweep
     eza
     hexyl
     gitui
@@ -123,8 +122,8 @@
     uiua-unstable
     jdk21_headless # might as well have it :/
     
-    (rWrapper.override { packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
-    (rstudioWrapper.override{ packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
+    # (rWrapper.override { packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
+    # (rstudioWrapper.override{ packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
 
 
     janet
@@ -166,6 +165,13 @@
     audacity
 
     nixd
+
+    manim
+
+    sbcl
+
+    lean4
+    #python313Packages.pip
   ];
 
   programs = {
