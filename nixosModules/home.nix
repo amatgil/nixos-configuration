@@ -172,6 +172,7 @@
 
     lean4
     #python313Packages.pip
+    tcpdump
   ];
 
   programs = {
