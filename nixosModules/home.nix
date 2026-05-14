@@ -174,6 +174,7 @@
     #python313Packages.pip
     tcpdump
     musescore
+    magic-wormhole
   ];
 
   programs = {
