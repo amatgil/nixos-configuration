@@ -577,7 +577,8 @@
       };
 
 
-  	  terminal.shell.program = "${pkgs.nushell}/bin/nu";
+  	  #terminal.shell.program = "${pkgs.nushell}/bin/nu";
+  	  terminal.shell.program = "${pkgs.zsh}/bin/zsh";
       cursor = {
         style = {
           shape = "Beam";
