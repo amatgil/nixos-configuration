@@ -121,6 +121,14 @@
     libraries = with pkgs; [
       stdenv.cc.cc.lib
       zlib
+
+      libGL.dev
+      raylib
+      xorg.libXrandr.dev
+      xorg.libXinerama.dev
+      xorg.libXcursor.dev
+      xorg.libXi.dev
+      xorg.libX11.dev
     ];
   };
   services.envfs.enable = true;
