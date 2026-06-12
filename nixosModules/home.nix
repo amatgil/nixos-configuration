@@ -79,6 +79,7 @@
     qdirstat
     (prismlauncher.override {
       jdks = [
+        temurin-bin-25
         temurin-bin-21
         temurin-bin-8
         temurin-bin-17
@@ -118,7 +119,7 @@
     obs-studio
 
     rustup trunk
-    ghc
+    ghc haskellPackages.haskell-language-server
     uiua-unstable
     jdk21_headless # might as well have it :/
     
@@ -175,6 +176,9 @@
     tcpdump
     musescore
     magic-wormhole
+    sshfs
+    krita
+    swi-prolog kissat
   ];
 
   programs = {
@@ -290,6 +294,7 @@
       initContent = ''
                     export GPG_TTY=$(tty)
                     bindkey '^ ' autosuggest-accept
+                    unsetopt share_history
                     '';
     };
 

@@ -1,2 +1,2 @@
 #!/bin/sh
-xinput map-to-output "HUION H420 Pen stylus" "DP1"
+xinput map-to-output "pointer: HUION H420" "DP1"
