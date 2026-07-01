@@ -179,6 +179,7 @@
     sshfs
     krita
     swi-prolog kissat
+    sqlite
   ];
 
   programs = {

@@ -129,6 +129,9 @@
       xorg.libXcursor.dev
       xorg.libXi.dev
       xorg.libX11.dev
+      openssl openssl.dev # i think the .dev is redundant
+      gexiv2 gexiv2.dev
+      glib
     ];
   };
   services.envfs.enable = true;
@@ -213,6 +216,9 @@
   ];
 
   environment.sessionVariables = {
+    OPENSSL_DIR = "${pkgs.openssl.dev}";
+    OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
+    OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
     PKG_CONFIG_PATH = with pkgs;
       lib.strings.concatStringsSep ":" (map (path: "${path.dev}/lib/pkgconfig") [
         libGL
@@ -221,10 +227,10 @@
         xorg.libXcursor
         xorg.libXi
         xorg.libX11
+        openssl # note the nix-ld section of this same file (i'm not sure if the duplication is necessary, TODO: check if it is)
+        gexiv2
+        glib
       ]);
-    # TODO uncomment (it should probably preserve the existing value?) and it
-    # should fix the fact that the xorg libraries can't exist outside devshells
-    # LD_LIBRARY_PATH = "${pkgs.libX11}/lib:$LD_LIBRARY_PATH";
   };
 
   documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
