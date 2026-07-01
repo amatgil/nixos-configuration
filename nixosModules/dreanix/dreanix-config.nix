@@ -18,18 +18,29 @@
     supportedFilesystems = [ "ntfs" ];
   };
 
-  # zram stuff
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 180;
-    "vm.watermark_boost_factor" = 0;
-    "vm.watermark_scale_factor" = 125;
-    "vm.page-cluster" = 0;
-  };
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 100;
-  };
+  # https://chrisdown.name/2026/03/24/zswap-vs-zram-when-to-use-what.html
+  # Meaning: zram bad {{
+  # boot.kernel.sysctl = {
+  #   "vm.swappiness" = 180;
+  #   "vm.watermark_boost_factor" = 0;
+  #   "vm.watermark_scale_factor" = 125;
+  #   "vm.page-cluster" = 0;
+  # };
+  # zramSwap = {
+  #   enable = true;
+  #   algorithm = "zstd";
+  #   memoryPercent = 100;
+  # };
+  # }}
+  # And meaning: zswap good
+  # Yoinked from https://wiki.nixos.org/wiki/Swap
+  boot.kernelParams = [
+    "zswap.enabled=1" # enables zswap
+    "zswap.compressor=lz4" # compression algorithm
+    "zswap.max_pool_percent=20" # maximum percentage of RAM that zswap is allowed to use
+    "zswap.shrinker_enabled=1" # whether to shrink the pool proactively on high memory pressure
+  ];
+  boot.initrd.systemd.enable = true;
 
   services.openssh = {
     enable = true;

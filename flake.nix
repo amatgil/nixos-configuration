@@ -17,6 +17,7 @@
           ./nixosModules/shared-config.nix
           ./nixosModules/dreanix/hardware-config.nix
           ./nixosModules/dreanix/dreanix-config.nix
+          ./nixosModules/dreanix/minecraft.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

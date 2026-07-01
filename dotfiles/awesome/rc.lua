@@ -214,6 +214,15 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
+    -- -- Always show the taskbar on the left-most monitor
+    --    this is dumb, 'ontop' means they'll go below. what i really want it
+    --    for it to reserve its vertical space, such that fullscreen programs do not
+    --    cover it up
+    -- if s.geometry.x == 0 then
+    --    s.mywibox.ontop = true
+    --    --s.mywibox.container.margin = 30
+    -- end
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -236,6 +245,8 @@ awful.screen.connect_for_each_screen(function(s)
                   arc_thickness = 1,
             }),
             wibox.widget.systray(),
+	    -- widget_separator,
+            -- conn_widget
 	    widget_separator,
 	    ram_widget,
 	    widget_separator,

@@ -7,6 +7,7 @@
     declarative = true;
     jvmOpts = "-Xms4G -Xmx8G";
     serverProperties = {
+      server-port = 3923;
       motd = "XC? More like, no gràcies";
       online-mode=false;
     };
