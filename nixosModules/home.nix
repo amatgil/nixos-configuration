@@ -180,6 +180,8 @@
     krita
     swi-prolog kissat
     sqlite
+    tmux
+    zbar
   ];
 
   programs = {
@@ -296,6 +298,7 @@
                     export GPG_TTY=$(tty)
                     bindkey '^ ' autosuggest-accept
                     unsetopt share_history
+                    [[ -v $TMUX ]] || tmux
                     '';
     };
 
@@ -407,6 +410,7 @@
 
   xdg.configFile.plantill.source = ../dotfiles/plantill;
   xdg.configFile.awesome.source = ../dotfiles/awesome;
+  xdg.configFile.".tmux.conf".source = ../dotfiles/tmux.conf; # note the missing dot
 
   # Emacs gets its own area
   # TODO: Extract this out into its own file
