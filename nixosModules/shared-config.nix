@@ -121,6 +121,7 @@
     libraries = with pkgs; [
       stdenv.cc.cc.lib
       zlib
+      zlib.dev
 
       libGL.dev
       raylib
