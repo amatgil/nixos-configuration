@@ -306,7 +306,7 @@
                                                  fi
                                                  '';
                     in 
-                      lib.mkMerge [ opts tmuxing ];
+                      lib.mkMerge [ opts  tmuxing ];
     };
 
     direnv = {
@@ -417,7 +417,7 @@
 
   xdg.configFile.plantill.source = ../dotfiles/plantill;
   xdg.configFile.awesome.source = ../dotfiles/awesome;
-  xdg.configFile.".tmux.conf".source = ../dotfiles/tmux.conf; # note the missing dot
+  xdg.configFile.tmux.source = ../dotfiles/tmux; # note the missing dot
 
   # Emacs gets its own area
   # TODO: Extract this out into its own file
