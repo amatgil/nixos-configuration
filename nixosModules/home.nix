@@ -294,12 +294,19 @@
         ignoreDups = true;
         ignoreSpace = true;
       };
-      initContent = ''
-                    export GPG_TTY=$(tty)
-                    bindkey '^ ' autosuggest-accept
-                    unsetopt share_history
-                    [[ -v $TMUX ]] || tmux
-                    '';
+      initContent = let 
+                      opts = lib.mkOrder 1000 ''
+                                              export GPG_TTY=$(tty)
+                                              bindkey '^ ' autosuggest-accept
+                                              unsetopt share_history
+                                              '';
+                      tmuxing = lib.mkOrder 1500 ''
+                                                 if [ -n "$PS1" ] && [ -z "$TMUX" ]; then
+                                                    tmux
+                                                 fi
+                                                 '';
+                    in 
+                      lib.mkMerge [ opts tmuxing ];
     };
 
     direnv = {
