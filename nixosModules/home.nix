@@ -109,7 +109,7 @@
     inkscape
     fontforge-gtk
     ascii
-    kicad-small
+    kicad
 
     ungoogled-chromium
     strawberry
@@ -182,6 +182,8 @@
     sqlite
     tmux
     zbar
+    nasm
+    zig
   ];
 
   programs = {
@@ -199,7 +201,6 @@
         le="eza -l --color=always --icons=always --no-user --no-time --git"; # Redundancy
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
         la="eza -al --color=always --icons=always --group-directories-first";  # Tot
-        ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
         ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
         lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
         lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
@@ -254,7 +255,6 @@
         l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
         la="eza -al --color=always --icons=always --group-directories-first";  # Tot
-        ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
         ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
         lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
         lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
