@@ -109,7 +109,7 @@
     inkscape
     fontforge-gtk
     ascii
-    kicad-small
+    kicad
 
     ungoogled-chromium
     strawberry
@@ -180,6 +180,10 @@
     krita
     swi-prolog kissat
     sqlite
+    tmux
+    zbar
+    nasm
+    zig
   ];
 
   programs = {
@@ -197,7 +201,6 @@
         le="eza -l --color=always --icons=always --no-user --no-time --git"; # Redundancy
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
         la="eza -al --color=always --icons=always --group-directories-first";  # Tot
-        ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
         ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
         lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
         lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
@@ -252,7 +255,6 @@
         l="eza -l --color=always --icons=always --no-user --no-time"; # Per defecte
         lg="eza -l --color=always --icons=always --no-user --no-time --git"; # Per defecte + git
         la="eza -al --color=always --icons=always --group-directories-first";  # Tot
-        ld="eza -l --color=always --icons=always --group-directories-first --no-user --no-time";  # Dirs first
         ldd="eza -al --color=always --icons=always --only-dirs --no-user --no-time";  # Dirs only
         lt="eza -aT --color=always --icons=always --group-directories-first --no-user --no-time"; # Arbre
         lm="eza --sort=size --icons=always -al --color=always --no-user --no-time"; # Tot, ordenat per mida
@@ -292,11 +294,19 @@
         ignoreDups = true;
         ignoreSpace = true;
       };
-      initContent = ''
-                    export GPG_TTY=$(tty)
-                    bindkey '^ ' autosuggest-accept
-                    unsetopt share_history
-                    '';
+      initContent = let 
+                      opts = lib.mkOrder 1000 ''
+                                              export GPG_TTY=$(tty)
+                                              bindkey '^ ' autosuggest-accept
+                                              unsetopt share_history
+                                              '';
+                      tmuxing = lib.mkOrder 1500 ''
+                                                 if [ -n "$PS1" ] && [ -z "$TMUX" ]; then
+                                                    tmux
+                                                 fi
+                                                 '';
+                    in 
+                      lib.mkMerge [ opts  tmuxing ];
     };
 
     direnv = {
@@ -407,6 +417,7 @@
 
   xdg.configFile.plantill.source = ../dotfiles/plantill;
   xdg.configFile.awesome.source = ../dotfiles/awesome;
+  xdg.configFile.tmux.source = ../dotfiles/tmux; # note the missing dot
 
   # Emacs gets its own area
   # TODO: Extract this out into its own file

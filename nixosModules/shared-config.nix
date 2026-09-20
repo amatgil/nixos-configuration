@@ -121,6 +121,7 @@
     libraries = with pkgs; [
       stdenv.cc.cc.lib
       zlib
+      zlib.dev
 
       libGL.dev
       raylib
@@ -233,7 +234,11 @@
       ]);
   };
 
-  documentation.dev.enable = true; # https://nixos.wiki/wiki/Man_pages
+  # https://nixos.wiki/wiki/Man_pages
+  documentation.enable = true;
+  documentation.man.enable = true;
+  documentation.man.generateCaches = true;
+  documentation.dev.enable = true;
 
   fonts.packages = with pkgs; [
     iosevka

@@ -295,7 +295,7 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
   (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+  ;(add-hook 'ielm-mode-hook             #'enable-paredit-mode)
   (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
   (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
   (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
@@ -359,7 +359,8 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
 
 ***** Elm
 #+begin_src emacs-lisp
-  (add-hook 'elm-mode-hook 'lsp-deferred)
+  (unless (package-installed-p 'elm-mode)        (package-install 'elm-mode))
+  ;(add-hook 'elm-mode-hook 'lsp-deferred)
 #+end_src
 
 ***** Uiua
@@ -461,7 +462,6 @@ Using =(add-to-list 'default-frame-alist)= because =set-frame-font= breaks with 
   (unless (package-installed-p 'forth-mode)      (package-install 'forth-mode))
   (unless (package-installed-p 'lua-mode)        (package-install 'lua-mode))
   (unless (package-installed-p 'nix-mode)        (package-install 'nix-mode))
-  (unless (package-installed-p 'elm-mode)        (package-install 'elm-mode))
   (unless (package-installed-p 'typescript-mode) (package-install 'typescript-mode))
   (unless (package-installed-p 'just-mode)       (package-install 'just-mode))
   (unless (package-installed-p 'bqn-mode)        (package-install 'bqn-mode))
