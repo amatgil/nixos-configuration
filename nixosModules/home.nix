@@ -40,17 +40,11 @@
     just
     sccache
     tealdeer
-    silicon
     bottom
     #cargo-sweep
-    eza
     hexyl
-    gitui
-    zellij
-    vscodium-fhs
-    alejandra
+    # alejandra
     obsidian
-    nil
     tokei
     eza
     monocraft
@@ -60,29 +54,26 @@
     yt-dlp
     dust # du-dust
     qbittorrent
-    mullvad-vpn
     alacritty
     pinentry-emacs
     delta difftastic
     meld
     pandoc
-    texlive.combined.scheme-full 
-    groff
+    texliveSmall #texlive.combined.scheme-full 
+    # groff
     # encfs <- deprecated?
     qalculate-gtk
     firefox
     thunderbird
-    zip
-    unzip
-    silicon
+    zip unzip
     fzf
     qdirstat
     (prismlauncher.override {
       jdks = [
         temurin-bin-25
-        temurin-bin-21
-        temurin-bin-8
-        temurin-bin-17
+        # temurin-bin-21
+        # temurin-bin-8
+        # temurin-bin-17
       ];})
     file
 
@@ -97,12 +88,12 @@
     imagemagick
     yt-dlp
 
-    kdePackages.korganizer # i don't remember if i ever used this
-    kdePackages.kruler  # neat :D
-    kdePackages.ktimer  # self-explanatory
-                kronometer  # self-explanatory
-    kdePackages.kmines  # game
-    kdePackages.knights # game
+    # kdePackages.korganizer # i don't remember if i ever used this
+    # kdePackages.kruler  # neat :D
+    # kdePackages.ktimer  # self-explanatory
+    #             kronometer  # self-explanatory
+    # kdePackages.kmines  # game
+    # kdePackages.knights # game
     kdePackages.minuet  # music practice
     kdePackages.kalzium # periodic table
     libreoffice
@@ -118,10 +109,11 @@
 
     obs-studio
 
-    rustup trunk
-    ghc haskellPackages.haskell-language-server
+    rustup # trunk
+    ghc
+    # haskellPackages.haskell-language-server
     uiua-unstable
-    jdk21_headless # might as well have it :/
+    # jdk21_headless # might as well have it :/
     
     # (rWrapper.override { packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
     # (rstudioWrapper.override{ packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
@@ -137,10 +129,7 @@
 
     virt-viewer openfortivpn # uni
 
-    mold
-
     cmake
-
 
     # X11 dependencies (for raylib)
     libGL xorg.libX11 xorg.libX11.dev xorg.libXcursor xorg.libXi xorg.libXinerama xorg.libXrandr
@@ -151,7 +140,7 @@
 
     elmPackages.elm elmPackages.elm-language-server uglify-js
 
-    llvmPackages_20.clang-tools # clangd
+    # llvmPackages_20.clang-tools # clangd
 
     python315
 
@@ -167,15 +156,15 @@
 
     nixd
 
-    manim
+    # manim
 
     sbcl
 
-    lean4
+    #lean4
     #python313Packages.pip
     tcpdump
-    musescore
-    magic-wormhole
+    # musescore
+    # magic-wormhole
     sshfs
     krita
     swi-prolog kissat

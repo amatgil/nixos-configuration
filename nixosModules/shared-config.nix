@@ -131,7 +131,7 @@
       xorg.libXi.dev
       xorg.libX11.dev
       openssl openssl.dev # i think the .dev is redundant
-      gexiv2 gexiv2.dev
+      #gexiv2 gexiv2.dev
       glib
     ];
   };
@@ -229,7 +229,7 @@
         xorg.libXi
         xorg.libX11
         openssl # note the nix-ld section of this same file (i'm not sure if the duplication is necessary, TODO: check if it is)
-        gexiv2
+        #gexiv2
         glib
       ]);
   };
