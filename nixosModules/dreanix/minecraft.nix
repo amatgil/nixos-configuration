@@ -2,9 +2,9 @@
   services.minecraft-server = {
     enable = true;
     eula = true;
-    package = pkgs.minecraftServers.vanilla-1-20;
+    package = pkgs.minecraftServers.vanilla-26-2;
     openFirewall = true;
-    declarative = true;
+    declarative = false;
     jvmOpts = "-Xms4G -Xmx8G";
     serverProperties = {
       server-port = 3923;

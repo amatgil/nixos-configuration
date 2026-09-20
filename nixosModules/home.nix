@@ -68,7 +68,7 @@
     pandoc
     texlive.combined.scheme-full 
     groff
-    encfs
+    # encfs <- deprecated?
     qalculate-gtk
     firefox
     thunderbird

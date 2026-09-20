@@ -251,6 +251,8 @@
     dina-font
     proggyfonts
   ];
+  fonts.fontconfig.enable = true;
+
   #virtualisation.docker.enable = true;
   #users.extraGroups.docker.members = [ "casenc" ]; # Equivalent to root, careful
   system.stateVersion = "23.11"; # NO TOUCHY
