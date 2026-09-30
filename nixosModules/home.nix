@@ -294,8 +294,9 @@
                                                     tmux
                                                  fi
                                                  '';
+                      fzf = ''eval "$(${lib.getExe pkgs.fzf} --zsh)"''; # C-t for file select, M-c for cd, C-r for history (history needs normal-mode)
                     in 
-                      lib.mkMerge [ opts  tmuxing ];
+                      lib.mkMerge [ opts tmuxing fzf];
     };
 
     direnv = {
