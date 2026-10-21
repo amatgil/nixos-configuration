@@ -39,7 +39,7 @@
     qbittorrent
     just
     sccache
-    tealdeer
+    #tealdeer
     bottom
     #cargo-sweep
     hexyl
@@ -52,7 +52,7 @@
     ripgrep
     wget
     yt-dlp
-    dust # du-dust
+    #dust # du-dust
     qbittorrent
     alacritty
     pinentry-emacs
@@ -83,10 +83,7 @@
     mold
     xmousepasteblock
     keepassxc
-    thunderbird
     devour
-    imagemagick
-    yt-dlp
 
     # kdePackages.korganizer # i don't remember if i ever used this
     # kdePackages.kruler  # neat :D
@@ -94,8 +91,8 @@
     #             kronometer  # self-explanatory
     # kdePackages.kmines  # game
     # kdePackages.knights # game
-    kdePackages.minuet  # music practice
-    kdePackages.kalzium # periodic table
+    #kdePackages.minuet  # music practice
+    #kdePackages.kalzium # periodic table
     libreoffice
     inkscape
     fontforge-gtk
@@ -112,7 +109,7 @@
     rustup # trunk
     ghc
     # haskellPackages.haskell-language-server
-    uiua-unstable
+    #uiua-unstable
     # jdk21_headless # might as well have it :/
     
     # (rWrapper.override { packages = with rPackages; [ggplot2 readr tidyverse dplyr xts]; })
@@ -173,6 +170,7 @@
     zbar
     nasm
     zig
+    freecad
   ];
 
   programs = {
@@ -294,9 +292,16 @@
                                                     tmux
                                                  fi
                                                  '';
-                      fzf = ''eval "$(${lib.getExe pkgs.fzf} --zsh)"''; # C-t for file select, M-c for cd, C-r for history (history needs normal-mode)
+                      # C-t for file select, M-c for cd, C-r for history
+                      fzf = lib.mkOrder 10000 ''
+                                              eval "$(${lib.getExe pkgs.fzf} --zsh)"
+                                              bindkey -M viins '^R' fzf-history-widget
+                                              function zvm_after_init() {
+                                                bindkey -M viins '^R' fzf-history-widget
+                                              }
+                                              ''; # first call probs does nothign. second one re-re-rebinds after zle loads vi-mode
                     in 
-                      lib.mkMerge [ opts tmuxing fzf];
+                      lib.mkMerge [opts fzf]; # no tmuxing. breaks fzf keybind setting and makes terminal open slower
     };
 
     direnv = {
@@ -466,9 +471,9 @@
   # TODO: Put these programs.* under the other programs = {...} section
 	programs.git = {
 		enable = true;
-		userName = "amatgil";
-		userEmail = "amatgilvinyes@gmail.com";
-		extraConfig = {
+		settings = {
+      user.name = "amatgil";
+      user.email = "amatgilvinyes@gmail.com";
       rerere.enabled = 1;
 			user.signingkey = "D34BAAD5029249C9";
 			init.defaultBranch = "master";
@@ -499,7 +504,7 @@
       safe.directory="*";
       github.user = "amatgil";
 		};
-    aliases = {
+    settings.alias = {
       s = "status";
       c = "commit";
     };
@@ -599,25 +604,25 @@
   	};
   };
 
-  programs.hyfetch = {
-  	enable = true;
-  	settings = {
-  	  args = null;
-  	  color_align = {
-  	    custom_colors."1" = 3;
-  	    custom_colors."2" = 2;
-  	    fore_back = [];
-  	    mode = "custom";
-  	  };
-  	  distro = null;
-  	  light_dark = "dark";
-  	  lightness = 0.65;
-  	  mode = "rgb";
-  	  preset = "asexual";
-  	  pride_month_disable = false;
-  	  pride_month_shown = [];
-  	};
-  };
+  # programs.hyfetch = {
+  # 	enable = true;
+  # 	settings = {
+  # 	  args = null;
+  # 	  color_align = {
+  # 	    custom_colors."1" = 3;
+  # 	    custom_colors."2" = 2;
+  # 	    fore_back = [];
+  # 	    mode = "custom";
+  # 	  };
+  # 	  distro = null;
+  # 	  light_dark = "dark";
+  # 	  lightness = 0.65;
+  # 	  mode = "rgb";
+  # 	  preset = "asexual";
+  # 	  pride_month_disable = false;
+  # 	  pride_month_shown = [];
+  # 	};
+  # };
 
   programs.mpv = {
   	enable = true;
@@ -646,5 +651,4 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
 }
