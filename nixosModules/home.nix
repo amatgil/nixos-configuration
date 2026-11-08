@@ -71,11 +71,12 @@
     (prismlauncher.override {
       jdks = [
         temurin-bin-25
-        # temurin-bin-21
+        temurin-bin-21 # also for hexxy??
         # temurin-bin-8
-        # temurin-bin-17
+        temurin-bin-17 # for hexxy
       ];})
     file
+    clang-tools
 
     neovim
 
@@ -86,7 +87,7 @@
     devour
 
     # kdePackages.korganizer # i don't remember if i ever used this
-    # kdePackages.kruler  # neat :D
+    kdePackages.kruler  # neat :D
     # kdePackages.ktimer  # self-explanatory
     #             kronometer  # self-explanatory
     # kdePackages.kmines  # game
@@ -137,8 +138,6 @@
 
     elmPackages.elm elmPackages.elm-language-server uglify-js
 
-    # llvmPackages_20.clang-tools # clangd
-
     python315
 
     haskellPackages.cabal-install
@@ -163,6 +162,8 @@
     # musescore
     # magic-wormhole
     sshfs
+    signal-desktop
+    typst
     krita
     swi-prolog kissat
     sqlite
@@ -647,6 +648,9 @@
     linker = "${pkgs.llvmPackages.clangUseLLVM}/bin/clang"
     rustflags = ["-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"]
   '';
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
+  ];
 
 
   # Let Home Manager install and manage itself.
